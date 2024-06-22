@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MimicWebApi", "WebApplication1\MimicWebApi.csproj", "{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F32F7BE2-FBE8-4C50-A4C3-E795E3B49B77}
+	EndGlobalSection
+EndGlobal
