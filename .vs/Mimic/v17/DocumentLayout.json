@@ -1,0 +1,143 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "A:\\LearnC#\\WebApplication1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|a:\\learnc#\\webapplication1\\webapplication1\\models\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|solutionrelative:webapplication1\\models\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|a:\\learnc#\\webapplication1\\webapplication1\\models\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|solutionrelative:webapplication1\\models\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|a:\\learnc#\\webapplication1\\webapplication1\\postgresql\\mimiccontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|solutionrelative:webapplication1\\postgresql\\mimiccontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|a:\\learnc#\\webapplication1\\webapplication1\\models\\storage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|solutionrelative:webapplication1\\models\\storage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|a:\\learnc#\\webapplication1\\webapplication1\\models\\properties.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|solutionrelative:webapplication1\\models\\properties.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|a:\\learnc#\\webapplication1\\webapplication1\\models\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|solutionrelative:webapplication1\\models\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|a:\\learnc#\\webapplication1\\webapplication1\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebAPI.csproj|solutionrelative:webapplication1\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 216,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Storage.cs",
+              "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\Storage.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Models\\Storage.cs",
+              "ToolTip": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\Storage.cs",
+              "RelativeToolTip": "WebApplication1\\Models\\Storage.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAzwAkAAABHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T13:19:42.175Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MimicContext.cs",
+              "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\WebApplication1\\PostgreSQL\\MimicContext.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\PostgreSQL\\MimicContext.cs",
+              "ToolTip": "A:\\LearnC#\\WebApplication1\\WebApplication1\\PostgreSQL\\MimicContext.cs",
+              "RelativeToolTip": "WebApplication1\\PostgreSQL\\MimicContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEsAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T09:35:02.992Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Character.cs",
+              "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\Character.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Models\\Character.cs",
+              "ToolTip": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\Character.cs",
+              "RelativeToolTip": "WebApplication1\\Models\\Character.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T13:51:18.423Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Item.cs",
+              "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\Item.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Models\\Item.cs",
+              "ToolTip": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\Item.cs",
+              "RelativeToolTip": "WebApplication1\\Models\\Item.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T13:52:11.447Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Properties.cs",
+              "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\Properties.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Models\\Properties.cs",
+              "ToolTip": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\Properties.cs",
+              "RelativeToolTip": "WebApplication1\\Models\\Properties.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T13:52:18.019Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Room.cs",
+              "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\Room.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Models\\Room.cs",
+              "ToolTip": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\Room.cs",
+              "RelativeToolTip": "WebApplication1\\Models\\Room.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAxwAoAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T13:52:20.2Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\User.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Models\\User.cs",
+              "ToolTip": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Models\\User.cs",
+              "RelativeToolTip": "WebApplication1\\Models\\User.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAYwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T13:52:45.041Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
