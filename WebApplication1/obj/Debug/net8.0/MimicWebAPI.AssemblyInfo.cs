@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("MimicWebAPI")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("MimicWebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
-[assembly: System.Reflection.AssemblyProductAttribute("MimicWebAPI")]
-[assembly: System.Reflection.AssemblyTitleAttribute("MimicWebAPI")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0427edbe58ea2ad289d82bb6568a0f029b72c8fa")]
+[assembly: System.Reflection.AssemblyProductAttribute("MimicWebApi")]
+[assembly: System.Reflection.AssemblyTitleAttribute("MimicWebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MimicWebApi.PostgreSQL;
+using MimicWebApi.DataLayer.EfCode;
 
 namespace MimicWebApi
 {
@@ -12,10 +12,10 @@ namespace MimicWebApi
             // Add services to the container
 
             builder.Services.AddControllers();
-            
+
             // Add to services db context (PostgreSQL)
-            builder.Services.AddDbContext<MimicContext>(options =>
-                        options.UseNpgsql(builder.Configuration.GetConnectionString("MimicContext")));
+            builder.Services.AddDbContext<MimicContext>();
+
 
 
             var app = builder.Build();
