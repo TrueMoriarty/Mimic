@@ -3,40 +3,44 @@
   "WorkspaceRootPath": "A:\\LearnC#\\WebApplication1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebApi.csproj|a:\\learnc#\\webapplication1\\webapplication1\\controllers\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebApi.csproj|solutionrelative:webapplication1\\controllers\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|a:\\learnc#\\webapplication1\\dal\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|a:\\learnc#\\webapplication1\\dal\\efclasses\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\efclasses\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebApi.csproj|a:\\learnc#\\webapplication1\\webapplication1\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebApi.csproj|solutionrelative:webapplication1\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebApi.csproj|a:\\learnc#\\webapplication1\\webapplication1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebApi.csproj|A:\\LearnC#\\WebApplication1\\webapplication1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebApi.csproj|solutionrelative:webapplication1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|a:\\learnc#\\webapplication1\\dal\\efcode\\mimiccontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\efcode\\mimiccontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|a:\\learnc#\\webapplication1\\dal\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|a:\\learnc#\\webapplication1\\dal\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|a:\\learnc#\\webapplication1\\dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebApi.csproj|A:\\LearnC#\\WebApplication1\\webapplication1\\controllers\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebApi.csproj|solutionrelative:webapplication1\\controllers\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|a:\\learnc#\\webapplication1\\dal\\di.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\di.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|A:\\LearnC#\\WebApplication1\\dal\\efcode\\mimiccontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\efcode\\mimiccontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|A:\\LearnC#\\WebApplication1\\dal\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|A:\\LearnC#\\WebApplication1\\dal\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|A:\\LearnC#\\WebApplication1\\dal\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|A:\\LearnC#\\WebApplication1\\dal\\efclasses\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}|DAL\\DAL.csproj|solutionrelative:dal\\efclasses\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebApi.csproj|A:\\LearnC#\\WebApplication1\\webapplication1\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}|WebApplication1\\MimicWebApi.csproj|solutionrelative:webapplication1\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 215,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,33 +58,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
+              "Title": "DI.cs",
+              "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\DAL\\DI.cs",
+              "RelativeDocumentMoniker": "DAL\\DI.cs",
+              "ToolTip": "A:\\LearnC#\\WebApplication1\\DAL\\DI.cs",
+              "RelativeToolTip": "DAL\\DI.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-21T14:11:38.605Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "User.cs",
               "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\DAL\\EfClasses\\User.cs",
               "RelativeDocumentMoniker": "DAL\\EfClasses\\User.cs",
               "ToolTip": "A:\\LearnC#\\WebApplication1\\DAL\\EfClasses\\User.cs",
               "RelativeToolTip": "DAL\\EfClasses\\User.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAAQwAUAAAABAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAUAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-21T11:04:57.972Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserDTO.cs",
-              "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\DAL\\UserDTO.cs",
-              "RelativeDocumentMoniker": "DAL\\UserDTO.cs",
-              "ToolTip": "A:\\LearnC#\\WebApplication1\\DAL\\UserDTO.cs",
-              "RelativeToolTip": "DAL\\UserDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-21T11:08:30.496Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "launchSettings.json",
               "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "WebApplication1\\Properties\\launchSettings.json",
@@ -93,33 +97,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Program.cs",
               "RelativeDocumentMoniker": "WebApplication1\\Program.cs",
               "ToolTip": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Program.cs",
               "RelativeToolTip": "WebApplication1\\Program.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-21T08:13:54.352Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "MimicContext.cs",
               "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\DAL\\EfCode\\MimicContext.cs",
               "RelativeDocumentMoniker": "DAL\\EfCode\\MimicContext.cs",
               "ToolTip": "A:\\LearnC#\\WebApplication1\\DAL\\EfCode\\MimicContext.cs",
               "RelativeToolTip": "DAL\\EfCode\\MimicContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAA1AAAA",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAzwAoAAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-20T14:50:42.411Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "IGenericRepository.cs",
               "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\DAL\\Repositories\\IGenericRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Repositories\\IGenericRepository.cs",
@@ -132,20 +136,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "UnitOfWork.cs",
               "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\DAL\\UnitOfWork.cs",
               "RelativeDocumentMoniker": "DAL\\UnitOfWork.cs",
               "ToolTip": "A:\\LearnC#\\WebApplication1\\DAL\\UnitOfWork.cs",
               "RelativeToolTip": "DAL\\UnitOfWork.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAABMAAAAyAAAA",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAqwBMAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-20T14:26:06.786Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "TestController.cs",
               "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\WebApplication1\\Controllers\\TestController.cs",
               "RelativeDocumentMoniker": "WebApplication1\\Controllers\\TestController.cs",
@@ -154,6 +158,19 @@
               "ViewState": "AQIAAAYAAAAAAAAAAAAAABAAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-20T13:31:57.085Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserDTO.cs",
+              "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\DAL\\UserDTO.cs",
+              "RelativeDocumentMoniker": "DAL\\UserDTO.cs",
+              "ToolTip": "A:\\LearnC#\\WebApplication1\\DAL\\UserDTO.cs",
+              "RelativeToolTip": "DAL\\UserDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-21T11:08:30.496Z",
               "EditorCaption": ""
             }
           ]
@@ -167,7 +184,7 @@
         "Id": "b57f5e37-5e3a-4cc5-a3f9-14b5760e41f6",
         "Display": 0,
         "X": -22,
-        "Y": 123,
+        "Y": 122,
         "Width": 1166,
         "Height": 613,
         "WindowState": 0
@@ -179,13 +196,13 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "GenericRepository.cs",
               "DocumentMoniker": "A:\\LearnC#\\WebApplication1\\DAL\\Repositories\\GenericRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Repositories\\GenericRepository.cs",
               "ToolTip": "A:\\LearnC#\\WebApplication1\\DAL\\Repositories\\GenericRepository.cs",
               "RelativeToolTip": "DAL\\Repositories\\GenericRepository.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAEkAAAAFAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAADgvxcAAABVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-20T13:48:52.421Z",
               "EditorCaption": ""
