@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MimicWebApi", "WebApplication1\MimicWebApi.csproj", "{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16} = {FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59570CBD-49D6-4E9C-B8FB-D17783CEBC14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,13 @@
+A:\LearnC#\WebApplication1\DAL\bin\Debug\net8.0\DAL.deps.json
+A:\LearnC#\WebApplication1\DAL\bin\Debug\net8.0\DAL.dll
+A:\LearnC#\WebApplication1\DAL\bin\Debug\net8.0\DAL.pdb
+A:\LearnC#\WebApplication1\DAL\obj\Debug\net8.0\DAL.csproj.AssemblyReference.cache
+A:\LearnC#\WebApplication1\DAL\obj\Debug\net8.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+A:\LearnC#\WebApplication1\DAL\obj\Debug\net8.0\DAL.AssemblyInfoInputs.cache
+A:\LearnC#\WebApplication1\DAL\obj\Debug\net8.0\DAL.AssemblyInfo.cs
+A:\LearnC#\WebApplication1\DAL\obj\Debug\net8.0\DAL.csproj.CoreCompileInputs.cache
+A:\LearnC#\WebApplication1\DAL\obj\Debug\net8.0\DAL.sourcelink.json
+A:\LearnC#\WebApplication1\DAL\obj\Debug\net8.0\DAL.dll
+A:\LearnC#\WebApplication1\DAL\obj\Debug\net8.0\refint\DAL.dll
+A:\LearnC#\WebApplication1\DAL\obj\Debug\net8.0\DAL.pdb
+A:\LearnC#\WebApplication1\DAL\obj\Debug\net8.0\ref\DAL.dll
