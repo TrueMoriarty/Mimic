@@ -13,11 +13,6 @@ public class Program
         builder.Services.AddDAL();
         builder.Services.AddControllers();
 
-        // Add to services db context (PostgreSQL)
-        //builder.Services.AddDbContext<MimicContext>();
-
-
-
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -25,7 +20,6 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-
 
         app.MapControllers();
 

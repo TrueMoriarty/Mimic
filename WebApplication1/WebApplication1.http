@@ -1,6 +1,0 @@
-@MimicWebApi_HostAddress = http://localhost:5272
-
-GET {{MimicWebApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
