@@ -11,11 +11,11 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         var vkConfig = builder.Configuration.GetSection("VkConfig").Get<VkConfig>()!;
-        builder.Services.AddAuthentication()
+        builder.Services
+            .AddAuthentication("vk-oauth-cookie")
             .AddCookie("vk-oauth-cookie")
             .AddVk("vk-oauth", "vk", o =>
             {
-                o.SignInScheme = "vk-oauth-cookie";
                 o.ClientSecret = vkConfig.ClientId;
                 o.ClientId = vkConfig.ClientId;
                 o.CodeVerifier = vkConfig.CodeVerifier;
@@ -25,17 +25,30 @@ public class Program
                 o.TokenEndpoint = "https://id.vk.com/oauth2/auth";
 
                 o.CallbackPath = "/api/auth/cb";
-
                 o.UsePkce = true;
-                o.SaveTokens = true;
             });
-        ;
+
+        string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(name: MyAllowSpecificOrigins,
+                o =>
+                {
+                    o.WithOrigins(
+                            "https://localhost:5173"
+                        )
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+        });
 
         // Add services to the container
         builder.Services.AddDAL();
         builder.Services.AddControllers();
 
         var app = builder.Build();
+        app.UseCors(MyAllowSpecificOrigins);
 
         // Configure the HTTP request pipeline.
 
