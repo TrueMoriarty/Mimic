@@ -1,6 +1,7 @@
 using DAL;
 using MimicWebApi.VkAuth;
 using MimicWebApi.VkAuth.Models;
+using Serilog;
 
 namespace MimicWebApi;
 
@@ -8,7 +9,13 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console()
+            .CreateLogger();
+
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddSerilog();
 
         var vkConfig = builder.Configuration.GetSection("VkConfig").Get<VkConfig>()!;
         builder.Services
@@ -68,6 +75,8 @@ public class Program
         {
             app.UseDeveloperExceptionPage();
         }
+
+        app.UseSerilogRequestLogging();
 
         app.Run();
     }
