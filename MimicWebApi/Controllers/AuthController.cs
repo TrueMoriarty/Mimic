@@ -22,7 +22,6 @@ public class AuthController(IConfiguration config) : ControllerBase
         var user = HttpContext.User.FindFirst("user_id")?.Value;
 
         string clientLocation = config.GetValue<string>("ClientUrl")!;
-        HttpContext.Response.Redirect(clientLocation);
+        HttpContext.Response.Redirect(clientLocation + '/');
     }
-
 }

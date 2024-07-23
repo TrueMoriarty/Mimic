@@ -18,6 +18,8 @@ public class Program
         builder.Services.AddSerilog();
 
         var vkConfig = builder.Configuration.GetSection("VkConfig").Get<VkConfig>()!;
+        string clientLocation = builder.Configuration.GetValue<string>("ClientUrl")!;
+
         builder.Services
             .AddAuthentication("vk-oauth-cookie")
             .AddCookie("vk-oauth-cookie")
@@ -41,9 +43,7 @@ public class Program
             options.AddPolicy(name: MyAllowSpecificOrigins,
                 o =>
                 {
-                    o.WithOrigins(
-                            "https://localhost:5173"
-                        )
+                    o.WithOrigins(clientLocation)
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
