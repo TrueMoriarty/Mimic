@@ -5,7 +5,7 @@ namespace MimicWebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController : ControllerBase
+public class AuthController(IConfiguration config) : ControllerBase
 {
     [HttpGet("oidc/vk")]
     public Task VkAuth()
@@ -21,7 +21,8 @@ public class AuthController : ControllerBase
     {
         var user = HttpContext.User.FindFirst("user_id")?.Value;
 
-        //TODO: посдтавить нормальный юрл из конфига 
-        HttpContext.Response.Redirect("https://localhost:5173/");
+        string clientLocation = config.GetValue<string>("ClientUrl")!;
+        HttpContext.Response.Redirect(clientLocation);
     }
+
 }
