@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MimicWebApi.Controllers;
@@ -23,5 +24,14 @@ public class AuthController(IConfiguration config) : ControllerBase
 
         string clientLocation = config.GetValue<string>("ClientUrl")!;
         HttpContext.Response.Redirect(clientLocation + '/');
+    }
+
+    [Authorize]
+    [HttpGet("oidc/userId")]
+    public IActionResult GetUserId()
+    {
+        var OidcUserId = HttpContext.User.FindFirst("user_id")?.Value;
+
+        return Ok(OidcUserId);
     }
 }
