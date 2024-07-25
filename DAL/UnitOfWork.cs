@@ -9,7 +9,7 @@ public class UnitOfWork : IDisposable
     // Создаются переменные класса для контекста бд и каждого репозитория.
     // Для переменной context создается новый контекст.
     private MimicContext context = new MimicContext();
-    GenericRepository<User> userRepository;
+    UserRepository userRepository;
     GenericRepository<Item> itemRepository;
 
     private bool disposed = false;
@@ -17,12 +17,12 @@ public class UnitOfWork : IDisposable
     // Каждое свойство репозитория проверяет существует ли репозиторий. Если нет
     // создается экземпляр репозитория и ему передается контекст. Поэтому все репозитории
     // используют один и тот же экземпляр контекста
-    public GenericRepository<User> UserRepository 
+    public UserRepository UserRepository 
     {
         get
         {
             if (userRepository == null)
-                userRepository = new GenericRepository<User>(context);
+                userRepository = new UserRepository(context);
             return userRepository;
         }
     }

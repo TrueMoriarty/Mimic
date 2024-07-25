@@ -2,19 +2,29 @@ import { Button, Card, CardHeader, Grid, Stack, TextField } from "@mui/material"
 import TextFieldFormik from "../Components/TextFieldFormik";
 import { Formik } from "formik";
 import * as Yup from 'yup';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 const initUnbourdingValues = {
-  nickname: null
+  username: null
 };
 
 const unbordingSchema = Yup.object().shape({
-  nickname: Yup.string().min(2, 'Too Short!').required('Required')
+  username: Yup.string().min(3, 'Too Short!').required('Required')
 });
 
 const UnbordingForm = () => {
+  const navigate = useNavigate();
 
-  const handleSubmit = (values) => {
-    console.log(values)
+  const handleSubmit = async (values) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const response = await axios.post("https://localhost/api/auth/unbord", { username: values.username });
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -26,7 +36,7 @@ const UnbordingForm = () => {
       {props => (
         <form onSubmit={props.handleSubmit} >
           <Stack direction="column" spacing={1}>
-            <TextFieldFormik name="nickname" label="Nickname" variant="standard" required />
+            <TextFieldFormik name="username" label="Username" variant="standard" />
             <Button variant="contained" type="submit">Unbord</Button>
           </Stack>
         </form>)

@@ -218,7 +218,7 @@ public class VkAuthenticationHandler : OAuthHandler<VkAuthenticationOptions>
 
         var userId = tokens.Response?.RootElement.GetString("user_id");
         if (!string.IsNullOrEmpty(userId))
-            identity.AddClaim(new("user_id", userId));
+            identity.AddClaim(new("oidc_id", userId));
 
         var ticket = await CreateTicketAsync(identity, properties, tokens);
         if (ticket != null)

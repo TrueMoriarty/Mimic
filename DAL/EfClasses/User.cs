@@ -1,10 +1,9 @@
-﻿using DAL.EfClasses;
-
-namespace DAL.EfClasses;
+﻿namespace DAL.EfClasses;
 
 public class User
 {
     public int UserId { get; set; }
+    public long? OidcUserId { get; set; }
     public string? Login { get; set; }
     public string? Password { get; set; }
     public string? Name { get; set; }

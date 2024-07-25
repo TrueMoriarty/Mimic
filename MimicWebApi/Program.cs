@@ -1,7 +1,9 @@
 using DAL;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using MimicWebApi.VkAuth;
 using MimicWebApi.VkAuth.Models;
 using Serilog;
+using Services;
 
 namespace MimicWebApi;
 
@@ -21,10 +23,11 @@ public class Program
         string clientLocation = builder.Configuration.GetValue<string>("ClientUrl")!;
 
         builder.Services
-            .AddAuthentication("vk-oauth-cookie")
-            .AddCookie("vk-oauth-cookie")
+            .AddAuthentication("auth-cookie")
+            .AddCookie("auth-cookie")
             .AddVk("vk-oauth", "vk", o =>
             {
+                o.SignInScheme = "auth-cookie";
                 o.ClientSecret = vkConfig.ClientId;
                 o.ClientId = vkConfig.ClientId;
                 o.CodeVerifier = vkConfig.CodeVerifier;
@@ -33,9 +36,13 @@ public class Program
                 o.AuthorizationEndpoint = "https://id.vk.com/authorize";
                 o.TokenEndpoint = "https://id.vk.com/oauth2/auth";
 
+                o.Scope.Add("vkid.personal_info");
+
                 o.CallbackPath = "/api/auth/cb";
                 o.UsePkce = true;
             });
+
+        builder.Services.AddAuthorization();
 
         string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         builder.Services.AddCors(options =>
@@ -52,6 +59,7 @@ public class Program
 
         // Add services to the container
         builder.Services.AddDAL();
+        builder.Services.AddServices();
         builder.Services.AddControllers();
 
         var app = builder.Build();

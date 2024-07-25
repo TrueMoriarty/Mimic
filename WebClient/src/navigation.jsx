@@ -55,7 +55,7 @@ const Navigation = () => {
         </Grid>
         <Grid item sx={{ mr: 1 }}>
           {auth ? (
-            <Typography>{user.nickname}</Typography>
+            <Typography>{user?.nickname}</Typography>
           ) : (
             <Button
               color="inherit"
