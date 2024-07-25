@@ -19,6 +19,7 @@ public class AuthController(IConfiguration config, IUserService userService) : C
     [HttpGet("oidc/vk")]
     public Task VkAuth()
     {
+        // todo: блядская ошибка с correlation cookie
         return HttpContext.ChallengeAsync("vk-oauth", new AuthenticationProperties()
         {
             RedirectUri = "oidc/checkUser"
@@ -34,8 +35,7 @@ public class AuthController(IConfiguration config, IUserService userService) : C
 
         if (user is not null) return SignInUser(user, new() { RedirectUri = _clientLocation });
 
-        HttpContext.Response.Redirect(_clientLocation + "user/unbording");
-        return Ok();
+        return Redirect(_clientLocation + "user/unbording");
     }
 
     [Authorize]

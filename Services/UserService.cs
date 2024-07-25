@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DAL.EfClasses;
+using DAL.Repositories;
 
 namespace Services;
 
@@ -12,6 +13,7 @@ public interface IUserService
 
 public class UserService(UnitOfWork unitOfWork) : IUserService
 {
+
     public void Add(User user)
     {
         unitOfWork.UserRepository.Insert(user);
