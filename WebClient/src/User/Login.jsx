@@ -1,8 +1,9 @@
-import { Box, Button, Card, Container, Divider, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, Divider, Grid, Stack, TextField, Typography } from "@mui/material";
 
 const Login = () => {
   const handleAuth = async () =>
     window.location.assign("https://localhost/api/auth/oidc/vk");
+
   return (
     <Grid container
       justifyContent="center"
@@ -21,12 +22,12 @@ const Login = () => {
           <Box sx={{ p: 1 }}>
             <Stack direction="column" spacing={1}>
               <TextField label="Login" variant="standard" disabled />
-              <TextField label="Password" variant="standard" type="password" disabled />
+              <TextField label="Password" variant="standard" type="password" disabled autoComplete="current-password" />
               <Button variant="contained" disabled>Login</Button>
               <Button variant="contained" disabled>Registration</Button>
             </Stack>
           </Box>
-        </Card >
+        </Card>
       </Grid>
     </Grid>
   );
