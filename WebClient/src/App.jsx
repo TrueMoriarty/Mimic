@@ -1,10 +1,10 @@
-import Home from "./Components/Home/Home";
-import Navigation from "./Components/navigation";
+import Home from "./Home/Home";
+import Navigation from "./navigation";
 import { Route, Routes } from "react-router-dom";
-import { Unbording } from "./Components/User/Unbording";
-import Login from "./Components/User/Login";
-import ItemsLibrary from "./Components/ItemsLibrary/ItemsLibrary";
-import Rooms from "./Components/Rooms/Rooms";
+import { Unbording } from "./User/Unbording";
+import Login from "./User/Login";
+import ItemsLibrary from "./ItemsLibrary/ItemsLibrary";
+import Rooms from "./Rooms/Rooms";
 
 function App() {
   return (

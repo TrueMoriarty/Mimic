@@ -1,13 +1,13 @@
 import { AppBar, Button, Grid, Tab, Tabs, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import useRouteMatch from "../hooks/useRouteMatch";
+import useRouteMatch from "./hooks/useRouteMatch";
 
 const Navigation = () => {
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState({ nickname: "Ilya" });
 
-  const routeMatch = useRouteMatch(["/", "/rooms", "/itemsLibrary"]);
+  const routeMatch = useRouteMatch(["/", "/rooms", "/itemsLibrary", "/user/unbording"]);
   const currentTab = routeMatch?.pattern?.path;
   return (
     <AppBar position="static">
@@ -43,6 +43,12 @@ const Navigation = () => {
                   to="/itemsLibrary"
                   component={Link}
                 />
+                <Tab
+                  label="Unbording test"
+                  value="/user/unbording"
+                  to="/user/unbording"
+                  component={Link}
+                />
               </Tabs>
             </Grid>
           </Grid>
@@ -51,10 +57,10 @@ const Navigation = () => {
           {auth ? (
             <Typography>{user.nickname}</Typography>
           ) : (
-            <Button 
-            color="inherit" 
-            to="/user/login"
-            component={Link}
+            <Button
+              color="inherit"
+              to="/user/login"
+              component={Link}
             >Login</Button>
           )}
         </Grid>
