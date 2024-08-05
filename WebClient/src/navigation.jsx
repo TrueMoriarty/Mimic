@@ -10,6 +10,8 @@ const init_user = {
 
 const Navigation = () => {
   const [user, setUser] = useState(init_user);
+  const routeMatch = useRouteMatch(["/", "/rooms", "/itemsLibrary"]);
+  const currentTab = routeMatch?.pattern?.path;
 
   useEffect(() => {
 
@@ -18,10 +20,8 @@ const Navigation = () => {
       isOk && setUser({ ...data, isAuth: true });
     })()
 
-  }, []);
+  }, [currentTab]);
 
-  const routeMatch = useRouteMatch(["/", "/rooms", "/itemsLibrary"]);
-  const currentTab = routeMatch?.pattern?.path;
   return (
     <AppBar position="static">
       <Grid
