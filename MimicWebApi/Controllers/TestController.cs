@@ -16,4 +16,5 @@ public class TestController(IUserService userService) : ControllerBase
         userService.Add(user.ToUser());
         return Ok();
     }
+
 }

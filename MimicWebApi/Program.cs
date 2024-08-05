@@ -1,6 +1,4 @@
 using DAL;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using MimicWebApi.VkAuth;
 using MimicWebApi.VkAuth.Models;
 using Serilog;
@@ -44,44 +42,6 @@ public class Program
 
                 o.CallbackPath = "/api/auth/cb";
                 o.UsePkce = true;
-
-                o.Events.OnRemoteFailure = (RemoteFailureContext context) =>
-                {
-                    context.HandleResponse();
-                    return Task.CompletedTask;
-                };
-
-                o.Events.OnCreatingTicket = async (OAuthCreatingTicketContext context) =>
-                {
-                    using var request = new HttpRequestMessage(HttpMethod.Post, context.Options.UserInformationEndpoint);
-
-                    var dict = new Dictionary<string, string>
-                    {
-                    { "client_id", context.Options.ClientId },
-                    { "access_token", context.AccessToken }
-                    };
-
-                    request.Content = new FormUrlEncodedContent(dict);
-
-                    request.Version = context.Backchannel.DefaultRequestVersion;
-
-                    using var response = await context.Backchannel.SendAsync(request);
-
-                    var userInfo = await response.Content.ReadFromJsonAsync<VkUserInfo>();
-                    var userService = context.HttpContext.RequestServices.GetService<IUserService>()!;
-                    var user = userService.GetByExternalId(userInfo.User.UserId);
-
-                    if (user is not null)
-                    {
-                        context.Identity.AddClaim(new("user_id", user.UserId.ToString()));
-                        context.Properties.RedirectUri = $"{clientLocation}/";
-                    }
-                    else
-                    {
-                        context.Identity.AddClaim(new("external_user_id", userInfo.User.UserId));
-                        context.Properties.RedirectUri = $"{clientLocation}/user/unbording";
-                    }
-                };
             });
 
         builder.Services.AddAuthorization();

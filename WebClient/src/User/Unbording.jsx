@@ -45,8 +45,6 @@ const UnbordingForm = () => {
   );
 }
 
-
-
 export const Unbording = () => {
   return (
     <Grid container
@@ -57,9 +55,7 @@ export const Unbording = () => {
       <Grid item xs={4}>
         <Card sx={{ p: 2 }}>
           <CardHeader title="Unbording" sx={{ p: 0 }} />
-
           <UnbordingForm />
-
         </Card>
       </Grid>
     </Grid>);
