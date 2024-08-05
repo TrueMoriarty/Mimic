@@ -1,11 +1,24 @@
 import { AppBar, Button, Grid, Tab, Tabs, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useRouteMatch from "./hooks/useRouteMatch";
+import { getAsync } from "./axios";
+
+const init_user = {
+  isAuth: false
+}
 
 const Navigation = () => {
-  const [auth, setAuth] = useState(false);
-  const [user, setUser] = useState({ nickname: "Ilya" });
+  const [user, setUser] = useState(init_user);
+
+  useEffect(() => {
+
+    (async () => {
+      const { isOk, data } = await getAsync("https://localhost/api/users/info",)
+      isOk && setUser({ ...data, isAuth: true });
+    })()
+
+  }, []);
 
   const routeMatch = useRouteMatch(["/", "/rooms", "/itemsLibrary", "/user/unbording"]);
   const currentTab = routeMatch?.pattern?.path;
@@ -54,8 +67,8 @@ const Navigation = () => {
           </Grid>
         </Grid>
         <Grid item sx={{ mr: 1 }}>
-          {auth ? (
-            <Typography>{user?.nickname}</Typography>
+          {user.isAuth ? (
+            <Typography>{user?.userName}</Typography>
           ) : (
             <Button
               color="inherit"

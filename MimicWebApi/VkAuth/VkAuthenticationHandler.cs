@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
+using MimicWebApi.VkAuth.Models;
+using System.Globalization;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
-using MimicWebApi.VkAuth.Models;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Text;
-using Microsoft.Extensions.Primitives;
-using System.Globalization;
-using System.Security.Claims;
 
 namespace MimicWebApi.VkAuth;
 
@@ -35,6 +35,7 @@ public class VkAuthenticationHandler : OAuthHandler<VkAuthenticationOptions>
             { "scope", scope },
             { "response_type", "code" },
             { "redirect_uri", redirectUri },
+            { "prompt", "consent" }
         };
 
         if (Options.UsePkce)
@@ -215,10 +216,6 @@ public class VkAuthenticationHandler : OAuthHandler<VkAuthenticationOptions>
 
             properties.StoreTokens(authTokens);
         }
-
-        var userId = tokens.Response?.RootElement.GetString("user_id");
-        if (!string.IsNullOrEmpty(userId))
-            identity.AddClaim(new("oidc_id", userId));
 
         var ticket = await CreateTicketAsync(identity, properties, tokens);
         if (ticket != null)
