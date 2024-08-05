@@ -20,7 +20,7 @@ const Navigation = () => {
 
   }, []);
 
-  const routeMatch = useRouteMatch(["/", "/rooms", "/itemsLibrary", "/user/unbording"]);
+  const routeMatch = useRouteMatch(["/", "/rooms", "/itemsLibrary"]);
   const currentTab = routeMatch?.pattern?.path;
   return (
     <AppBar position="static">
@@ -54,12 +54,6 @@ const Navigation = () => {
                   label="Items library"
                   value="/itemsLibrary"
                   to="/itemsLibrary"
-                  component={Link}
-                />
-                <Tab
-                  label="Unbording test"
-                  value="/user/unbording"
-                  to="/user/unbording"
                   component={Link}
                 />
               </Tabs>
