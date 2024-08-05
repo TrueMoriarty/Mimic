@@ -20,14 +20,14 @@ public class AuthController(IUserService userService) : ControllerBase
     [HttpPost("unbord")]
     public IActionResult Unbord([FromBody] UnbordingModel model)
     {
-        var oidcId = HttpContext.GetOidcUserId()!.Value;
-        var user = userService.GetByOidcId(oidcId);
+        var externalId = HttpContext.GetExternalUserId()!;
+        var user = userService.GetByExternalId(externalId);
 
         if (user is not null)
             return BadRequest($"User {user.Name} has already been unborded");
 
         var unbordedUser = model.ToUser();
-        unbordedUser.OidcUserId = oidcId;
+        unbordedUser.ExternalUserId = externalId;
 
         userService.Add(unbordedUser);
 

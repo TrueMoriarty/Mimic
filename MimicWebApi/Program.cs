@@ -68,10 +68,8 @@ public class Program
                     using var response = await context.Backchannel.SendAsync(request);
 
                     var userInfo = await response.Content.ReadFromJsonAsync<VkUserInfo>();
-                    var userService = context.HttpContext.RequestServices.GetService<IUserService>();
-
-                    var id = long.Parse(userInfo.User.UserId);
-                    var user = userService.GetByOidcId(id);
+                    var userService = context.HttpContext.RequestServices.GetService<IUserService>()!;
+                    var user = userService.GetByExternalId(userInfo.User.UserId);
 
                     if (user is not null)
                     {
@@ -80,7 +78,7 @@ public class Program
                     }
                     else
                     {
-                        context.Identity.AddClaim(new("oidc_id", userInfo.User.UserId));
+                        context.Identity.AddClaim(new("external_user_id", userInfo.User.UserId));
                         context.Properties.RedirectUri = $"{clientLocation}/user/unbording";
                     }
                 };

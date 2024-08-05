@@ -5,15 +5,15 @@
 namespace MimicWebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddOidcUserId : Migration
+    public partial class AddExternalId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<long>(
-                name: "OidcUserId",
+            migrationBuilder.AddColumn<string>(
+                name: "ExternalUserId",
                 table: "Users",
-                type: "bigint",
+                type: "text",
                 nullable: true);
         }
 
@@ -21,7 +21,7 @@ namespace MimicWebApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "OidcUserId",
+                name: "ExternalUserId",
                 table: "Users");
         }
     }

@@ -5,5 +5,5 @@ namespace DAL.Repositories;
 
 public class UserRepository(MimicContext context) : GenericRepository<User>(context)
 {
-    public User? GetByOidcId(long oidcId) => context.Users.FirstOrDefault(u => u.OidcUserId == oidcId);
+    public User? GetByExternalId(string externalId) => context.Users.FirstOrDefault(u => u.ExternalUserId == externalId);
 }

@@ -7,7 +7,7 @@ public interface IUserService
 {
     public void Add(User user);
 
-    public User? GetByOidcId(long oidcId);
+    public User? GetByExternalId(string externalId);
     public User? GetById(int id);
 }
 
@@ -19,6 +19,6 @@ public class UserService(UnitOfWork unitOfWork) : IUserService
         unitOfWork.Save();
     }
 
-    public User? GetByOidcId(long oidcId) => unitOfWork.UserRepository.GetByOidcId(oidcId);
+    public User? GetByExternalId(string externalId) => unitOfWork.UserRepository.GetByExternalId(externalId);
     public User GetById(int id) => unitOfWork.UserRepository.GetByID(id);
 }
