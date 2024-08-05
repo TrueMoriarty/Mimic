@@ -17,10 +17,4 @@ public class TestController(IUserService userService) : ControllerBase
         return Ok();
     }
 
-    [HttpGet]
-    public IActionResult TestAuthWithUnBordered([FromBody] UserDTO user)
-    {
-        
-        return Ok();
-    }
 }
