@@ -30,10 +30,17 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     // Каждое свойство репозитория проверяет существует ли репозиторий. Если нет
     // создается экземпляр репозитория и ему передается контекст. Поэтому все репозитории
     // используют один и тот же экземпляр контекста
-    public IUserRepository UserRepository => userRepository ??= new UserRepository(context);
-    public IGenericRepository<Item> ItemRepository => itemRepository ??= new GenericRepository<Item>(context);
-    public IGenericRepository<Storage> StorageRepository => storageRepository ??= new GenericRepository<Storage>(context);
-    public IGenericRepository<Property> PropertiesRepository => propertyRepository ??= new GenericRepository<Property>(context);
+    public IUserRepository UserRepository => 
+        userRepository ??= new UserRepository(context);
+
+    public IGenericRepository<Item> ItemRepository =>
+        itemRepository ??= new GenericRepository<Item>(context);
+
+    public IGenericRepository<Storage> StorageRepository =>
+        storageRepository ??= new GenericRepository<Storage>(context);
+
+    public IGenericRepository<Property> PropertiesRepository =>
+        propertyRepository ??= new GenericRepository<Property>(context);
 
     public void Save()
     {

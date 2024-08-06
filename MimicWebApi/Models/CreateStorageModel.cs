@@ -1,7 +1,5 @@
 ﻿namespace MimicWebApi.Models;
 
-public class CreateStorageModel
+public class CreateStorageModel : BaseModel
 {
-    public string Name { get; set; }
-    public string Description { get; set; }
 }

@@ -10,6 +10,7 @@ public interface IItemsService
 
 public class ItemsService(IUnitOfWork unitOfWork) : IItemsService
 {
+    //todo: добавление свойств предметов
     public Item CreateItem(User creator, string name, string description, int? storageId = null)
     {
         var item = new Item

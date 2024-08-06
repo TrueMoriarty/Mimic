@@ -1,9 +1,6 @@
 ﻿namespace MimicWebApi.Models;
 
-public class CreateItemModel
+public class CreateItemModel : BaseModel
 {
-    public string Name { get; set; }
-    public string Description { get; set; }
-
     public int? StorageId { get; set; }
 }
