@@ -8,6 +8,8 @@ public interface IUnitOfWork
 {
     public IUserRepository UserRepository { get; }
     public IGenericRepository<Item> ItemRepository { get; }
+    public IGenericRepository<Storage> StorageRepository { get; }
+    public IGenericRepository<Property> PropertiesRepository { get; }
 
     public void Save();
 }
@@ -17,8 +19,11 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     // Создаются переменные класса для контекста бд и каждого репозитория.
     // Для переменной context создается новый контекст.
     private MimicContext context = new MimicContext();
+
     UserRepository? userRepository;
     GenericRepository<Item>? itemRepository;
+    GenericRepository<Storage>? storageRepository;
+    GenericRepository<Property>? propertyRepository;
 
     private bool disposed = false;
 
@@ -27,6 +32,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     // используют один и тот же экземпляр контекста
     public IUserRepository UserRepository => userRepository ??= new UserRepository(context);
     public IGenericRepository<Item> ItemRepository => itemRepository ??= new GenericRepository<Item>(context);
+    public IGenericRepository<Storage> StorageRepository => storageRepository ??= new GenericRepository<Storage>(context);
+    public IGenericRepository<Property> PropertiesRepository => propertyRepository ??= new GenericRepository<Property>(context);
 
     public void Save()
     {

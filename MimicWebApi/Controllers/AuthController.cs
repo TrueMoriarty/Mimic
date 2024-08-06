@@ -11,7 +11,7 @@ namespace MimicWebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController(IUserService userService) : ControllerBase
+public class AuthController(IUsersService usersService) : ControllerBase
 {
     [HttpGet("oidc/vk")]
     public ChallengeResult VkAuth() => Challenge("vk-oauth");
@@ -21,7 +21,7 @@ public class AuthController(IUserService userService) : ControllerBase
     public IActionResult Unbord([FromBody] UnbordingModel model)
     {
         var externalId = HttpContext.GetExternalUserId()!;
-        var user = userService.GetByExternalId(externalId);
+        var user = usersService.GetByExternalId(externalId);
 
         if (user is not null)
             return BadRequest($"User {user.Name} has already been unborded");
@@ -29,7 +29,7 @@ public class AuthController(IUserService userService) : ControllerBase
         var unbordedUser = model.ToUser();
         unbordedUser.ExternalUserId = externalId;
 
-        userService.Add(unbordedUser);
+        usersService.Add(unbordedUser);
 
         return SignInUser(unbordedUser);
     }

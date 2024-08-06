@@ -3,7 +3,7 @@ using DAL.EfClasses;
 
 namespace Services;
 
-public interface IUserService
+public interface IUsersService
 {
     public void Add(User user);
 
@@ -11,7 +11,7 @@ public interface IUserService
     public User? GetById(int id);
 }
 
-public class UserService(IUnitOfWork unitOfWork) : IUserService
+public class UsersService(IUnitOfWork unitOfWork) : IUsersService
 {
     public void Add(User user)
     {

@@ -10,7 +10,7 @@ namespace DAL.Repositories;
 /// сложная фильтрация или упорядочивание, можно создать производный класс с дополнительными 
 /// методами для этого типа.
 /// </summary>
-/// <typeparam name="TEntity"></typeparam
+/// <typeparam name="TEntity"></typeparam>
 public class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDisposable where TEntity : class
 {
     internal MimicContext context;

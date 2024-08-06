@@ -1,8 +1,8 @@
 ﻿namespace DAL.EfClasses;
 
-public class Properties
+public class Property
 {
-    public int PropertiesId { get; set; }
+    public int PropertyId { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
 
