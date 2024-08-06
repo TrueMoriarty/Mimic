@@ -10,7 +10,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MimicWebApi", "MimicWebApi\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{FDFCF5BA-C2BA-4869-BE82-50888D9EFF16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{189ACE1E-9710-4B32-8EDA-75245866C2C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{189ACE1E-9710-4B32-8EDA-75245866C2C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MimicBLTests", "MimicBLTests\MimicBLTests.csproj", "{E04DF7F3-DB65-4C71-B3C5-D32A2D9A6D69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 		{189ACE1E-9710-4B32-8EDA-75245866C2C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{189ACE1E-9710-4B32-8EDA-75245866C2C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{189ACE1E-9710-4B32-8EDA-75245866C2C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E04DF7F3-DB65-4C71-B3C5-D32A2D9A6D69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E04DF7F3-DB65-4C71-B3C5-D32A2D9A6D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E04DF7F3-DB65-4C71-B3C5-D32A2D9A6D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E04DF7F3-DB65-4C71-B3C5-D32A2D9A6D69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

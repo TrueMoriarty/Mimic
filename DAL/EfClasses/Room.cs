@@ -1,6 +1,4 @@
-﻿using DAL.EfClasses;
-
-namespace DAL.EfClasses;
+﻿namespace DAL.EfClasses;
 
 public class Room
 {

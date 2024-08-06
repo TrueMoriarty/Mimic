@@ -11,7 +11,7 @@ public interface IUserService
     public User? GetById(int id);
 }
 
-public class UserService(UnitOfWork unitOfWork) : IUserService
+public class UserService(IUnitOfWork unitOfWork) : IUserService
 {
     public void Add(User user)
     {
