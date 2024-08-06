@@ -8,7 +8,7 @@ namespace MimicWebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UsersController(IUserService userService) : ControllerBase
+public class UsersController(IUsersService usersService) : ControllerBase
 {
     [Authorize]
     [HttpGet("info")]
@@ -17,7 +17,7 @@ public class UsersController(IUserService userService) : ControllerBase
         long? userId = HttpContext.GetUserId();
         if (userId == null) return BadRequest();
 
-        var user = userService.GetById((int) userId.Value);
+        var user = usersService.GetById((int) userId.Value);
         if (user == null) return NotFound();
 
         return Ok(new UserInfoViewModel(user!));

@@ -4,8 +4,8 @@ namespace DAL;
 
 public static class DI
 {
-    public static void  AddDAL(this IServiceCollection services)
+    public static void AddDAL(this IServiceCollection services)
     {
-        services.AddTransient<UnitOfWork>();
+        services.AddTransient<IUnitOfWork, UnitOfWork>();
     }
 }

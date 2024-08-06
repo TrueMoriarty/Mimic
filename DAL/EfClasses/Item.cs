@@ -12,8 +12,8 @@ public class Item
     public int CreatorId { get; set; }
     public User Creator { get; set; }
 
-    public int StorageId { get; set; }
+    public int? StorageId { get; set; }
     public Storage Storage { get; set; }
 
-    public ICollection<Properties> Properties { get; set; }
+    public ICollection<Property> Properties { get; set; }
 }

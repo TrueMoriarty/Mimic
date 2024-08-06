@@ -35,7 +35,7 @@ public class VkAuthenticationOptions : OAuthOptions
             using var response = await context.Backchannel.SendAsync(request);
 
             var userInfo = await response.Content.ReadFromJsonAsync<VkUserInfo>();
-            var userService = context.HttpContext.RequestServices.GetService<IUserService>()!;
+            var userService = context.HttpContext.RequestServices.GetService<IUsersService>()!;
             var user = userService.GetByExternalId(userInfo.User.UserId);
 
             var clientLocation = context.HttpContext.RequestServices.GetService<IConfiguration>()!.GetValue<string>("ClientUrl")!;
