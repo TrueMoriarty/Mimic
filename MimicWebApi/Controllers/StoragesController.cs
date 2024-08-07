@@ -9,7 +9,7 @@ namespace MimicWebApi.Controllers;
 public class StoragesController(IStoragesService storagesService) : ControllerBase
 {
     [HttpPost]
-    public IActionResult CreateStorage([FromBody] CreateStorageModel model)
+    public IActionResult CreateStorage([FromBody] StorageModel model)
     {
         var storage = storagesService.CreateStorage(model.Name, model.Description);
         return Ok(storage.StorageId);
