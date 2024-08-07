@@ -8,8 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ServiceLayer\Sevices\" />
-    <Folder Include="Views\" />
+    <Compile Remove="ServiceLayer\**" />
+    <Compile Remove="Views\**" />
+    <Content Remove="ServiceLayer\**" />
+    <Content Remove="Views\**" />
+    <EmbeddedResource Remove="ServiceLayer\**" />
+    <EmbeddedResource Remove="Views\**" />
+    <None Remove="ServiceLayer\**" />
+    <None Remove="Views\**" />
   </ItemGroup>
 
   <ItemGroup>
