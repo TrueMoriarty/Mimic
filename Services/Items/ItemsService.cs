@@ -6,20 +6,20 @@ namespace Services.Items;
 
 public interface IItemsService
 {
-    Item CreateItem(CreateItemDto createItemDto);
+    Item CreateItem(CreateItemDto itemDto);
 }
 
 public class ItemsService(IUnitOfWork unitOfWork, IPropertiesService propertiesService) : IItemsService
 {
-    public Item CreateItem(CreateItemDto createItemDto)
+    public Item CreateItem(CreateItemDto itemDto)
     {
-        var item = createItemDto.ToItem();
+        var item = itemDto.ToItem();
 
         unitOfWork.ItemRepository.Insert(item);
         unitOfWork.Save();
 
-        if (createItemDto.Properties is null) return item;
-        AddProperties(item, createItemDto.Properties);
+        if (itemDto.Properties is null) return item;
+        AddProperties(item, itemDto.Properties);
 
         return item;
     }
