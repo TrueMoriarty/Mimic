@@ -106,7 +106,7 @@ const Navigation = () => {
               color="inherit"
               to="/user/login"
               component={Link}
-            >Login</Button>
+            ><Typography variant="h6">Login</Typography></Button>
           )}
         </Grid>
       </Grid>
