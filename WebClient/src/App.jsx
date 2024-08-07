@@ -1,25 +1,22 @@
-import axios from "axios";
-import { useState } from "react";
+import Home from "./Home/Home";
+import Navigation from "./navigation";
+import { Route, Routes } from "react-router-dom";
+import { Unbording } from "./User/Unbording";
+import Login from "./User/Login";
+import ItemsLibrary from "./ItemsLibrary/ItemsLibrary";
+import Rooms from "./Rooms/Rooms";
 
 function App() {
-  const [userId, setUserId] = useState(null);
-
-  const handleAuth = async () =>
-    window.location.assign("https://localhost/api/auth/oidc/vk");
-
-  const handleInfo = async () => {
-    axios.defaults.withCredentials = true;
-    const response = await axios.get("https://localhost/api/auth/oidc/userId");
-    setUserId(response.data);
-  };
-
   return (
     <>
-      <div>
-        <span>{userId}</span>
-      </div>
-      <button onClick={handleAuth}>Vk auth</button>
-      <button onClick={handleInfo}>Info</button>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/rooms" element={<Rooms />} />
+        <Route path="/itemsLibrary" element={<ItemsLibrary />} />
+        <Route path="/user/login" element={<Login />} />
+        <Route path="/user/unbording" element={<Unbording />} />
+      </Routes>
     </>
   );
 }

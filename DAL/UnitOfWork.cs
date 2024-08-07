@@ -4,37 +4,43 @@ using DAL.Repositories;
 
 namespace DAL;
 
-public class UnitOfWork : IDisposable
+public interface IUnitOfWork
+{
+    public IUserRepository UserRepository { get; }
+    public IGenericRepository<Item> ItemRepository { get; }
+    public IGenericRepository<Storage> StorageRepository { get; }
+    public IGenericRepository<Property> PropertiesRepository { get; }
+
+    public void Save();
+}
+
+public class UnitOfWork : IUnitOfWork, IDisposable
 {
     // Создаются переменные класса для контекста бд и каждого репозитория.
     // Для переменной context создается новый контекст.
     private MimicContext context = new MimicContext();
-    GenericRepository<User> userRepository;
-    GenericRepository<Item> itemRepository;
+
+    UserRepository? userRepository;
+    GenericRepository<Item>? itemRepository;
+    GenericRepository<Storage>? storageRepository;
+    GenericRepository<Property>? propertyRepository;
 
     private bool disposed = false;
 
     // Каждое свойство репозитория проверяет существует ли репозиторий. Если нет
     // создается экземпляр репозитория и ему передается контекст. Поэтому все репозитории
     // используют один и тот же экземпляр контекста
-    public GenericRepository<User> UserRepository 
-    {
-        get
-        {
-            if (userRepository == null)
-                userRepository = new GenericRepository<User>(context);
-            return userRepository;
-        }
-    }
-    public GenericRepository<Item> ItemRepository
-    {
-        get
-        {
-            if (itemRepository == null)
-                itemRepository = new GenericRepository<Item>(context);
-            return itemRepository;
-        }
-    }
+    public IUserRepository UserRepository => 
+        userRepository ??= new UserRepository(context);
+
+    public IGenericRepository<Item> ItemRepository =>
+        itemRepository ??= new GenericRepository<Item>(context);
+
+    public IGenericRepository<Storage> StorageRepository =>
+        storageRepository ??= new GenericRepository<Storage>(context);
+
+    public IGenericRepository<Property> PropertiesRepository =>
+        propertyRepository ??= new GenericRepository<Property>(context);
 
     public void Save()
     {
@@ -44,10 +50,12 @@ public class UnitOfWork : IDisposable
     // реализация интерфейса IDisposable и удаление контекста
     protected virtual void Dispose(bool disposing)
     {
-        if (!disposed)
-            if (disposing)
-                context.Dispose();
+        if (disposed) return;
+
+        if (disposing)
+            context.Dispose();
     }
+
     public void Dispose()
     {
         Dispose(true);

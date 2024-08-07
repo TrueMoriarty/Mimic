@@ -1,37 +1,48 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using DAL.EfClasses;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MimicWebApi.Models;
+using MimicWebApi.Utils;
+using Services;
+using System.Security.Claims;
 
 namespace MimicWebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController(IConfiguration config) : ControllerBase
+public class AuthController(IUsersService usersService) : ControllerBase
 {
     [HttpGet("oidc/vk")]
-    public Task VkAuth()
-    {
-        return HttpContext.ChallengeAsync("vk-oauth", new AuthenticationProperties()
-        {
-            RedirectUri = "oidc/checkUser"
-        });
-    }
-
-    [HttpGet("oidc/checkUser")]
-    public void CheckUser()
-    {
-        var user = HttpContext.User.FindFirst("user_id")?.Value;
-
-        string clientLocation = config.GetValue<string>("ClientUrl")!;
-        HttpContext.Response.Redirect(clientLocation + '/');
-    }
+    public ChallengeResult VkAuth() => Challenge("vk-oauth");
 
     [Authorize]
-    [HttpGet("oidc/userId")]
-    public IActionResult GetUserId()
+    [HttpPost("unbord")]
+    public IActionResult Unbord([FromBody] UnbordingModel model)
     {
-        var OidcUserId = HttpContext.User.FindFirst("user_id")?.Value;
+        var externalId = HttpContext.GetExternalUserId()!;
+        var user = usersService.GetByExternalId(externalId);
 
-        return Ok(OidcUserId);
+        if (user is not null)
+            return BadRequest($"User {user.Name} has already been unborded");
+
+        var unbordedUser = model.ToUser();
+        unbordedUser.ExternalUserId = externalId;
+
+        usersService.Add(unbordedUser);
+
+        return SignInUser(unbordedUser);
+    }
+
+    private SignInResult SignInUser(User user, AuthenticationProperties? properties = null)
+    {
+        var claims = new List<Claim>()
+        {
+            new("user_id", user.UserId.ToString()),
+        };
+
+        var identity = new ClaimsIdentity(claims, "auth-cookie");
+        var principal = new ClaimsPrincipal(identity);
+        return SignIn(principal, properties, "auth-cookie");
     }
 }

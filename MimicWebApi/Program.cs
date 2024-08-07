@@ -2,6 +2,7 @@ using DAL;
 using MimicWebApi.VkAuth;
 using MimicWebApi.VkAuth.Models;
 using Serilog;
+using Services;
 
 namespace MimicWebApi;
 
@@ -16,15 +17,18 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddSerilog();
+        builder.Services.AddDAL();
+        builder.Services.AddServices();
 
         var vkConfig = builder.Configuration.GetSection("VkConfig").Get<VkConfig>()!;
         string clientLocation = builder.Configuration.GetValue<string>("ClientUrl")!;
 
         builder.Services
-            .AddAuthentication("vk-oauth-cookie")
-            .AddCookie("vk-oauth-cookie")
+            .AddAuthentication("auth-cookie")
+            .AddCookie("auth-cookie")
             .AddVk("vk-oauth", "vk", o =>
             {
+                o.SignInScheme = "auth-cookie";
                 o.ClientSecret = vkConfig.ClientId;
                 o.ClientId = vkConfig.ClientId;
                 o.CodeVerifier = vkConfig.CodeVerifier;
@@ -32,10 +36,15 @@ public class Program
 
                 o.AuthorizationEndpoint = "https://id.vk.com/authorize";
                 o.TokenEndpoint = "https://id.vk.com/oauth2/auth";
+                o.UserInformationEndpoint = "https://id.vk.com/oauth2/user_info";
+
+                o.Scope.Add("vkid.personal_info");
 
                 o.CallbackPath = "/api/auth/cb";
                 o.UsePkce = true;
             });
+
+        builder.Services.AddAuthorization();
 
         string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         builder.Services.AddCors(options =>
@@ -51,11 +60,10 @@ public class Program
         });
 
         // Add services to the container
-        builder.Services.AddDAL();
         builder.Services.AddControllers();
 
         var app = builder.Build();
-        app.UseCors(MyAllowSpecificOrigins);
+        app.UseSerilogRequestLogging();
 
         // Configure the HTTP request pipeline.
 
@@ -63,6 +71,8 @@ public class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseCors(MyAllowSpecificOrigins);
 
         app.MapControllers();
 
@@ -75,8 +85,6 @@ public class Program
         {
             app.UseDeveloperExceptionPage();
         }
-
-        app.UseSerilogRequestLogging();
 
         app.Run();
     }

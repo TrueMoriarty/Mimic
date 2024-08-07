@@ -3,6 +3,7 @@ using System;
 using DAL.EfCode;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MimicWebApi.Migrations
 {
     [DbContext(typeof(MimicContext))]
-    partial class MimicContextModelSnapshot : ModelSnapshot
+    [Migration("20240806120400_AddNullableStorageId")]
+    partial class AddNullableStorageId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,13 +86,13 @@ namespace MimicWebApi.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("DAL.EfClasses.Property", b =>
+            modelBuilder.Entity("DAL.EfClasses.Properties", b =>
                 {
-                    b.Property<int>("PropertyId")
+                    b.Property<int>("PropertiesId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("PropertyId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("PropertiesId"));
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -100,7 +103,7 @@ namespace MimicWebApi.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.HasKey("PropertyId");
+                    b.HasKey("PropertiesId");
 
                     b.HasIndex("ItemId");
 
@@ -231,7 +234,7 @@ namespace MimicWebApi.Migrations
                     b.Navigation("Storage");
                 });
 
-            modelBuilder.Entity("DAL.EfClasses.Property", b =>
+            modelBuilder.Entity("DAL.EfClasses.Properties", b =>
                 {
                     b.HasOne("DAL.EfClasses.Item", null)
                         .WithMany("Properties")
