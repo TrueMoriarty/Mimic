@@ -1,4 +1,4 @@
-import { AppBar, Button, Grid, Tab, Tabs, Typography } from "@mui/material";
+import { AppBar, Avatar, Button, Grid, Tab, Tabs, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useRouteMatch from "./hooks/useRouteMatch";
@@ -10,7 +10,7 @@ const init_user = {
 
 const Navigation = () => {
   const [user, setUser] = useState(init_user);
-  const routeMatch = useRouteMatch(["/", "/rooms", "/itemsLibrary"]);
+  const routeMatch = useRouteMatch(["/rooms", "/library", "/workshop", "/characters"]);
   const currentTab = routeMatch?.pattern?.path;
 
   useEffect(() => {
@@ -23,37 +23,68 @@ const Navigation = () => {
   }, [currentTab]);
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="mimic">
       <Grid
         container
         direction="row"
         justifyContent="space-between"
         alignItems="center"
+        sx={{ m: 0 }}
       >
         <Grid item sx={{ ml: 1 }}>
           <Grid container spacing={1}>
+            <Grid item xs sx={{ my: 'auto' }}>
+              <Typography
+                variant="h4"
+                to="/"
+                align="center"
+                color="mimic.contrastText"
+                component={Link} sx={{ textDecoration: 'none', boxShadow: "none" }} >
+                Mimic
+              </Typography>
+            </Grid>
             <Grid item>
               <Tabs
                 value={currentTab}
-                textColor="white"
+                sx={{ mb: 0.5 }}
+                textColor="mimic"
                 TabIndicatorProps={{
                   style: {
-                    backgroundColor: "#F6BCFF",
-                  },
+                    background: '#6E8190',
+                    height: "3px"
+                  }
                 }}
-                sx={{ mb: 0.5 }}
               >
-                <Tab label="Home" value="/" to="/" component={Link} />
                 <Tab
-                  label="Rooms"
+                  label={<Typography>
+                    Персонажи
+                  </Typography>}
+                  value="/characters"
+                  to="/characters"
+                  component={Link}
+                />
+                <Tab
+                  label={<Typography>
+                    Комнаты
+                  </Typography>}
                   value="/rooms"
                   to="/rooms"
                   component={Link}
                 />
                 <Tab
-                  label="Items library"
-                  value="/itemsLibrary"
-                  to="/itemsLibrary"
+                  label={<Typography>
+                    Мастерская
+                  </Typography>}
+                  value="/workshop"
+                  to="/workshop"
+                  component={Link}
+                />
+                <Tab
+                  label={<Typography >
+                    Библиотека
+                  </Typography>}
+                  value="/library"
+                  to="/library"
                   component={Link}
                 />
               </Tabs>
@@ -62,7 +93,14 @@ const Navigation = () => {
         </Grid>
         <Grid item sx={{ mr: 1 }}>
           {user.isAuth ? (
-            <Typography>{user?.userName}</Typography>
+            <Grid container spacing={1} >
+              <Grid item>
+                <Avatar alt="user" />
+              </Grid>
+              <Grid item sx={{ my: 'auto' }}>
+                <Typography variant="h6">{user?.userName}</Typography>
+              </Grid>
+            </Grid>
           ) : (
             <Button
               color="inherit"
@@ -72,7 +110,7 @@ const Navigation = () => {
           )}
         </Grid>
       </Grid>
-    </AppBar>
+    </AppBar >
   );
 };
 
