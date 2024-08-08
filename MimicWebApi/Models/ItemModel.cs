@@ -9,9 +9,9 @@ public class ItemModel : BaseModel
 
     public List<PropertyModel>? Properties { get; set; }
 
-    public CreateItemDto ToCreateItemDto(User creator)
+    public ItemDto MapToItemDto(User creator)
     {
-        var itemDto = new CreateItemDto
+        var itemDto = new ItemDto
         {
             Creator = creator,
             StorageId = StorageId,

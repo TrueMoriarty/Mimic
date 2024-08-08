@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Services.Items;
+using Services.Properties;
 
 namespace Services;
 

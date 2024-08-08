@@ -1,24 +1,25 @@
 ﻿using DAL;
 using DAL.EfClasses;
+using Services.Properties.Dto;
 
-namespace Services;
+namespace Services.Properties;
 
 public interface IPropertiesService
 {
-    Property CreateProperty(string name, string description, int itemId);
+    Property CreateProperty(PropertyDto propertyDto);
     List<Property> CreateBulkProperties(List<Property> properties);
 }
 
 public class PropertiesService(IUnitOfWork unitOfWork) : IPropertiesService
 {
-    public Property CreateProperty(string name, string description, int itemId)
+    public Property CreateProperty(PropertyDto propertyDto)
     {
-        var prop = new Property() { Name = name, Description = description, ItemId = itemId };
+        Property property = propertyDto.MapToPropety();
 
-        unitOfWork.PropertiesRepository.Insert(prop);
+        unitOfWork.PropertiesRepository.Insert(property);
         unitOfWork.Save();
 
-        return prop;
+        return property;
     }
 
     public List<Property> CreateBulkProperties(List<Property> properties)

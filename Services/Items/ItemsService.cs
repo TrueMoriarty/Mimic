@@ -1,19 +1,20 @@
 ﻿using DAL;
 using DAL.EfClasses;
 using Services.Items.Dto;
+using Services.Properties;
 
 namespace Services.Items;
 
 public interface IItemsService
 {
-    Item CreateItem(CreateItemDto itemDto);
+    Item CreateItem(ItemDto itemDto);
 }
 
 public class ItemsService(IUnitOfWork unitOfWork, IPropertiesService propertiesService) : IItemsService
 {
-    public Item CreateItem(CreateItemDto itemDto)
+    public Item CreateItem(ItemDto itemDto)
     {
-        var item = itemDto.ToItem();
+        var item = itemDto.MapToItem();
 
         unitOfWork.ItemRepository.Insert(item);
         unitOfWork.Save();
