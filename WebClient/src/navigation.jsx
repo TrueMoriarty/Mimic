@@ -56,9 +56,7 @@ const Navigation = () => {
                 }}
               >
                 <Tab
-                  label={<Typography>
-                    Персонажи
-                  </Typography>}
+                  label={<Typography>Персонажи</Typography>}
                   value="/characters"
                   to="/characters"
                   component={Link}
