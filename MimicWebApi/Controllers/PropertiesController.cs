@@ -12,14 +12,6 @@ namespace MimicWebApi.Controllers;
 [Authorize]
 public class ItemPropertiesController(IItemPropertiesService propertiesService) : ControllerBase
 {
-    [HttpGet]
-    public IActionResult GetAllItemProperty()
-    {
-        List<ItemProperty> properties = propertiesService.GetAllItemProperties();
-
-        return Ok(properties);
-    }
-
     [HttpPost]
     public IActionResult CreateItemProperty([FromBody] ItemPropertyModel propertyModel)
     {
@@ -30,17 +22,4 @@ public class ItemPropertiesController(IItemPropertiesService propertiesService) 
 
         return Ok(property);
     }
-
-    [HttpPatch]
-    public IActionResult UpdateItemProperty()
-    {
-        return Ok();
-    }
-
-    [HttpDelete]
-    public IActionResult DeleteItemProperty()
-    {
-        return Ok();
-    }
-
 }
