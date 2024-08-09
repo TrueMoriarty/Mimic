@@ -104,7 +104,7 @@ namespace MimicWebApi.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("Properties");
+                    b.ToTable("ItemProperties");
                 });
 
             modelBuilder.Entity("DAL.EfClasses.Room", b =>

@@ -8,7 +8,7 @@ public class MimicContext : DbContext
     public DbSet<Item> Items { get; set; }
     public DbSet<Character> Characters { get; set; }
     public DbSet<RoomStorageRelation> RoomStorageRelation { get; set; }
-    public DbSet<ItemProperty> Properties { get; set; }
+    public DbSet<ItemProperty> ItemProperties { get; set; }
     public DbSet<Room> Rooms { get; set; }
     public DbSet<Storage> Storages { get; set; }
     public DbSet<User> Users { get; set; }
