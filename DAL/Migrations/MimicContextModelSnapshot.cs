@@ -83,13 +83,13 @@ namespace MimicWebApi.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("DAL.EfClasses.Property", b =>
+            modelBuilder.Entity("DAL.EfClasses.ItemProperty", b =>
                 {
-                    b.Property<int>("PropertyId")
+                    b.Property<int>("ItemPropertyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("PropertyId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("ItemPropertyId"));
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -100,11 +100,11 @@ namespace MimicWebApi.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.HasKey("PropertyId");
+                    b.HasKey("ItemPropertyId");
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("Properties");
+                    b.ToTable("ItemProperties");
                 });
 
             modelBuilder.Entity("DAL.EfClasses.Room", b =>
@@ -231,7 +231,7 @@ namespace MimicWebApi.Migrations
                     b.Navigation("Storage");
                 });
 
-            modelBuilder.Entity("DAL.EfClasses.Property", b =>
+            modelBuilder.Entity("DAL.EfClasses.ItemProperty", b =>
                 {
                     b.HasOne("DAL.EfClasses.Item", null)
                         .WithMany("Properties")

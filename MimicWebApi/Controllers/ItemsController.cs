@@ -13,7 +13,7 @@ namespace MimicWebApi.Controllers;
 public class ItemsController(IItemsService itemsService, IUsersService usersService) : ControllerBase
 {
     [HttpPost]
-    public IActionResult CreateItem([FromBody] ItemModel model)
+    public IActionResult CreateItem([FromBody] ItemModel itemModel)
     {
         var userId = HttpContext.GetUserId()!;
 
@@ -21,9 +21,9 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
         if (user == null)
             return NotFound();
 
-        var createItemDto = model.ToCreateItemDto(user);
+        var itemDto = itemModel.MapToItemDto(user);
 
-        var item = itemsService.CreateItem(createItemDto);
+        var item = itemsService.CreateItem(itemDto);
 
         return Ok(item.ItemId);
     }
