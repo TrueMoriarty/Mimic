@@ -8,7 +8,7 @@ public class ItemDto
     public string Name { get; set; }
     public string Description { get; set; }
     public int? StorageId { get; set; }
-    public List<Property>? Properties { get; set; }
+    public List<ItemProperty>? ItemProperties { get; set; }
 
     public Item MapToItem()
     {

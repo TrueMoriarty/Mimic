@@ -1,15 +1,15 @@
 ﻿using DAL.EfClasses;
-using Services.Properties.Dto;
+using Services.ItemProperties.Dto;
 
 namespace MimicWebApi.Models;
 
-public class PropertyModel : BaseModel
+public class ItemPropertyModel : BaseModel
 {
     public int ItemId { get; set; }
 
-    public PropertyDto MapToPropertyDto()
+    public ItemPropertyDto MapToItemPropertyDto()
     {
-        PropertyDto propertyDto = new PropertyDto()
+        ItemPropertyDto propertyDto = new ItemPropertyDto()
         {
             Name = Name,
             Description = Description,
@@ -19,7 +19,7 @@ public class PropertyModel : BaseModel
         return propertyDto;
     }
 
-    public Property ToProperty() => new()
+    public ItemProperty ToProperty() => new()
     {
         Name = Name,
         Description = Description,

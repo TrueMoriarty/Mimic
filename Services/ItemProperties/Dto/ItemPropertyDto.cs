@@ -1,9 +1,9 @@
 ﻿
 using DAL.EfClasses;
 
-namespace Services.Properties.Dto;
+namespace Services.ItemProperties.Dto;
 
-public class PropertyDto
+public class ItemPropertyDto
 {
     public string? Name { get; set; }
     public string? Description { get; set; }
@@ -13,9 +13,9 @@ public class PropertyDto
 
     public int ItemId { get; set; }
 
-    public Property MapToPropety()
+    public ItemProperty MapToPropety()
     {
-        Property property = new Property()
+        ItemProperty property = new ItemProperty()
         {
             Name = Name,
             Description = Description,

@@ -2,41 +2,43 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Models;
-using Services.Properties;
-using Services.Properties.Dto;
+using Services.ItemProperties;
+using Services.ItemProperties.Dto;
 
 namespace MimicWebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class PropertiesController(IPropertiesService propertiesService) : ControllerBase
+public class ItemPropertiesController(IItemPropertiesService propertiesService) : ControllerBase
 {
     [HttpGet]
-    public IActionResult GetProperty()
+    public IActionResult GetAllItemProperty()
     {
-        return Ok();
+        List<ItemProperty> properties = propertiesService.GetAllItemProperties();
+
+        return Ok(properties);
     }
 
     [HttpPost]
-    public IActionResult CreateProperty([FromBody] PropertyModel propertyModel)
+    public IActionResult CreateItemProperty([FromBody] ItemPropertyModel propertyModel)
     {
-        PropertyDto propertyDto = propertyModel.MapToPropertyDto();
+        ItemPropertyDto propertyDto = propertyModel.MapToItemPropertyDto();
 
-        Property property = 
-            propertiesService.CreateProperty(propertyDto);
+        ItemProperty property = 
+            propertiesService.CreateItemProperty(propertyDto);
 
         return Ok(property);
     }
 
     [HttpPatch]
-    public IActionResult UpdateProperty()
+    public IActionResult UpdateItemProperty()
     {
         return Ok();
     }
 
     [HttpDelete]
-    public IActionResult DeleteProperty()
+    public IActionResult DeleteItemProperty()
     {
         return Ok();
     }

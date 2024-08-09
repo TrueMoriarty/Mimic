@@ -15,5 +15,5 @@ public class Item
     public int? StorageId { get; set; }
     public Storage Storage { get; set; }
 
-    public ICollection<Property> Properties { get; set; }
+    public ICollection<ItemProperty> Properties { get; set; }
 }

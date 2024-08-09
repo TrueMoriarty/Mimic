@@ -8,7 +8,7 @@ public class MimicContext : DbContext
     public DbSet<Item> Items { get; set; }
     public DbSet<Character> Characters { get; set; }
     public DbSet<RoomStorageRelation> RoomStorageRelation { get; set; }
-    public DbSet<Property> Properties { get; set; }
+    public DbSet<ItemProperty> Properties { get; set; }
     public DbSet<Room> Rooms { get; set; }
     public DbSet<Storage> Storages { get; set; }
     public DbSet<User> Users { get; set; }
@@ -74,7 +74,7 @@ public class MimicContext : DbContext
 
         modelBuilder.Entity<Character>().Property(t => t.CharacterId).UseIdentityAlwaysColumn();
 
-        modelBuilder.Entity<Property>().Property(t => t.PropertyId).UseIdentityAlwaysColumn();
+        modelBuilder.Entity<ItemProperty>().Property(t => t.ItemPropertyId).UseIdentityAlwaysColumn();
 
         modelBuilder.Entity<Storage>().Property(t => t.StorageId).UseIdentityAlwaysColumn();
 

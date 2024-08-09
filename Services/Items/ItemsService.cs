@@ -1,7 +1,7 @@
 ﻿using DAL;
 using DAL.EfClasses;
 using Services.Items.Dto;
-using Services.Properties;
+using Services.ItemProperties;
 
 namespace Services.Items;
 
@@ -10,7 +10,8 @@ public interface IItemsService
     Item CreateItem(ItemDto itemDto);
 }
 
-public class ItemsService(IUnitOfWork unitOfWork, IPropertiesService propertiesService) : IItemsService
+public class ItemsService(IUnitOfWork unitOfWork, 
+IItemPropertiesService propertiesService) : IItemsService
 {
     public Item CreateItem(ItemDto itemDto)
     {
@@ -19,15 +20,15 @@ public class ItemsService(IUnitOfWork unitOfWork, IPropertiesService propertiesS
         unitOfWork.ItemRepository.Insert(item);
         unitOfWork.Save();
 
-        if (itemDto.Properties is null) return item;
-        AddProperties(item, itemDto.Properties);
+        if (itemDto.ItemProperties is null) return item;
+        AddProperties(item, itemDto.ItemProperties);
 
         return item;
     }
 
-    private void AddProperties(Item item, List<Property> properties)
+    private void AddProperties(Item item, List<ItemProperty> properties)
     {
         properties.ForEach(p => p.ItemId = item.ItemId);
-        item.Properties = propertiesService.CreateBulkProperties(properties);
+        item.Properties = propertiesService.CreateBulkItemProperties(properties);
     }
 }
