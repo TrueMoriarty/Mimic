@@ -6,10 +6,10 @@ const CharacterCard = ({ name, roomName, description }) => {
         <Card>
             <CardContent>
                 <Grid container spacing={1}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                         <Box
                             height={150}
-                            width={150}
+                            width={"sm"}
                             display="flex"
                             alignItems={"center"}
                             justifyContent={"center"}
@@ -20,7 +20,7 @@ const CharacterCard = ({ name, roomName, description }) => {
                             <PersonIcon sx={{ fontSize: 40 }} />
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={"auto"}>
                         <Grid
                             container
                             spacing={1}
