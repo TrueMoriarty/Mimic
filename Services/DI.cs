@@ -11,5 +11,6 @@ public static class DI
         services.AddTransient<IItemsService, ItemsService>();
         services.AddTransient<IStoragesService, StoragesService>();
         services.AddTransient<IPropertiesService, PropertiesService>();
+        services.AddTransient<ICharactersService, CharactersService>();
     }
 }

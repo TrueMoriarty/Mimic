@@ -18,7 +18,6 @@ const Characters = () => {
 
     return (
         <>
-            {/* <LinearProgress color="mimicLoader" sx={{ m: 1 }} /> */}
             <Grid container spacing={4} sx={{ mt: 1 }}>
                 {characterList.map(item =>
                     <Grid item xs={4}>
