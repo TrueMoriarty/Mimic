@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Services.Items;
+using Services.ItemProperties;
 
 namespace Services;
 
@@ -10,7 +11,6 @@ public static class DI
         services.AddTransient<IUsersService, UsersService>();
         services.AddTransient<IItemsService, ItemsService>();
         services.AddTransient<IStoragesService, StoragesService>();
-        services.AddTransient<IPropertiesService, PropertiesService>();
-        services.AddTransient<ICharactersService, CharactersService>();
+        services.AddTransient<IItemPropertiesService, ItemPropertiesService>();
     }
 }

@@ -2,15 +2,15 @@
 
 namespace Services.Items.Dto;
 
-public class CreateItemDto
+public class ItemDto
 {
     public User Creator { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public int? StorageId { get; set; }
-    public List<Property>? Properties { get; set; }
+    public List<ItemProperty>? ItemProperties { get; set; }
 
-    public Item ToItem()
+    public Item MapToItem()
     {
         var item = new Item
         {
