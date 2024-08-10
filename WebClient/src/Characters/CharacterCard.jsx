@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 
-const CharacterCard = ({ name, status, description }) => {
+const CharacterCard = ({ name, roomName, description }) => {
     return (
         <Card>
             <CardContent>
@@ -26,7 +26,7 @@ const CharacterCard = ({ name, status, description }) => {
                             spacing={1}
                             direction="column"
                         >
-                            <Grid item xs={1}><Typography variant="caption">{status}</Typography></Grid>
+                            <Grid item xs={1}><Typography variant="caption">{roomName ?? "Шаблон"}</Typography></Grid>
                             <Grid item xs={1}><Typography variant="h6">{name}</Typography></Grid>
                             <Grid item xs={10} >
                                 <Typography

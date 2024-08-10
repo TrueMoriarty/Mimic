@@ -10,6 +10,7 @@ public interface IUnitOfWork
     public IGenericRepository<Item> ItemRepository { get; }
     public IGenericRepository<Storage> StorageRepository { get; }
     public IGenericRepository<ItemProperty> PropertiesRepository { get; }
+    public IGenericRepository<Character> CharactersRepository { get; }
 
     public void Save();
 }
@@ -24,6 +25,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     GenericRepository<Item>? itemRepository;
     GenericRepository<Storage>? storageRepository;
     GenericRepository<ItemProperty>? propertyRepository;
+    GenericRepository<Character>? characterRepository;
 
     private bool disposed = false;
 
@@ -41,6 +43,9 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 
     public IGenericRepository<ItemProperty> PropertiesRepository =>
         propertyRepository ??= new GenericRepository<ItemProperty>(context);
+
+    public IGenericRepository<Character> CharactersRepository =>
+        characterRepository ??= new GenericRepository<Character>(context);
 
     public void Save()
     {
