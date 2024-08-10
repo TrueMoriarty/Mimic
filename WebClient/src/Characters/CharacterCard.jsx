@@ -1,9 +1,9 @@
-import { Box, Card, CardContent, Grid, Stack, Typography } from "@mui/material";
+import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 
 const CharacterCard = ({ name, status, description }) => {
     return (
-        <Card sx={{ m: 1 }}>
+        <Card>
             <CardContent>
                 <Grid container spacing={1}>
                     <Grid item xs={6}>
@@ -26,15 +26,17 @@ const CharacterCard = ({ name, status, description }) => {
                             spacing={1}
                             direction="column"
                         >
-                            <Grid item xs={1} ><Typography>{status}</Typography></Grid>
-                            <Grid item xs={1} ><Typography>{name}</Typography></Grid>
+                            <Grid item xs={1}><Typography variant="caption">{status}</Typography></Grid>
+                            <Grid item xs={1}><Typography variant="h6">{name}</Typography></Grid>
                             <Grid item xs={10} >
-                                <Typography sx={{
-                                    display: '-webkit-box',
-                                    overflow: 'hidden',
-                                    WebkitBoxOrient: 'vertical',
-                                    WebkitLineClamp: 4,
-                                }}>{description}</Typography>
+                                <Typography
+                                    variant="body2"
+                                    sx={{
+                                        display: '-webkit-box',
+                                        overflow: 'hidden',
+                                        WebkitBoxOrient: 'vertical',
+                                        WebkitLineClamp: 4,
+                                    }}>{description}</Typography>
 
                             </Grid>
                         </Grid>
