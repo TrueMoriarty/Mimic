@@ -29,11 +29,11 @@ const CharacterList = () => {
             {isLoading && (<LinearProgress color="mimicLoader" sx={{ mb: 1 }} />)}
             <Grid container spacing={4}>
                 {characterList?.map(item =>
-                    <Grid item xs={4} key={item.name.characterId}>
+                    <Grid item xs={12} sm={4} key={item.name.characterId}>
                         <CharacterCard name={item.name} roomName={item.roomName} description={item.description} />
                     </Grid>)
                 }
-                <Grid item xs={4}><AddCardButton onClick={handleAdd} /></Grid>
+                <Grid item xs={12} sm={4}><AddCardButton onClick={handleAdd} /></Grid>
             </Grid >
         </Container>
     )
