@@ -31,9 +31,9 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 	}
 
 	[HttpGet]
-	public IActionResult GetItems([FromBody] PaginateDataItemDto paginateDataItemDto)
+	public IActionResult GetItems([FromQuery] PaginateDataItemDto paginateDataItemDto)
 	{
-		IEnumerable<Item> items = itemsService.GetPagedItems(paginateDataItemDto);
+		List<Item> items = itemsService.GetPagedItems(paginateDataItemDto);
 
 		return Ok(items);
 	}

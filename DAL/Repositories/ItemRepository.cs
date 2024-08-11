@@ -6,12 +6,12 @@ namespace DAL.Repositories;
 
 public interface IItemRepository : IGenericRepository<Item>
 {
-	public IEnumerable<Item> GetPaged(PaginateDataItemDto paginateDataItemDto);
+	public List<Item> GetPaged(PaginateDataItemDto paginateDataItemDto);
 }
 
 public class ItemRepository(MimicContext context) : GenericRepository<Item>(context), IItemRepository
 {
-	public IEnumerable<Item> GetPaged(PaginateDataItemDto paginateDataItemDto)
+	public List<Item> GetPaged(PaginateDataItemDto paginateDataItemDto)
 	{
 		var query = context.Items
 			.Where(item => 
@@ -22,7 +22,7 @@ public class ItemRepository(MimicContext context) : GenericRepository<Item>(cont
 			.Take(paginateDataItemDto.PageSize);
 
 		List<Item> result = 
-			paginateDataItemDto.OrderBy == "Name" 
+			paginateDataItemDto.OrderBy == nameof(Item.Name) 
 			? query.OrderBy(item => item.Name).ToList()
 			: query.ToList(); 
 		

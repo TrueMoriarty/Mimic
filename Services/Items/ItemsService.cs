@@ -10,7 +10,7 @@ namespace Services.Items;
 public interface IItemsService
 {
 	Item CreateItem(ItemDto itemDto);
-	IEnumerable<Item> GetPagedItems(PaginateDataItemDto paginateDataItemDto);
+	List<Item> GetPagedItems(PaginateDataItemDto paginateDataItemDto);
 }
 
 public class ItemsService(IUnitOfWork unitOfWork, 
@@ -35,9 +35,9 @@ IItemPropertiesService propertiesService) : IItemsService
 		item.Properties = propertiesService.CreateBulkItemProperties(properties);
 	}
 	
-	public IEnumerable<Item> GetPagedItems(PaginateDataItemDto paginateDataItemDto)
+	public List<Item> GetPagedItems(PaginateDataItemDto paginateDataItemDto)
 	{
-		IEnumerable<Item> items = unitOfWork.ItemRepository.GetPaged(paginateDataItemDto);
+		List<Item> items = unitOfWork.ItemRepository.GetPaged(paginateDataItemDto);
 		return items;
 	}
 }
