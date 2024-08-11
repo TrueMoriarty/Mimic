@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DAL.Dto;
+using DAL.EfClasses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Models;
 using MimicWebApi.Utils;
@@ -12,19 +14,27 @@ namespace MimicWebApi.Controllers;
 [Authorize]
 public class ItemsController(IItemsService itemsService, IUsersService usersService) : ControllerBase
 {
-    [HttpPost]
-    public IActionResult CreateItem([FromBody] ItemModel itemModel)
-    {
-        var userId = HttpContext.GetUserId()!;
+	[HttpPost]
+	public IActionResult CreateItem([FromBody] ItemModel itemModel)
+	{
+		var userId = HttpContext.GetUserId()!;
 
-        var user = usersService.GetById(userId.Value);
-        if (user == null)
-            return NotFound();
+		var user = usersService.GetById(userId.Value);
+		if (user == null)
+			return NotFound();
 
-        var itemDto = itemModel.MapToItemDto(user);
+		var itemDto = itemModel.MapToItemDto(user);
 
-        var item = itemsService.CreateItem(itemDto);
+		var item = itemsService.CreateItem(itemDto);
 
-        return Ok(item.ItemId);
-    }
+		return Ok(item.ItemId);
+	}
+
+	[HttpGet]
+	public IActionResult GetItems([FromBody] PaginateDataItemDto paginateDataItemDto)
+	{
+		IEnumerable<Item> items = itemsService.GetPagedItems(paginateDataItemDto);
+
+		return Ok(items);
+	}
 }

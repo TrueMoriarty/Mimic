@@ -9,9 +9,12 @@ public interface IGenericRepository<TEntity> : IDisposable
         string includeProperties = "");
 
     TEntity GetByID(object id);
+
     void Insert(TEntity entity);
     void InsertRange(IEnumerable<TEntity> entity);
+
     void Delete(object id);
     void Delete(TEntity entityToDelete);
+
     void Update(TEntity entityToUpdate);
 }
