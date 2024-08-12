@@ -20,4 +20,12 @@ public class CharactersController(ICharactersService charactersService) : Contro
 
         return Ok(characterListViewModal);
     }
+
+    [HttpGet("{characterId}")]
+    public IActionResult GetCreatorUserCharactersList([FromRoute] int characterId)
+    {
+        var character = charactersService.GetById(characterId);
+
+        return character is null ? NotFound() : Ok(new CharacterViewModel(character));
+    }
 }

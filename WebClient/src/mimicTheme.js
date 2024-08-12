@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from '@mui/material';
 
 export const mimicTheme = createTheme({
     palette: {
@@ -26,3 +26,11 @@ export const mimicTheme = createTheme({
         },
     },
 });
+
+export const trunicateTypographyStyle = {
+    color: 'text.secondary',
+    display: '-webkit-box',
+    overflow: 'hidden',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 1,
+};

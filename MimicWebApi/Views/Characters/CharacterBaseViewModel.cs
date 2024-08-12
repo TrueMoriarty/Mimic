@@ -2,7 +2,7 @@
 
 namespace MimicWebApi.Views.Characters;
 
-public class CharacterListItemViewModel
+public class CharacterBaseViewModel
 {
     public int CharacterId { get; set; }
     public string Name { get; set; }
@@ -10,7 +10,7 @@ public class CharacterListItemViewModel
 
     public string RoomName { get; set; }
 
-    public CharacterListItemViewModel(Character character)
+    public CharacterBaseViewModel(Character character)
     {
         CharacterId = character.CharacterId;
         Name = character.Name!;

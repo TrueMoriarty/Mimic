@@ -4,10 +4,10 @@ namespace MimicWebApi.Views.Characters;
 
 public class CharacterListViewModel
 {
-    public List<CharacterListItemViewModel> Characters { get; set; }
+    public List<CharacterBaseViewModel> Characters { get; set; }
 
     public CharacterListViewModel(List<Character> characters)
     {
-        Characters = characters.ConvertAll(c => new CharacterListItemViewModel(c));
+        Characters = characters.ConvertAll(c => new CharacterBaseViewModel(c));
     }
 }

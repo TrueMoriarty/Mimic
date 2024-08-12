@@ -24,9 +24,12 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDisposab
 
     public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-        string includeProperties = "")
+        string includeProperties = "", bool readOnly = false)
     {
         IQueryable<TEntity> query = dbSet;
+
+        if (readOnly)
+            query = query.AsNoTracking();
 
         if (filter != null)
         {

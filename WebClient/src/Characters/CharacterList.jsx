@@ -1,28 +1,16 @@
-import {
-    Container,
-    Dialog,
-    DialogTitle,
-    Grid,
-    LinearProgress,
-} from '@mui/material';
-import CharacterCard from './CharacterCard';
+import { Container, Grid, LinearProgress } from '@mui/material';
 import AddCardButton from '../Components/AddCardButton';
 import { useEffect, useState } from 'react';
 import { getAsync } from '../axios';
 import { GET_CREATOR_CHARACTERS } from '../contants';
 import CharacterDialog from './CharacterDialog';
+import CharacterListItem from './CharacterListItem';
 
 const CharacterList = () => {
-    const [characterList, setCharacterList] = useState();
+    const [characterList, setCharacterList] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isOpenDialog, setIsOpenDialog] = useState(false);
-
-    const handleAdd = () => {
-        setCharacterList([
-            ...characterList,
-            { name: 'Test ch', status: 'In game', description: 'Aloha' },
-        ]);
-    };
+    const [selectedCharacterId, setSelectedCharacterId] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -33,18 +21,32 @@ const CharacterList = () => {
         })();
     }, []);
 
+    const handleAdd = () => {};
+
+    const handleSelectCharacter = (characterId) => {
+        setIsOpenDialog(true);
+        setSelectedCharacterId(characterId);
+    };
+
+    const handleCloseCharacterDialog = () => {
+        setIsOpenDialog(false);
+        setSelectedCharacterId(null);
+    };
+
     return (
         <Container maxWidth='lg' sx={{ mt: 1 }}>
             {isLoading && <LinearProgress color='mimicLoader' sx={{ mb: 1 }} />}
             <Grid container spacing={4}>
-                {characterList?.map((item) => (
-                    <Grid item xs={12} sm={4} key={item.name.characterId}>
-                        <CharacterCard
-                            key={item.name.characterId}
-                            name={item.name}
-                            roomName={item.roomName}
-                            description={item.description}
-                            onClick={() => setIsOpenDialog(true)}
+                {characterList?.map((character) => (
+                    <Grid item xs={12} sm={4} key={character.characterId}>
+                        <CharacterListItem
+                            key={character.characterId}
+                            name={character.name}
+                            roomName={character.roomName}
+                            description={character.description}
+                            onClick={() =>
+                                handleSelectCharacter(character.characterId)
+                            }
                         />
                     </Grid>
                 ))}
@@ -53,8 +55,9 @@ const CharacterList = () => {
                 </Grid>
             </Grid>
             <CharacterDialog
+                characterId={selectedCharacterId}
                 open={isOpenDialog}
-                onClose={() => setIsOpenDialog(false)}
+                onClose={handleCloseCharacterDialog}
             />
         </Container>
     );
