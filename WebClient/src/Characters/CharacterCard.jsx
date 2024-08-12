@@ -1,9 +1,18 @@
 import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 
-const CharacterCard = ({ name, roomName, description }) => {
+const CharacterCard = ({ name, roomName, description, onClick }) => {
+
+
     return (
-        <Card>
+        <Card
+            onClick={onClick}
+            sx={{
+                ':hover': {
+                    boxShadow: 10,
+                },
+            }}
+        >
             <CardContent>
                 <Grid container spacing={1}>
                     <Grid item xs={12} md={6}>
