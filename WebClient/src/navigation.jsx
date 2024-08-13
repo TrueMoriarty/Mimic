@@ -11,13 +11,10 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useRouteMatch from './hooks/useRouteMatch';
 import { getAsync } from './axios';
-
-const init_user = {
-    isAuth: false,
-};
+import { GET_USER_INFO } from './contants';
 
 const Navigation = () => {
-    const [user, setUser] = useState(init_user);
+    const [user, setUser] = useState(null);
     const routeMatch = useRouteMatch([
         '/rooms',
         '/library',
@@ -28,10 +25,8 @@ const Navigation = () => {
 
     useEffect(() => {
         (async () => {
-            const { isOk, data } = await getAsync(
-                'https://localhost/api/users/info'
-            );
-            isOk && setUser({ ...data, isAuth: true });
+            const { isOk, data } = await getAsync(GET_USER_INFO);
+            isOk && setUser({ ...data });
         })();
     }, [currentTab]);
 
@@ -102,7 +97,7 @@ const Navigation = () => {
                     </Grid>
                 </Grid>
                 <Grid item sx={{ mr: 1 }}>
-                    {user.isAuth ? (
+                    {user ? (
                         <Grid container spacing={1}>
                             <Grid item>
                                 <Avatar alt='user' />
