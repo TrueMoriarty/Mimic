@@ -13,6 +13,7 @@ internal class CharacterRepository(MimicContext context) : GenericRepository<Cha
         var paginationFilter = filter.PaginateFilter;
 
         var query = context.Characters
+            .AsNoTracking()
             .Include(c => c.Room)
             .Where(c => c.CreatorId == filter.CreatorId && (
                 string.IsNullOrWhiteSpace(paginationFilter.NameFilter) || c.Name.Contains(paginationFilter.NameFilter)));

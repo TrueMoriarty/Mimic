@@ -1,5 +1,4 @@
 import { Container, Grid, LinearProgress, Pagination } from '@mui/material';
-import AddCardButton from '../Components/AddCardButton';
 import { useEffect, useState } from 'react';
 import { getAsync } from '../axios';
 import { GET_CREATOR_CHARACTERS } from '../contants';
