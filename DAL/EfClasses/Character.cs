@@ -14,4 +14,7 @@ public class Character
     public required User Creator { get; set; }
     public int? RoomId { get; set; }
     public Room? Room { get; set; }
+
+    public int? StorageId { get; set; }
+    public Storage? Storage { get; set; }
 }

@@ -1,4 +1,4 @@
-import { Container, Grid, LinearProgress } from '@mui/material';
+import { Container, Grid, LinearProgress, Pagination } from '@mui/material';
 import AddCardButton from '../Components/AddCardButton';
 import { useEffect, useState } from 'react';
 import { getAsync } from '../axios';
@@ -36,7 +36,7 @@ const CharacterList = () => {
     return (
         <Container maxWidth='lg' sx={{ mt: 1 }}>
             {isLoading && <LinearProgress color='mimicLoader' sx={{ mb: 1 }} />}
-            <Grid container spacing={4}>
+            <Grid container spacing={4} alignItems='center'>
                 {characterList?.map((character) => (
                     <Grid item xs={12} sm={4} key={character.characterId}>
                         <CharacterListItem
@@ -52,6 +52,9 @@ const CharacterList = () => {
                 ))}
                 <Grid item xs={12} sm={4}>
                     <AddCardButton onClick={handleAdd} />
+                </Grid>
+                <Grid item xs={12} container justifyContent={'center'}>
+                    <Pagination count={10} variant='outlined' shape='rounded' />
                 </Grid>
             </Grid>
             <CharacterDialog

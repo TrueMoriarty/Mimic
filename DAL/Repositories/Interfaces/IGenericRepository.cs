@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace DAL.Repositories;
+namespace DAL.Repositories.Interfaces;
 
 public interface IGenericRepository<TEntity> : IDisposable
 {

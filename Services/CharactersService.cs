@@ -12,21 +12,8 @@ public interface ICharactersService
 public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
 {
     public List<Character> GetListByCreatorId(int creatorId) =>
-        unitOfWork.CharactersRepository
-            .Get(
-                character => character.CreatorId == creatorId,
-                character => character.OrderBy(c => c.Name),
-                "Room",
-                true
-            )
-            .ToList();
+        unitOfWork.CharactersRepository.GetListByCreatorId(creatorId);
 
     public Character? GetById(int characterId) =>
-        unitOfWork.CharactersRepository
-            .Get(
-                character => character.CharacterId == characterId,
-                includeProperties: "Room.RoomStorageRelations.Storage.Items.Properties",
-                readOnly: true
-            )
-            .FirstOrDefault();
+        unitOfWork.CharactersRepository.GetById(characterId);
 }
