@@ -6,20 +6,35 @@ import { GET_CREATOR_CHARACTERS } from '../contants';
 import CharacterDialog from './CharacterDialog';
 import CharacterListItem from './CharacterListItem';
 
+const PAGE_SIZE = 5;
+
 const CharacterList = () => {
     const [characterList, setCharacterList] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isOpenDialog, setIsOpenDialog] = useState(false);
     const [selectedCharacterId, setSelectedCharacterId] = useState(null);
+    const [page, setPage] = useState(1);
+    const [pageCount, setPageCount] = useState(0);
 
     useEffect(() => {
         (async () => {
-            setIsLoading(true);
-            const { isOk, data } = await getAsync(GET_CREATOR_CHARACTERS);
-            isOk && setCharacterList(data.characters);
-            setIsLoading(false);
+            await loadCharacterList();
         })();
-    }, []);
+    }, [page]);
+
+    const loadCharacterList = async () => {
+        setIsLoading(true);
+        const { isOk, data } = await getAsync(
+            GET_CREATOR_CHARACTERS +
+                `?pageSize=${PAGE_SIZE}&pageIndex=${page - 1}`
+        );
+        if (isOk) {
+            setCharacterList(data.value);
+            setPageCount(data.totalPages);
+        }
+
+        setIsLoading(false);
+    };
 
     const handleAdd = () => {};
 
@@ -35,8 +50,8 @@ const CharacterList = () => {
 
     return (
         <Container maxWidth='lg' sx={{ mt: 1 }}>
-            {isLoading && <LinearProgress color='mimicLoader' sx={{ mb: 1 }} />}
-            <Grid container spacing={4} alignItems='center'>
+            {isLoading && <LinearProgress color='mimicLoader' />}
+            <Grid container spacing={4} alignItems='center' sx={{ mt: 1 }}>
                 {characterList?.map((character) => (
                     <Grid item xs={12} sm={4} key={character.characterId}>
                         <CharacterListItem
@@ -53,9 +68,17 @@ const CharacterList = () => {
                 <Grid item xs={12} sm={4}>
                     <AddCardButton onClick={handleAdd} />
                 </Grid>
-                <Grid item xs={12} container justifyContent={'center'}>
-                    <Pagination count={10} variant='outlined' shape='rounded' />
-                </Grid>
+                {pageCount > 1 && (
+                    <Grid item xs={12} container justifyContent={'center'}>
+                        <Pagination
+                            count={pageCount}
+                            variant='outlined'
+                            shape='rounded'
+                            page={page}
+                            onChange={(event, value) => setPage(value)}
+                        />
+                    </Grid>
+                )}
             </Grid>
             <CharacterDialog
                 characterId={selectedCharacterId}

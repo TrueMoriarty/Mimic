@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DAL.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Utils;
 using MimicWebApi.Views.Characters;
@@ -12,11 +13,16 @@ namespace MimicWebApi.Controllers;
 public class CharactersController(ICharactersService charactersService) : ControllerBase
 {
     [HttpGet("creator")]
-    public IActionResult GetCreatorUserCharactersList()
+    public IActionResult GetCreatorUserCharactersList([FromQuery] PaginateDataItemDto paginateDataItemDto)
     {
-        var userId = HttpContext.GetUserId();
-        var characterList = charactersService.GetListByCreatorId(userId!.Value);
-        var characterListViewModal = new CharacterListViewModel(characterList);
+         var userId = HttpContext.GetUserId();
+        var characterList = charactersService.GetListByCreatorId(userId!.Value, paginateDataItemDto);
+
+        var characterListViewModal = new PaginatedContainer<List<CharacterBaseViewModel>>(
+            characterList.Value.ConvertAll(c => new CharacterBaseViewModel(c)),
+            characterList.TotalCount,
+            characterList.TotalPages
+        );
 
         return Ok(characterListViewModal);
     }

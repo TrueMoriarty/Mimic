@@ -1,9 +1,10 @@
-﻿using DAL.EfClasses;
+﻿using DAL.Dto;
+using DAL.EfClasses;
 
 namespace DAL.Repositories.Interfaces;
 
 public interface ICharacterRepository
 {
-    List<Character> GetListByCreatorId(int creatorId);
+    PaginatedContainer<List<Character>> GetPaginatedListByCreatorId(int creatorId, PaginateDataItemDto paginateDataItem);
     Character GetById(int id);
 }
