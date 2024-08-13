@@ -13,14 +13,14 @@ namespace MimicWebApi.Controllers;
 public class CharactersController(ICharactersService charactersService) : ControllerBase
 {
     [HttpGet("creator")]
-    public IActionResult GetCreatorUserCharactersList([FromQuery] PaginateDataItemDto paginateDataItemDto)
+    public IActionResult GetCreatorUserCharactersList([FromQuery] PaginateFilter paginateFilter)
     {
         var userId = HttpContext.GetUserId();
 
         var characterList = charactersService.GetListByCreatorId(new CharacterFilter
         {
             CreatorId = userId!.Value,
-            PaginateFilter = paginateDataItemDto
+            PaginateFilter = paginateFilter
         });
 
         var characterListViewModal = new PaginatedContainer<List<CharacterBaseViewModel>>(

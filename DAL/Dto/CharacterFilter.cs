@@ -2,6 +2,6 @@
 
 public class CharacterFilter
 {
-    public int CreatorId { get; set; }
-    public PaginateDataItemDto PaginateFilter { get; set; }
+    public int? CreatorId { get; set; }
+    public PaginateFilter Pagination { get; set; }
 }

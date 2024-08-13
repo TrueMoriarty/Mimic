@@ -10,21 +10,14 @@ internal class CharacterRepository(MimicContext context) : GenericRepository<Cha
 {
     public PaginatedContainer<List<Character>> GetPaginatedListByCreatorId(CharacterFilter filter)
     {
-        var paginationFilter = filter.PaginateFilter;
+        var paginationFilter = filter.Pagination;
 
         var query = context.Characters
             .AsNoTracking()
             .Include(c => c.Room)
-            .Where(c => c.CreatorId == filter.CreatorId && (
-                string.IsNullOrWhiteSpace(paginationFilter.NameFilter) || c.Name.Contains(paginationFilter.NameFilter)));
+            .Where(c => c.CreatorId == filter.CreatorId);
 
-        var orderedList = paginationFilter.OrderBy switch
-        {
-            nameof(Character.Name) => query.OrderBy(p => p.Name),
-            _ => query,
-        };
-
-        var paginatedList = orderedList
+        var paginatedList = query
             .Skip(paginationFilter.PageIndex * paginationFilter.PageSize)
             .Take(paginationFilter.PageSize);
 
