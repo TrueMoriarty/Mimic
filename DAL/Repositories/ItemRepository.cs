@@ -8,6 +8,7 @@ namespace DAL.Repositories;
 public interface IItemRepository : IGenericRepository<Item>
 {
 	public List<Item> GetPaged(PaginateDataItemDto paginateDataItemDto);
+	public bool HasItemById(int itemId);
 }
 
 public class ItemRepository(MimicContext context) : GenericRepository<Item>(context), IItemRepository
@@ -30,4 +31,8 @@ public class ItemRepository(MimicContext context) : GenericRepository<Item>(cont
 
 		return result;
 	}
+
+	public bool HasItemById(int itemId) =>
+		context.Items.Any(item => item.ItemId == itemId);
+
 }

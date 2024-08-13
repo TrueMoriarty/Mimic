@@ -31,10 +31,27 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 	}
 
 	[HttpGet]
-	public IActionResult GetItems([FromQuery] PaginateDataItemDto paginateDataItemDto)
+	public IActionResult GetPagedItems([FromQuery] PaginateDataItemDto paginateDataItemDto)
 	{
 		List<Item> items = itemsService.GetPagedItems(paginateDataItemDto);
 
 		return Ok(items);
+	}
+
+	[HttpDelete]
+	public IActionResult DeleteItem([FromQuery] int itemId)
+	{
+		if (itemId == null)
+		{
+			return NotFound();
+		}
+		if (!itemsService.HasItemById(itemId))
+		{
+			return NotFound();	
+		}
+
+		itemsService.DeleteItem(itemId);
+		
+		return NoContent();
 	}
 }

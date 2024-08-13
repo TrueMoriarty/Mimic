@@ -11,6 +11,8 @@ public interface IItemsService
 {
 	Item CreateItem(ItemDto itemDto);
 	List<Item> GetPagedItems(PaginateDataItemDto paginateDataItemDto);
+	void DeleteItem(int itemId);
+	bool HasItemById(int itemId);
 }
 
 public class ItemsService(IUnitOfWork unitOfWork, 
@@ -40,4 +42,13 @@ IItemPropertiesService propertiesService) : IItemsService
 		List<Item> items = unitOfWork.ItemRepository.GetPaged(paginateDataItemDto);
 		return items;
 	}
+
+	public void DeleteItem(int itemId)
+	{
+		unitOfWork.ItemRepository.Delete(itemId);
+		unitOfWork.Save();
+	}
+
+	public bool HasItemById(int itemId) => 
+		unitOfWork.ItemRepository.HasItemById(itemId);
 }
