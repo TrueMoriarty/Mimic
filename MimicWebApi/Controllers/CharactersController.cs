@@ -20,7 +20,7 @@ public class CharactersController(ICharactersService charactersService) : Contro
         var characterList = charactersService.GetListByCreatorId(new CharacterFilter
         {
             CreatorId = userId!.Value,
-            PaginateFilter = paginateFilter
+            Pagination = paginateFilter
         });
 
         var characterListViewModal = new PaginatedContainer<List<CharacterBaseViewModel>>(
