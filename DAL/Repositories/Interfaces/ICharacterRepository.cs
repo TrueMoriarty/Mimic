@@ -5,6 +5,6 @@ namespace DAL.Repositories.Interfaces;
 
 public interface ICharacterRepository
 {
-    PaginatedContainer<List<Character>> GetPaginatedListByCreatorId(int creatorId, PaginateDataItemDto paginateDataItem);
+    PaginatedContainer<List<Character>> GetPaginatedListByCreatorId(CharacterFilter filter);
     Character GetById(int id);
 }

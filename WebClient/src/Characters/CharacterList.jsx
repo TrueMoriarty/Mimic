@@ -6,7 +6,7 @@ import { GET_CREATOR_CHARACTERS } from '../contants';
 import CharacterDialog from './CharacterDialog';
 import CharacterListItem from './CharacterListItem';
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 6;
 
 const CharacterList = () => {
     const [characterList, setCharacterList] = useState(null);
@@ -36,8 +36,6 @@ const CharacterList = () => {
         setIsLoading(false);
     };
 
-    const handleAdd = () => {};
-
     const handleSelectCharacter = (characterId) => {
         setIsOpenDialog(true);
         setSelectedCharacterId(characterId);
@@ -65,9 +63,6 @@ const CharacterList = () => {
                         />
                     </Grid>
                 ))}
-                <Grid item xs={12} sm={4}>
-                    <AddCardButton onClick={handleAdd} />
-                </Grid>
                 {pageCount > 1 && (
                     <Grid item xs={12} container justifyContent={'center'}>
                         <Pagination

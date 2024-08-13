@@ -15,8 +15,13 @@ public class CharactersController(ICharactersService charactersService) : Contro
     [HttpGet("creator")]
     public IActionResult GetCreatorUserCharactersList([FromQuery] PaginateDataItemDto paginateDataItemDto)
     {
-         var userId = HttpContext.GetUserId();
-        var characterList = charactersService.GetListByCreatorId(userId!.Value, paginateDataItemDto);
+        var userId = HttpContext.GetUserId();
+
+        var characterList = charactersService.GetListByCreatorId(new CharacterFilter
+        {
+            CreatorId = userId!.Value,
+            PaginateFilter = paginateDataItemDto
+        });
 
         var characterListViewModal = new PaginatedContainer<List<CharacterBaseViewModel>>(
             characterList.Value.ConvertAll(c => new CharacterBaseViewModel(c)),

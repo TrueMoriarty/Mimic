@@ -8,28 +8,30 @@ namespace DAL.Repositories;
 
 internal class CharacterRepository(MimicContext context) : GenericRepository<Character>(context), ICharacterRepository
 {
-    public PaginatedContainer<List<Character>> GetPaginatedListByCreatorId(int creatorId, PaginateDataItemDto paginateDataItem)
+    public PaginatedContainer<List<Character>> GetPaginatedListByCreatorId(CharacterFilter filter)
     {
+        var paginationFilter = filter.PaginateFilter;
+
         var query = context.Characters
             .Include(c => c.Room)
-            .Where(c => c.CreatorId == creatorId && (
-                string.IsNullOrWhiteSpace(paginateDataItem.NameFilter) || c.Name.Contains(paginateDataItem.NameFilter)));
+            .Where(c => c.CreatorId == filter.CreatorId && (
+                string.IsNullOrWhiteSpace(paginationFilter.NameFilter) || c.Name.Contains(paginationFilter.NameFilter)));
 
-        var orderedList = paginateDataItem.OrderBy switch
+        var orderedList = paginationFilter.OrderBy switch
         {
             nameof(Character.Name) => query.OrderBy(p => p.Name),
             _ => query,
         };
 
         var paginatedList = orderedList
-            .Skip(paginateDataItem.PageIndex * paginateDataItem.PageSize)
-            .Take(paginateDataItem.PageSize);
+            .Skip(paginationFilter.PageIndex * paginationFilter.PageSize)
+            .Take(paginationFilter.PageSize);
 
         int totalCount = query.Count();
 
         var result = new PaginatedContainer<List<Character>>(paginatedList.ToList(),
             totalCount,
-            (int) Math.Ceiling(totalCount / (double) paginateDataItem.PageSize));
+            (int) Math.Ceiling(totalCount / (double) paginationFilter.PageSize));
 
         return result;
     }
