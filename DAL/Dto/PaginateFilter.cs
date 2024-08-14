@@ -1,6 +1,6 @@
 ﻿namespace DAL.Dto;
 
-public class PaginateFilter
+public class PaginatedFilter
 {
     public int PageIndex { get; set; }
     public int PageSize { get; set; }

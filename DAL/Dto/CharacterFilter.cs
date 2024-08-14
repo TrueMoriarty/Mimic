@@ -3,5 +3,5 @@
 public class CharacterFilter
 {
     public int? CreatorId { get; set; }
-    public PaginateFilter Pagination { get; set; }
+    public PaginatedFilter Pagination { get; set; }
 }

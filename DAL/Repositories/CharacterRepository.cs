@@ -8,7 +8,7 @@ namespace DAL.Repositories;
 
 internal class CharacterRepository(MimicContext context) : GenericRepository<Character>(context), ICharacterRepository
 {
-    public PaginatedContainer<List<Character>> GetPaginatedListByCreatorId(CharacterFilter filter)
+    public PaginatedContainerDto<List<Character>> GetPaginatedListByCreatorId(CharacterFilter filter)
     {
         var paginationFilter = filter.Pagination;
 
@@ -23,7 +23,7 @@ internal class CharacterRepository(MimicContext context) : GenericRepository<Cha
 
         int totalCount = query.Count();
 
-        var result = new PaginatedContainer<List<Character>>(paginatedList.ToList(),
+        var result = new PaginatedContainerDto<List<Character>>(paginatedList.ToList(),
             totalCount,
             (int) Math.Ceiling(totalCount / (double) paginationFilter.PageSize));
 
