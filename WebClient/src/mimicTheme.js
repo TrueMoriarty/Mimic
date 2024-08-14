@@ -1,7 +1,8 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from '@mui/material';
 
 export const mimicTheme = createTheme({
     palette: {
+        //custom colors
         mimic: {
             main: '#DFC7A7',
             light: '#EFDCC2',
@@ -14,5 +15,22 @@ export const mimicTheme = createTheme({
             dark: '#24445D',
             contrastText: '#AEBCC7',
         },
+        mimicLoader: {
+            main: '#E4EBBF',
+            light: '#A4B8C7',
+        },
+
+        // override colors
+        background: {
+            paper: '#EFDCC2',
+        },
     },
 });
+
+export const trunicateTypographyStyle = {
+    color: 'text.secondary',
+    display: '-webkit-box',
+    overflow: 'hidden',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 1,
+};

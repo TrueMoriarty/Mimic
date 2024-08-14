@@ -1,5 +1,7 @@
+import CharacterList from './CharacterList';
+
 const Characters = () => {
-    return <div>Characters</div>;
+    return <CharacterList />;
 };
 
 export default Characters;

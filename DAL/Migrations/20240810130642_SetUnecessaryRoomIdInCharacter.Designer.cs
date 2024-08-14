@@ -3,6 +3,7 @@ using System;
 using DAL.EfCode;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MimicWebApi.Migrations
 {
     [DbContext(typeof(MimicContext))]
-    partial class MimicContextModelSnapshot : ModelSnapshot
+    [Migration("20240810130642_SetUnecessaryRoomIdInCharacter")]
+    partial class SetUnecessaryRoomIdInCharacter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,17 +48,11 @@ namespace MimicWebApi.Migrations
                     b.Property<int?>("RoomId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("StorageId")
-                        .HasColumnType("integer");
-
                     b.HasKey("CharacterId");
 
                     b.HasIndex("CreatorId");
 
                     b.HasIndex("RoomId");
-
-                    b.HasIndex("StorageId")
-                        .IsUnique();
 
                     b.ToTable("Characters");
                 });
@@ -213,15 +210,9 @@ namespace MimicWebApi.Migrations
                         .WithMany("Characters")
                         .HasForeignKey("RoomId");
 
-                    b.HasOne("DAL.EfClasses.Storage", "Storage")
-                        .WithOne()
-                        .HasForeignKey("DAL.EfClasses.Character", "StorageId");
-
                     b.Navigation("Creator");
 
                     b.Navigation("Room");
-
-                    b.Navigation("Storage");
                 });
 
             modelBuilder.Entity("DAL.EfClasses.Item", b =>

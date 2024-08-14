@@ -7,4 +7,5 @@ public static class HttpContextExtensions
 
     public static int? GetUserId(this HttpContext context) =>
         int.TryParse(context.User.FindFirst("user_id")?.Value, out int id) ? id : null;
+
 }

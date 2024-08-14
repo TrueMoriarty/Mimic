@@ -1,4 +1,5 @@
 ﻿using DAL.EfCode;
+using DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -11,7 +12,7 @@ namespace DAL.Repositories;
 /// методами для этого типа.
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-public class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDisposable where TEntity : class
+internal class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDisposable where TEntity : class
 {
     internal MimicContext context;
     internal DbSet<TEntity> dbSet;
@@ -24,9 +25,12 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDisposab
 
     public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-        string includeProperties = "")
+        string includeProperties = "", bool readOnly = false)
     {
         IQueryable<TEntity> query = dbSet;
+
+        if (readOnly)
+            query = query.AsNoTracking();
 
         if (filter != null)
         {
@@ -39,14 +43,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDisposab
             query = query.Include(includeProperty);
         }
 
-        if (orderBy != null)
-        {
-            return orderBy(query).ToList();
-        }
-        else
-        {
-            return query.ToList();
-        }
+        return orderBy != null ? orderBy(query).AsEnumerable() : query.AsEnumerable();
     }
 
     public virtual TEntity GetByID(object id)
