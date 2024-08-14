@@ -2,23 +2,22 @@
 using DAL.EfClasses;
 using Services.Items.Dto;
 using Services.ItemProperties;
-using DAL.Dto;
-using DAL.Repositories;
+using DAL.Dto.ItemDto;
 
 namespace Services.Items;
 
 public interface IItemsService
 {
-	Item CreateItem(ItemDto itemDto);
+	Item CreateItem(PostItemDto itemDto);
 	List<Item> GetPagedItems(PaginateDataItemDto paginateDataItemDto);
-	void DeleteItem(int itemId);
+	Item? TryDeleteItem(int itemId, int? creatorId);
 	bool HasItemById(int itemId);
 }
 
 public class ItemsService(IUnitOfWork unitOfWork, 
 IItemPropertiesService propertiesService) : IItemsService
 {
-	public Item CreateItem(ItemDto itemDto)
+	public Item CreateItem(PostItemDto itemDto)
 	{
 		var item = itemDto.MapToItem();
 
@@ -43,10 +42,11 @@ IItemPropertiesService propertiesService) : IItemsService
 		return items;
 	}
 
-	public void DeleteItem(int itemId)
+	public Item? TryDeleteItem(int itemId, int? creatorId)
 	{
-		unitOfWork.ItemRepository.Delete(itemId);
+		var item = unitOfWork.ItemRepository.TryDelete(itemId, creatorId);
 		unitOfWork.Save();
+		return item;
 	}
 
 	public bool HasItemById(int itemId) => 

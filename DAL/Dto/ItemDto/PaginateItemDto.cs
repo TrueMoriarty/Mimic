@@ -1,4 +1,4 @@
-namespace DAL.Dto;
+namespace DAL.Dto.ItemDto;
 
 public class PaginateDataItemDto
 {

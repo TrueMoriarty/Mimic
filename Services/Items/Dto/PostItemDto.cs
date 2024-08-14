@@ -2,7 +2,7 @@
 
 namespace Services.Items.Dto;
 
-public class ItemDto
+public class PostItemDto
 {
     public User Creator { get; set; }
     public string Name { get; set; }
