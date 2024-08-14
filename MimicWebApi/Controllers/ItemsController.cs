@@ -16,7 +16,6 @@ namespace MimicWebApi.Controllers;
 [Authorize]
 public class ItemsController(IItemsService itemsService, IUsersService usersService) : ControllerBase
 {
-	// TODO: Добавить проверку на UserId [FromQuery]
 	[HttpGet]
 	public IActionResult GetPaginatedItems([FromQuery] ItemFilter paginateDataItemDto)
 	{
