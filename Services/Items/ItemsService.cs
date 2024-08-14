@@ -3,15 +3,15 @@ using DAL.EfClasses;
 using Services.Items.Dto;
 using Services.ItemProperties;
 using DAL.Dto.ItemDto;
+using DAL.Dto;
 
 namespace Services.Items;
 
 public interface IItemsService
 {
 	Item CreateItem(PostItemDto itemDto);
-	List<Item> GetPagedItems(PaginateDataItemDto paginateDataItemDto);
+	PaginatedContainerDto<List<Item>> GetPaginatedItems(PaginateDataItemDto paginateDataItemDto);
 	Item? TryDeleteItem(int itemId, int? creatorId);
-	bool HasItemById(int itemId);
 }
 
 public class ItemsService(IUnitOfWork unitOfWork, 
@@ -36,11 +36,8 @@ IItemPropertiesService propertiesService) : IItemsService
 		item.Properties = propertiesService.CreateBulkItemProperties(properties);
 	}
 	
-	public List<Item> GetPagedItems(PaginateDataItemDto paginateDataItemDto)
-	{
-		List<Item> items = unitOfWork.ItemRepository.GetPaged(paginateDataItemDto);
-		return items;
-	}
+	public PaginatedContainerDto<List<Item>> GetPaginatedItems(PaginateDataItemDto paginateDataItemDto) => 
+		unitOfWork.ItemRepository.GetPaginatedItems(paginateDataItemDto);
 
 	public Item? TryDeleteItem(int itemId, int? creatorId)
 	{
@@ -48,7 +45,4 @@ IItemPropertiesService propertiesService) : IItemsService
 		unitOfWork.Save();
 		return item;
 	}
-
-	public bool HasItemById(int itemId) => 
-		unitOfWork.ItemRepository.HasItemById(itemId);
 }

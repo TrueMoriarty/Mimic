@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Models.ItemModels;
 using MimicWebApi.Utils;
+using MimicWebApi.Views;
 using Services;
 using Services.Items;
 
@@ -17,11 +18,20 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 {
 	// TODO: Добавить проверку на UserId [FromQuery]
 	[HttpGet]
-	public IActionResult GetPagedItems([FromQuery] PaginateDataItemDto paginateDataItemDto)
+	public IActionResult GetPaginatedItems([FromQuery] PaginateDataItemDto paginateDataItemDto)
 	{
-		List<Item> items = itemsService.GetPagedItems(paginateDataItemDto);
+		PaginatedContainerDto<List<Item>> itemsList = 
+			itemsService.GetPaginatedItems(paginateDataItemDto);
 
-		return Ok(items);
+		PaginatedContainerDto<List<ItemViewModel>> itemsListViewModel = 
+			new PaginatedContainerDto<List<ItemViewModel>>
+			(
+				itemsList.Value.ConvertAll(item => new ItemViewModel(item)),
+				itemsList.TotalCount,
+				itemsList.TotalPages
+			);
+
+		return Ok(itemsListViewModel);
 	}
 
 	[HttpPost]
@@ -43,27 +53,17 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 	// TODO: добавить на проверку CreatorId
 	//[HttpPatch]
 
-	// TODO: добавить проверку CreatorId, изменить на TryDeleteItem, а в нем возвращать bool при null
 	[HttpDelete("{itemId}")]
 	public IActionResult TryDeleteItem([FromRoute] int itemId)
 	{
 		int? creatorId = HttpContext.GetUserId();
-		if (itemId == 0)
-		{
-			return BadRequest();
-		}
-		if (creatorId == null)
+		if (itemId == 0 || creatorId == null)
 		{
 			return BadRequest();
 		}
 
 		Item? item = itemsService.TryDeleteItem(itemId, creatorId);
-
-		if (item == null)
-		{
-			return NotFound();
-		}
-
-		return NoContent();
+		
+		return item is null ? NotFound() : NoContent();
 	}
 }

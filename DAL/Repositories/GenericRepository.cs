@@ -12,7 +12,7 @@ namespace DAL.Repositories;
 /// методами для этого типа.
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-internal class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDisposable where TEntity : class
+public class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDisposable where TEntity : class
 {
     internal MimicContext context;
     internal DbSet<TEntity> dbSet;

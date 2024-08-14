@@ -1,34 +1,46 @@
+using DAL.Dto;
 using DAL.Dto.ItemDto;
 using DAL.EfClasses;
 using DAL.EfCode;
+using DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;
 
 public interface IItemRepository : IGenericRepository<Item>
 {
-	public List<Item> GetPaged(PaginateDataItemDto paginateDataItemDto);
+	public PaginatedContainerDto<List<Item>> GetPaginatedItems(PaginateDataItemDto paginateDataItemDto);
 	public Item? TryDelete(int itemId, int? creatorId);
-	public bool HasItemById(int itemId);
 }
 
-public class ItemRepository(MimicContext context) : GenericRepository<Item>(context), IItemRepository
+internal class ItemRepository(MimicContext context) : GenericRepository<Item>(context), IItemRepository
 {
 	// TODO: Внести проверку CreatorId во все методы, чтобы минимизировать кол-во запросов к бд
-	public List<Item> GetPaged(PaginateDataItemDto paginateDataItemDto)
+	public PaginatedContainerDto<List<Item>> GetPaginatedItems(PaginateDataItemDto paginateDataItemDto)
 	{
 		var query = context.Items
-			.Where(item => 
-			paginateDataItemDto.SearchString == null
-			|| item.Name == paginateDataItemDto.SearchString)
-			.Skip((paginateDataItemDto.PageIndex - 1) 
-			* paginateDataItemDto.PageSize)
-			.Take(paginateDataItemDto.PageSize).AsNoTracking();
+			.Where(item => paginateDataItemDto.SearchString == null
+				|| item.Name == paginateDataItemDto.SearchString)
+			.Include(item => item.Properties).AsNoTracking();
 
-		List<Item> result = 
+		int totalCount = query.Count();
+
+		var paginatedQuery = query
+			.Skip((paginateDataItemDto.PageIndex - 1) 
+				* paginateDataItemDto.PageSize)
+			.Take(paginateDataItemDto.PageSize);
+
+		var paginatedQueryOrdered = 
 			paginateDataItemDto.OrderBy == nameof(Item.Name) 
-			? query.OrderBy(item => item.Name).ToList()
-			: query.ToList();
+			? paginatedQuery.OrderBy(item => item.Name)
+			: paginatedQuery;
+
+		var result = new PaginatedContainerDto<List<Item>>
+		(
+			paginatedQueryOrdered.ToList(),
+			totalCount,
+			(int) Math.Ceiling(totalCount / (double) paginateDataItemDto.PageSize)
+		);
 
 		return result;
 	}
@@ -47,8 +59,5 @@ public class ItemRepository(MimicContext context) : GenericRepository<Item>(cont
 
 		return query;
 	}
-
-	public bool HasItemById(int itemId) =>
-		context.Items.Any(item => item.ItemId == itemId);
 
 }
