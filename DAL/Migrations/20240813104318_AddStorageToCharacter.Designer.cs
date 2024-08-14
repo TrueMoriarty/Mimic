@@ -3,6 +3,7 @@ using System;
 using DAL.EfCode;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MimicWebApi.Migrations
 {
     [DbContext(typeof(MimicContext))]
-    partial class MimicContextModelSnapshot : ModelSnapshot
+    [Migration("20240813104318_AddStorageToCharacter")]
+    partial class AddStorageToCharacter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,8 +57,7 @@ namespace MimicWebApi.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.HasIndex("StorageId")
-                        .IsUnique();
+                    b.HasIndex("StorageId");
 
                     b.ToTable("Characters");
                 });
@@ -214,8 +216,8 @@ namespace MimicWebApi.Migrations
                         .HasForeignKey("RoomId");
 
                     b.HasOne("DAL.EfClasses.Storage", "Storage")
-                        .WithOne()
-                        .HasForeignKey("DAL.EfClasses.Character", "StorageId");
+                        .WithMany()
+                        .HasForeignKey("StorageId");
 
                     b.Navigation("Creator");
 

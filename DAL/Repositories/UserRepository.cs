@@ -1,14 +1,12 @@
 ﻿using DAL.EfClasses;
 using DAL.EfCode;
+using DAL.Repositories.Interfaces;
 
 namespace DAL.Repositories;
 
-public interface IUserRepository : IGenericRepository<User>
-{
-    public User? GetByExternalId(string externalId);
-}
-
-public class UserRepository(MimicContext context) : GenericRepository<User>(context), IUserRepository
+internal class UserRepository(MimicContext context) : GenericRepository<User>(context), IUserRepository
 {
     public User? GetByExternalId(string externalId) => context.Users.FirstOrDefault(u => u.ExternalUserId == externalId);
+    public User? GetById(int id) => GetByID(id);
+    public void AddUser(User user) => Insert(user);
 }

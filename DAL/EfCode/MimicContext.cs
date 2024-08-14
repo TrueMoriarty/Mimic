@@ -66,6 +66,11 @@ public class MimicContext : DbContext
             .WithOne(t => t.Storage)
             .HasForeignKey(t => t.StorageId);
 
+        modelBuilder.Entity<Character>()
+            .HasOne(t => t.Storage)
+            .WithOne()
+            .HasForeignKey<Character>(t => t.StorageId);
+
         modelBuilder.Entity<Item>().Property(t => t.ItemId).UseIdentityAlwaysColumn();
 
         modelBuilder.Entity<User>().Property(t => t.UserId).UseIdentityAlwaysColumn();

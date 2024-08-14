@@ -15,10 +15,10 @@ public class UsersService(IUnitOfWork unitOfWork) : IUsersService
 {
     public void Add(User user)
     {
-        unitOfWork.UserRepository.Insert(user);
+        unitOfWork.UserRepository.AddUser(user);
         unitOfWork.Save();
     }
 
     public User? GetByExternalId(string externalId) => unitOfWork.UserRepository.GetByExternalId(externalId);
-    public User GetById(int id) => unitOfWork.UserRepository.GetByID(id);
+    public User GetById(int id) => unitOfWork.UserRepository.GetById(id);
 }

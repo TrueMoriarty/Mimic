@@ -1,6 +1,7 @@
 ﻿using DAL.EfClasses;
 using DAL.EfCode;
 using DAL.Repositories;
+using DAL.Repositories.Interfaces;
 
 namespace DAL;
 
@@ -10,6 +11,7 @@ public interface IUnitOfWork
     public IItemRepository ItemRepository { get; }
     public IGenericRepository<Storage> StorageRepository { get; }
     public IGenericRepository<ItemProperty> PropertiesRepository { get; }
+    public ICharacterRepository CharactersRepository { get; }
 
     public void Save();
 }
@@ -24,13 +26,14 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     ItemRepository? itemRepository;
     GenericRepository<Storage>? storageRepository;
     GenericRepository<ItemProperty>? propertyRepository;
+    ICharacterRepository? characterRepository;
 
     private bool disposed = false;
 
     // Каждое свойство репозитория проверяет существует ли репозиторий. Если нет
     // создается экземпляр репозитория и ему передается контекст. Поэтому все репозитории
     // используют один и тот же экземпляр контекста
-    public IUserRepository UserRepository => 
+    public IUserRepository UserRepository =>
         userRepository ??= new UserRepository(context);
 
     public IItemRepository ItemRepository =>
@@ -41,6 +44,9 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 
     public IGenericRepository<ItemProperty> PropertiesRepository =>
         propertyRepository ??= new GenericRepository<ItemProperty>(context);
+
+    public ICharacterRepository CharactersRepository =>
+        characterRepository ??= new CharacterRepository(context);
 
     public void Save()
     {
