@@ -18,12 +18,12 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 {
 	// TODO: Добавить проверку на UserId [FromQuery]
 	[HttpGet]
-	public IActionResult GetPaginatedItems([FromQuery] PaginateDataItemDto paginateDataItemDto)
+	public IActionResult GetPaginatedItems([FromQuery] ItemFilter paginateDataItemDto)
 	{
 		PaginatedContainerDto<List<Item>> itemsList = 
 			itemsService.GetPaginatedItems(paginateDataItemDto);
 
-		PaginatedContainerDto<List<ItemViewModel>> itemsListViewModel = 
+		var itemsListViewModel = 
 			new PaginatedContainerDto<List<ItemViewModel>>
 			(
 				itemsList.Value.ConvertAll(item => new ItemViewModel(item)),
@@ -35,7 +35,7 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 	}
 
 	[HttpPost]
-	public IActionResult CreateItem([FromBody] PostItemModel itemModel)
+	public IActionResult CreateItem([FromBody] CreateItemModel itemModel)
 	{
 		var userId = HttpContext.GetUserId()!;
 

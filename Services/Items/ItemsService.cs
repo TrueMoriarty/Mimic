@@ -9,15 +9,15 @@ namespace Services.Items;
 
 public interface IItemsService
 {
-	Item CreateItem(PostItemDto itemDto);
-	PaginatedContainerDto<List<Item>> GetPaginatedItems(PaginateDataItemDto paginateDataItemDto);
+	Item CreateItem(CreateItemDto itemDto);
+	PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
 	Item? TryDeleteItem(int itemId, int? creatorId);
 }
 
 public class ItemsService(IUnitOfWork unitOfWork, 
 IItemPropertiesService propertiesService) : IItemsService
 {
-	public Item CreateItem(PostItemDto itemDto)
+	public Item CreateItem(CreateItemDto itemDto)
 	{
 		var item = itemDto.MapToItem();
 
@@ -36,7 +36,7 @@ IItemPropertiesService propertiesService) : IItemsService
 		item.Properties = propertiesService.CreateBulkItemProperties(properties);
 	}
 	
-	public PaginatedContainerDto<List<Item>> GetPaginatedItems(PaginateDataItemDto paginateDataItemDto) => 
+	public PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto) => 
 		unitOfWork.ItemRepository.GetPaginatedItems(paginateDataItemDto);
 
 	public Item? TryDeleteItem(int itemId, int? creatorId)

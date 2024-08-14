@@ -3,15 +3,15 @@ using Services.Items.Dto;
 
 namespace MimicWebApi.Models.ItemModels;
 
-public class PostItemModel : BaseModel
+public class CreateItemModel : BaseModel
 {
     public int? StorageId { get; set; }
 
     public List<ItemPropertyModel>? ItemProperties { get; set; }
 
-    public PostItemDto MapToPostItemDto(User creator)
+    public CreateItemDto MapToPostItemDto(User creator)
     {
-        var itemDto = new PostItemDto
+        var itemDto = new CreateItemDto
         {
             Creator = creator,
             StorageId = StorageId,

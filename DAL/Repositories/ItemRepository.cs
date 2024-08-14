@@ -9,31 +9,32 @@ namespace DAL.Repositories;
 
 public interface IItemRepository : IGenericRepository<Item>
 {
-	public PaginatedContainerDto<List<Item>> GetPaginatedItems(PaginateDataItemDto paginateDataItemDto);
+	public PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
 	public Item? TryDelete(int itemId, int? creatorId);
 }
 
 internal class ItemRepository(MimicContext context) : GenericRepository<Item>(context), IItemRepository
 {
-	// TODO: Внести проверку CreatorId во все методы, чтобы минимизировать кол-во запросов к бд
-	public PaginatedContainerDto<List<Item>> GetPaginatedItems(PaginateDataItemDto paginateDataItemDto)
+	public PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto)
 	{
 		var query = context.Items
-			.Where(item => paginateDataItemDto.SearchString == null
-				|| item.Name == paginateDataItemDto.SearchString)
+			.Where(item => (paginateDataItemDto.Name == null
+				|| item.Name == paginateDataItemDto.Name) 
+				&& (paginateDataItemDto.CreatorId == null 
+				||item.CreatorId == paginateDataItemDto.CreatorId))
 			.Include(item => item.Properties).AsNoTracking();
 
 		int totalCount = query.Count();
 
-		var paginatedQuery = query
+		var queryOrdered = 
+			paginateDataItemDto.OrderBy == nameof(Item.Name) 
+			? query.OrderBy(item => item.Name)
+			: query;
+
+		var paginatedQueryOrdered = queryOrdered
 			.Skip((paginateDataItemDto.PageIndex - 1) 
 				* paginateDataItemDto.PageSize)
 			.Take(paginateDataItemDto.PageSize);
-
-		var paginatedQueryOrdered = 
-			paginateDataItemDto.OrderBy == nameof(Item.Name) 
-			? paginatedQuery.OrderBy(item => item.Name)
-			: paginatedQuery;
 
 		var result = new PaginatedContainerDto<List<Item>>
 		(
