@@ -1,17 +1,17 @@
 ﻿using DAL.EfClasses;
 using Services.Items.Dto;
 
-namespace MimicWebApi.Models;
+namespace MimicWebApi.Models.ItemModels;
 
-public class ItemModel : BaseModel
+public class CreateItemModel : BaseModel
 {
     public int? StorageId { get; set; }
 
     public List<ItemPropertyModel>? ItemProperties { get; set; }
 
-    public ItemDto MapToItemDto(User creator)
+    public CreateItemDto MapToPostItemDto(User creator)
     {
-        var itemDto = new ItemDto
+        var itemDto = new CreateItemDto
         {
             Creator = creator,
             StorageId = StorageId,

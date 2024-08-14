@@ -8,7 +8,7 @@ namespace DAL;
 public interface IUnitOfWork
 {
     public IUserRepository UserRepository { get; }
-    public IGenericRepository<Item> ItemRepository { get; }
+    public IItemRepository ItemRepository { get; }
     public IGenericRepository<Storage> StorageRepository { get; }
     public IGenericRepository<ItemProperty> PropertiesRepository { get; }
     public ICharacterRepository CharactersRepository { get; }
@@ -23,7 +23,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     private MimicContext context = new MimicContext();
 
     UserRepository? userRepository;
-    GenericRepository<Item>? itemRepository;
+    ItemRepository? itemRepository;
     GenericRepository<Storage>? storageRepository;
     GenericRepository<ItemProperty>? propertyRepository;
     ICharacterRepository? characterRepository;
@@ -36,8 +36,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IUserRepository UserRepository =>
         userRepository ??= new UserRepository(context);
 
-    public IGenericRepository<Item> ItemRepository =>
-        itemRepository ??= new GenericRepository<Item>(context);
+    public IItemRepository ItemRepository =>
+        itemRepository ??= new ItemRepository(context);
 
     public IGenericRepository<Storage> StorageRepository =>
         storageRepository ??= new GenericRepository<Storage>(context);
