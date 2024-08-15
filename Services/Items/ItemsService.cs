@@ -10,8 +10,9 @@ public interface IItemsService
     Item CreateItem(ItemDto itemDto);
 }
 
-public class ItemsService(IUnitOfWork unitOfWork, 
-IItemPropertiesService propertiesService) : IItemsService
+public class ItemsService(
+    IUnitOfWork unitOfWork,
+    IItemPropertiesService propertiesService) : IItemsService
 {
     public Item CreateItem(ItemDto itemDto)
     {

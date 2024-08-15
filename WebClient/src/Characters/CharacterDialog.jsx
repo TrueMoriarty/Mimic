@@ -12,6 +12,12 @@ import RoomNameTitle from './RoomName';
 import { getCharacterById } from '../contants';
 import { getAsync } from '../axios';
 import ItemAccordion from '../Items/ItemAccordion';
+import { useFormikContext } from 'formik';
+
+const CharacterForm = ({initialValues, onSubmit}) => {
+    
+    return()
+};
 
 const CharacterDialog = ({ characterId, open, onClose }) => {
     const [character, setCharacter] = useState();
