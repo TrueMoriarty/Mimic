@@ -1,17 +1,18 @@
 ﻿using DAL.EfClasses;
+using MimicWebApi.Models.ItemModels;
 using Services.Characters.Dto;
 
 namespace MimicWebApi.Models;
 
-public class CharacterModel : BaseModel
+public class CreatingCharacterModel : BaseModel
 {
-    public List<ItemModel> Items { get; set; }
+    public List<CreateItemModel> Items { get; set; }
 
     public CharacterDto MapToCharacterDto(User creator) => new()
     {
         Creator = creator,
         Name = Name,
         Description = Description,
-        Items = Items?.ConvertAll(i => i.MapToItemDto(creator)),
+        Items = Items?.ConvertAll(i => i.MapToCreatingItemDto(creator)),
     };
 }

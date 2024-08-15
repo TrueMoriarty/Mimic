@@ -9,7 +9,7 @@ public class CreateItemModel : BaseModel
 
     public List<ItemPropertyModel>? ItemProperties { get; set; }
 
-    public CreateItemDto MapToPostItemDto(User creator)
+    public CreateItemDto MapToCreatingItemDto(User creator)
     {
         var itemDto = new CreateItemDto
         {

@@ -9,7 +9,7 @@ public class CharacterDto
     public string Name { get; set; }
     public string Description { get; set; }
 
-    public List<ItemDto>? Items { get; set; }
+    public List<CreateItemDto>? Items { get; set; }
 
     public Character MapToCharacter() => new()
     {

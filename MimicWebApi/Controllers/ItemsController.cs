@@ -42,7 +42,7 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 		if (user == null)
 			return NotFound();
 
-		var itemDto = itemModel.MapToPostItemDto(user);
+		var itemDto = itemModel.MapToCreatingItemDto(user);
 
 		var item = itemsService.CreateItem(itemDto);
 

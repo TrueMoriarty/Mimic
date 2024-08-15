@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material';
 
+//todo: поправить цветовую схему. А то тут костыль какой-то
 export const mimicTheme = createTheme({
     palette: {
         //custom colors

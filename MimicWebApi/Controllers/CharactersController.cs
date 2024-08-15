@@ -37,16 +37,16 @@ public class CharactersController(ICharactersService charactersService, IUsersSe
     }
 
     [HttpPost]
-    public IActionResult CreateCharacter([FromBody] CharacterModel characterModel)
+    public IActionResult CreateCharacter([FromBody] CreatingCharacterModel creatingCharacterModel)
     {
         //валидация
-        if (string.IsNullOrWhiteSpace(characterModel.Name))
+        if (string.IsNullOrWhiteSpace(creatingCharacterModel.Name))
             return BadRequest();
 
         int userId = HttpContext.GetUserId()!.Value;
         var user = usersService.GetById(userId)!;
 
-        var characterDto = characterModel.MapToCharacterDto(user);
+        var characterDto = creatingCharacterModel.MapToCharacterDto(user);
 
         var character = charactersService.CreateCharacter(characterDto);
 
