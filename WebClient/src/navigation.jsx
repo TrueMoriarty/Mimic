@@ -7,14 +7,12 @@ import {
     Tabs,
     Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useRouteMatch from './hooks/useRouteMatch';
-import { getAsync } from './axios';
-import { GET_USER_INFO } from './contants';
+import useUserInfoContext from './hooks/useUserInfoContext';
 
 const Navigation = () => {
-    const [user, setUser] = useState(null);
+    const userInfo = useUserInfoContext();
     const routeMatch = useRouteMatch([
         '/rooms',
         '/library',
@@ -22,13 +20,6 @@ const Navigation = () => {
         '/characters',
     ]);
     const currentTab = routeMatch?.pattern?.path;
-
-    useEffect(() => {
-        (async () => {
-            const { isOk, data } = await getAsync(GET_USER_INFO);
-            isOk && setUser({ ...data });
-        })();
-    }, [currentTab]);
 
     return (
         <AppBar position='static' color='mimic'>
@@ -97,14 +88,14 @@ const Navigation = () => {
                     </Grid>
                 </Grid>
                 <Grid item sx={{ mr: 1 }}>
-                    {user ? (
+                    {userInfo ? (
                         <Grid container spacing={1}>
                             <Grid item>
                                 <Avatar alt='user' />
                             </Grid>
                             <Grid item sx={{ my: 'auto' }}>
                                 <Typography variant='h6'>
-                                    {user?.userName}
+                                    {userInfo?.userName}
                                 </Typography>
                             </Grid>
                         </Grid>

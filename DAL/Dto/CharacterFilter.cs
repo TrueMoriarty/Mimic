@@ -1,7 +1,6 @@
 ﻿namespace DAL.Dto;
 
-public class CharacterFilter
+public class CharacterFilter : PaginatedFilter
 {
     public int? CreatorId { get; set; }
-    public PaginatedFilter Pagination { get; set; }
 }
