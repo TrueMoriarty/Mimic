@@ -11,7 +11,8 @@ public interface IItemsService
 {
 	Item CreateItem(CreateItemDto itemDto);
 	PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
-	Item? TryDeleteItem(int itemId, int? creatorId);
+	Item? GetItemById(int itemId);
+	Item? DeleteItem(int itemId, int? creatorId);
 }
 
 public class ItemsService(IUnitOfWork unitOfWork, 
@@ -39,9 +40,12 @@ IItemPropertiesService propertiesService) : IItemsService
 	public PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto) => 
 		unitOfWork.ItemRepository.GetPaginatedItems(paginateDataItemDto);
 
-	public Item? TryDeleteItem(int itemId, int? creatorId)
+	public Item? GetItemById(int itemId) => 
+		unitOfWork.ItemRepository.GetItemById(itemId);
+
+	public Item? DeleteItem(int itemId, int? creatorId)
 	{
-		var item = unitOfWork.ItemRepository.TryDelete(itemId, creatorId);
+		var item = unitOfWork.ItemRepository.Delete(itemId, creatorId);
 		unitOfWork.Save();
 		return item;
 	}

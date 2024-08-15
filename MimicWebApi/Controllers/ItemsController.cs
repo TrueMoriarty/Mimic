@@ -33,6 +33,19 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 		return Ok(itemsListViewModel);
 	}
 
+	[HttpGet("{itemId}")]
+	public IActionResult GetItemById([FromRoute]int itemId)
+	{
+		Item? item = itemsService.GetItemById(itemId);
+
+		if (item == null)
+			return NotFound();
+
+		ItemViewModel itemViewModel = new ItemViewModel(item);
+
+		return Ok(itemViewModel);
+	}
+
 	[HttpPost]
 	public IActionResult CreateItem([FromBody] CreateItemModel itemModel)
 	{
@@ -42,7 +55,7 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 		if (user == null)
 			return NotFound();
 
-		var itemDto = itemModel.MapToPostItemDto(user);
+		var itemDto = itemModel.MapToItemDto(user);
 
 		var item = itemsService.CreateItem(itemDto);
 
@@ -53,7 +66,7 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 	//[HttpPatch]
 
 	[HttpDelete("{itemId}")]
-	public IActionResult TryDeleteItem([FromRoute] int itemId)
+	public IActionResult DeleteItem([FromRoute] int itemId)
 	{
 		int? creatorId = HttpContext.GetUserId();
 		if (itemId == 0 || creatorId == null)
@@ -61,7 +74,7 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 			return BadRequest();
 		}
 
-		Item? item = itemsService.TryDeleteItem(itemId, creatorId);
+		Item? item = itemsService.DeleteItem(itemId, creatorId);
 		
 		return item is null ? NotFound() : NoContent();
 	}

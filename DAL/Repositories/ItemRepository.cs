@@ -9,8 +9,9 @@ namespace DAL.Repositories;
 
 public interface IItemRepository : IGenericRepository<Item>
 {
-	public PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
-	public Item? TryDelete(int itemId, int? creatorId);
+	PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
+	Item? GetItemById(int itemId);
+	Item? Delete(int itemId, int? creatorId);
 }
 
 internal class ItemRepository(MimicContext context) : GenericRepository<Item>(context), IItemRepository
@@ -46,7 +47,14 @@ internal class ItemRepository(MimicContext context) : GenericRepository<Item>(co
 		return result;
 	}
 
-	public Item? TryDelete(int itemId, int? creatorId)
+	public Item? GetItemById(int itemId) =>
+		Get(
+				item => item.ItemId == itemId,
+				includeProperties: "Properties",
+				readOnly: true
+			).FirstOrDefault();
+
+	public Item? Delete(int itemId, int? creatorId)
 	{
 		var query = context.Items.FirstOrDefault(item => item.ItemId == itemId 
 			&& item.CreatorId == creatorId);
