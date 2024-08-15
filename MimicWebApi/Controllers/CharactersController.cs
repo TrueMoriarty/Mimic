@@ -27,7 +27,7 @@ public class CharactersController(ICharactersService charactersService) : Contro
     }
 
     [HttpGet("{characterId}")]
-    public IActionResult GetCreatorUserCharacter([FromRoute] int characterId)
+    public IActionResult GetCharacter([FromRoute] int characterId)
     {
         var character = charactersService.GetById(characterId);
 
