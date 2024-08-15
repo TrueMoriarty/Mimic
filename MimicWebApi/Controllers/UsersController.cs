@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DAL.EfClasses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Utils;
 using MimicWebApi.Views;
@@ -14,10 +15,9 @@ public class UsersController(IUsersService usersService) : ControllerBase
     [HttpGet("info")]
     public IActionResult GetUserInfo()
     {
-        long? userId = HttpContext.GetUserId();
-        if (userId == null) return BadRequest();
+        int userId = HttpContext.GetAuthorizedUserId();
 
-        var user = usersService.GetById((int) userId.Value);
+        var user = usersService.GetById(userId);
         if (user == null) return NotFound();
 
         return Ok(new UserInfoViewModel(user!));

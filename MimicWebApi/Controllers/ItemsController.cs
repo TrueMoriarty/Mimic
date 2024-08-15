@@ -36,9 +36,9 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 	[HttpPost]
 	public IActionResult CreateItem([FromBody] CreateItemModel itemModel)
 	{
-		var userId = HttpContext.GetUserId()!;
+		var userId = HttpContext.GetAuthorizedUserId()!;
 
-		var user = usersService.GetById(userId.Value);
+		var user = usersService.GetById(userId);
 		if (user == null)
 			return NotFound();
 
@@ -55,7 +55,7 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 	[HttpDelete("{itemId}")]
 	public IActionResult TryDeleteItem([FromRoute] int itemId)
 	{
-		int? creatorId = HttpContext.GetUserId();
+		int? creatorId = HttpContext.GetAuthorizedUserId();
 		if (itemId == 0 || creatorId == null)
 		{
 			return BadRequest();

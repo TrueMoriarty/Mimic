@@ -43,7 +43,7 @@ public class CharactersController(ICharactersService charactersService, IUsersSe
         if (string.IsNullOrWhiteSpace(creatingCharacterModel.Name))
             return BadRequest();
 
-        int userId = HttpContext.GetUserId()!.Value;
+        int userId = HttpContext.GetAuthorizedUserId();
         var user = usersService.GetById(userId)!;
 
         var characterDto = creatingCharacterModel.MapToCharacterDto(user);
