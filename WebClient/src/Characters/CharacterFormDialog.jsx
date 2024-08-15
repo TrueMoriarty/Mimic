@@ -12,6 +12,9 @@ import {
     Stack,
 } from '@mui/material';
 import ImageBox from '../Components/ImageBox';
+import { postAsync } from '../axios';
+import { API_CHARACTERS } from '../contants';
+import LoadingButton from '../Components/LoadingButton';
 
 const initValues = {
     name: '',
@@ -25,8 +28,10 @@ const CharacterFormDailog = ({ open, onClose, disabled }) => {
         onClose?.();
     };
 
-    const handleSubmit = (values) => {
-        console.log(values);
+    const handleSubmit = async (values) => {
+        setIsLoading(true);
+        const { isOk, data } = await postAsync(API_CHARACTERS, values);
+        setIsLoading(false);
     };
 
     return (
@@ -36,12 +41,6 @@ const CharacterFormDailog = ({ open, onClose, disabled }) => {
             open={open}
             onClose={handleClose}
         >
-            {isLoading && (
-                <CircularProgress
-                    color='mimicLoader'
-                    sx={{ mx: 'auto', my: 3 }}
-                />
-            )}
             <DialogTitle>Create Character</DialogTitle>
             <DialogContent>
                 <Formik initialValues={initValues} onSubmit={handleSubmit}>
@@ -81,13 +80,13 @@ const CharacterFormDailog = ({ open, onClose, disabled }) => {
                             >
                                 Cancel
                             </Button>
-                            <Button
+                            <LoadingButton
+                                caption={'Subscribe'}
                                 type='submit'
                                 variant='contained'
                                 color='mimicSelected'
-                            >
-                                Subscribe
-                            </Button>
+                                isLoading={isLoading}
+                            />
                         </DialogActions>
                     </Form>
                 </Formik>

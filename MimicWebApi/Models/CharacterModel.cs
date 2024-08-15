@@ -6,7 +6,7 @@ namespace MimicWebApi.Models;
 
 public class CreatingCharacterModel : BaseModel
 {
-    public List<CreateItemModel> Items { get; set; }
+    public List<CreateItemModel>? Items { get; set; }
 
     public CharacterDto MapToCharacterDto(User creator) => new()
     {

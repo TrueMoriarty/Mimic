@@ -1,7 +1,7 @@
 import { Container, Grid, LinearProgress, Pagination } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getAsync } from '../axios';
-import { GET_PAGED_CHARACTERS } from '../contants';
+import { API_GET_PAGED_CHARACTERS } from '../contants';
 import CharacterDialog from './CharacterDialog';
 import CharacterListItem from './CharacterListItem';
 import useUserInfoContext from '../hooks/useUserInfoContext';
@@ -29,7 +29,7 @@ const CharacterList = () => {
     const loadCharacterList = async () => {
         setIsLoading(true);
         const { isOk, data } = await getAsync(
-            GET_PAGED_CHARACTERS +
+            API_GET_PAGED_CHARACTERS +
                 `?pageSize=${PAGE_SIZE}&pageIndex=${page - 1}&creatorId=${
                     userInfo.userId
                 }`

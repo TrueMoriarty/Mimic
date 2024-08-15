@@ -4,13 +4,19 @@ import CharacterFormDailog from './CharacterFormDialog';
 import { Button, Container, Stack } from '@mui/material';
 
 const Characters = () => {
-    const [isOpenCharaterForm, setOpenCharaterForm] = useState();
+    const [isOpenCharaterForm, setOpenCharaterForm] = useState(false);
 
     return (
         <>
-            <Container>
+            <Container sx={{ mt: 1 }}>
                 <Stack direction='row' spacing={2}>
-                    <Button color='mimicLoader'>Create</Button>
+                    <Button
+                        color='mimicSelected'
+                        variant='contained'
+                        onClick={() => setOpenCharaterForm(true)}
+                    >
+                        Create
+                    </Button>
                 </Stack>
             </Container>
             <CharacterList />
