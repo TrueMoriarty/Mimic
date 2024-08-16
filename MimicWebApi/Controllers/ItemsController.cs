@@ -19,10 +19,10 @@ public class ItemsController(IItemsService itemsService) : ControllerBase
 	[HttpGet]
 	public IActionResult GetPaginatedItems([FromQuery] ItemFilter paginateDataItemDto)
 	{
-		PaginatedContainerDto<List<Item>> itemsList = 
+		PaginatedContainerDto<List<Item>> itemsList =
 			itemsService.GetPaginatedItems(paginateDataItemDto);
 
-		var itemsListViewModel = 
+		var itemsListViewModel =
 			new PaginatedContainerDto<List<ItemViewModel>>
 			(
 				itemsList.Value.ConvertAll(item => new ItemViewModel(item)),
@@ -34,7 +34,7 @@ public class ItemsController(IItemsService itemsService) : ControllerBase
 	}
 
 	[HttpGet("{itemId}")]
-	public IActionResult GetItemById([FromRoute]int itemId)
+	public IActionResult GetItemById([FromRoute] int itemId)
 	{
 		Item? item = itemsService.GetItemById(itemId);
 
@@ -62,7 +62,7 @@ public class ItemsController(IItemsService itemsService) : ControllerBase
 	}
 
 	[HttpPut("{itemId}")]
-	public IActionResult EditItem([FromRoute] int itemId, 
+	public IActionResult EditItem([FromRoute] int itemId,
 		[FromBody] ItemModel changingItemModel)
 	{
 		int? userId = HttpContext.GetUserId();
@@ -71,8 +71,11 @@ public class ItemsController(IItemsService itemsService) : ControllerBase
 			return BadRequest();
 		if (userId == null)
 			return Unauthorized();
-		if (!itemsService.IsCreator(itemId, userId.Value))
-			return Unauthorized();
+
+		Item? item = itemsService.GetLightItemById(itemId, userId.Value);
+
+		if (item == null)
+			return NotFound();
 
 		ItemDto itemDto = changingItemModel.MapToItemDto(userId.Value);
 		itemsService.EditItem(itemId, itemDto);
@@ -89,11 +92,14 @@ public class ItemsController(IItemsService itemsService) : ControllerBase
 			return BadRequest();
 		if (userId == null)
 			return Unauthorized();
-		if (!itemsService.IsCreator(itemId, userId.Value))
-			return Unauthorized();
 
-		Item? item = itemsService.DeleteItem(itemId, userId.Value);
-		
-		return item is null ? NotFound() : NoContent();
+		Item? item = itemsService.GetLightItemById(itemId, userId.Value);
+
+		if (item == null)
+			return NotFound();
+
+		itemsService.DeleteItem(item);
+
+		return NoContent();
 	}
 }

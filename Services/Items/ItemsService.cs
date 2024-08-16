@@ -14,11 +14,11 @@ public interface IItemsService
 	PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
 	Item? GetItemById(int itemId);
 	void EditItem(int itemId, ItemDto itemDto);
-	Item? DeleteItem(int itemId, int creatorId);
-	bool IsCreator(int itemId, int creatorId);
+	void DeleteItem(Item item);
+	public Item? GetLightItemById(int itemId, int creatorId);
 }
 
-public class ItemsService(IUnitOfWork unitOfWork, 
+public class ItemsService(IUnitOfWork unitOfWork,
 IItemPropertiesService propertiesService) : IItemsService
 {
 	public Item CreateItem(ItemDto itemDto)
@@ -39,11 +39,11 @@ IItemPropertiesService propertiesService) : IItemsService
 		properties.ForEach(p => p.ItemId = item.ItemId);
 		item.Properties = propertiesService.CreateBulkItemProperties(properties);
 	}
-	
-	public PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto) => 
+
+	public PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto) =>
 		unitOfWork.ItemRepository.GetPaginatedItems(paginateDataItemDto);
 
-	public Item? GetItemById(int itemId) => 
+	public Item? GetItemById(int itemId) =>
 		unitOfWork.ItemRepository.GetItemById(itemId);
 
 	public void EditItem(int itemId, ItemDto itemDto)
@@ -54,15 +54,15 @@ IItemPropertiesService propertiesService) : IItemsService
 		unitOfWork.Save();
 	}
 
-	public Item? DeleteItem(int itemId, int creatorId)
+	public void DeleteItem(Item item)
 	{
-		var item = unitOfWork.ItemRepository.Delete(itemId, creatorId);
+		unitOfWork.ItemRepository.DeleteItem(item);
 		unitOfWork.Save();
-		return item;
 	}
 
-	public bool IsCreator(int itemId, int creatorId)
+	public Item? GetLightItemById(int itemId, int creatorId)
 	{
-		return unitOfWork.ItemRepository.IsCreator(itemId, creatorId);
+		Item? item = unitOfWork.ItemRepository.GetLightItemById(itemId, creatorId);
+		return item;
 	}
 }
