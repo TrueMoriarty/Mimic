@@ -6,23 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Models.ItemModels;
 using MimicWebApi.Utils;
 using MimicWebApi.Views;
-using Services;
 using Services.Items;
+using Services.Items.Dto;
 
 namespace MimicWebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class ItemsController(IItemsService itemsService, IUsersService usersService) : ControllerBase
+public class ItemsController(IItemsService itemsService) : ControllerBase
 {
 	[HttpGet]
 	public IActionResult GetPaginatedItems([FromQuery] ItemFilter paginateDataItemDto)
 	{
-		PaginatedContainerDto<List<Item>> itemsList = 
+		PaginatedContainerDto<List<Item>> itemsList =
 			itemsService.GetPaginatedItems(paginateDataItemDto);
 
-		var itemsListViewModel = 
+		var itemsListViewModel =
 			new PaginatedContainerDto<List<ItemViewModel>>
 			(
 				itemsList.Value.ConvertAll(item => new ItemViewModel(item)),
@@ -33,36 +33,73 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 		return Ok(itemsListViewModel);
 	}
 
-	[HttpPost]
-	public IActionResult CreateItem([FromBody] CreateItemModel itemModel)
+	[HttpGet("{itemId}")]
+	public IActionResult GetItemById([FromRoute] int itemId)
 	{
-		var userId = HttpContext.GetUserId()!;
+		Item? item = itemsService.GetItemById(itemId);
 
-		var user = usersService.GetById(userId.Value);
-		if (user == null)
+		if (item == null)
 			return NotFound();
 
-		var itemDto = itemModel.MapToPostItemDto(user);
+		ItemViewModel itemViewModel = new ItemViewModel(item);
 
-		var item = itemsService.CreateItem(itemDto);
+		return Ok(itemViewModel);
+	}
+
+	[HttpPost]
+	public IActionResult CreateItem([FromBody] ItemModel itemModel)
+	{
+		int? userId = HttpContext.GetUserId();
+
+		if (userId == null)
+			return Unauthorized();
+
+		ItemDto itemDto = itemModel.MapToItemDto(userId.Value);
+
+		Item item = itemsService.CreateItem(itemDto);
 
 		return Ok(item.ItemId);
 	}
 
-	// TODO: добавить на проверку CreatorId
-	//[HttpPatch]
+	[HttpPut("{itemId}")]
+	public IActionResult EditItem([FromRoute] int itemId,
+		[FromBody] ItemModel changingItemModel)
+	{
+		int? userId = HttpContext.GetUserId();
+
+		if (itemId == 0)
+			return BadRequest();
+		if (userId == null)
+			return Unauthorized();
+
+		Item? item = itemsService.GetLightItemById(itemId, userId.Value);
+
+		if (item == null)
+			return NotFound();
+
+		ItemDto itemDto = changingItemModel.MapToItemDto(userId.Value);
+		itemsService.EditItem(itemId, itemDto);
+
+		return NoContent();
+	}
 
 	[HttpDelete("{itemId}")]
-	public IActionResult TryDeleteItem([FromRoute] int itemId)
+	public IActionResult DeleteItem([FromRoute] int itemId)
 	{
-		int? creatorId = HttpContext.GetUserId();
-		if (itemId == 0 || creatorId == null)
-		{
-			return BadRequest();
-		}
+		int? userId = HttpContext.GetUserId();
 
-		Item? item = itemsService.TryDeleteItem(itemId, creatorId);
-		
-		return item is null ? NotFound() : NoContent();
+		if (itemId == 0)
+			return BadRequest();
+		if (userId == null)
+			return Unauthorized();
+
+		Item? item = itemsService.GetLightItemById(itemId, userId.Value);
+
+		if (item == null)
+			return NotFound();
+
+		itemsService.DeleteItem(item);
+
+		return NoContent();
 	}
 }

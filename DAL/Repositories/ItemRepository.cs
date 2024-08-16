@@ -9,8 +9,10 @@ namespace DAL.Repositories;
 
 public interface IItemRepository : IGenericRepository<Item>
 {
-	public PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
-	public Item? TryDelete(int itemId, int? creatorId);
+	PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
+	Item? GetItemById(int itemId);
+	void DeleteItem(Item item);
+	public Item? GetLightItemById(int itemId, int creatorId);
 }
 
 internal class ItemRepository(MimicContext context) : GenericRepository<Item>(context), IItemRepository
@@ -19,20 +21,20 @@ internal class ItemRepository(MimicContext context) : GenericRepository<Item>(co
 	{
 		var query = context.Items
 			.Where(item => (paginateDataItemDto.Name == null
-				|| item.Name == paginateDataItemDto.Name) 
-				&& (paginateDataItemDto.CreatorId == null 
-				||item.CreatorId == paginateDataItemDto.CreatorId))
+				|| item.Name == paginateDataItemDto.Name)
+				&& (paginateDataItemDto.CreatorId == null
+				|| item.CreatorId == paginateDataItemDto.CreatorId))
 			.Include(item => item.Properties).AsNoTracking();
 
 		int totalCount = query.Count();
 
-		var queryOrdered = 
-			paginateDataItemDto.OrderBy == nameof(Item.Name) 
+		var queryOrdered =
+			paginateDataItemDto.OrderBy == nameof(Item.Name)
 			? query.OrderBy(item => item.Name)
 			: query;
 
 		var paginatedQueryOrdered = queryOrdered
-			.Skip((paginateDataItemDto.PageIndex - 1) 
+			.Skip((paginateDataItemDto.PageIndex - 1)
 				* paginateDataItemDto.PageSize)
 			.Take(paginateDataItemDto.PageSize);
 
@@ -40,25 +42,28 @@ internal class ItemRepository(MimicContext context) : GenericRepository<Item>(co
 		(
 			paginatedQueryOrdered.ToList(),
 			totalCount,
-			(int) Math.Ceiling(totalCount / (double) paginateDataItemDto.PageSize)
+			(int)Math.Ceiling(totalCount / (double)paginateDataItemDto.PageSize)
 		);
 
 		return result;
 	}
 
-	public Item? TryDelete(int itemId, int? creatorId)
+	public Item? GetLightItemById(int itemId, int creatorId) =>
+		Get(
+				item => item.ItemId == itemId && item.CreatorId == creatorId,
+				readOnly: true
+			).FirstOrDefault();
+
+	public Item? GetItemById(int itemId) =>
+		Get(
+				item => item.ItemId == itemId,
+				includeProperties: "Properties",
+				readOnly: true
+			).FirstOrDefault();
+
+	public void DeleteItem(Item item)
 	{
-		var query = context.Items.FirstOrDefault(item => item.ItemId == itemId 
-			&& item.CreatorId == creatorId);
-		if (query == null)
-		{
-			return null;
-		}
-
-		context.Items.Remove(query);
+		context.Items.Remove(item);
 		context.SaveChanges();
-
-		return query;
 	}
-
 }

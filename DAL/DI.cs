@@ -6,6 +6,6 @@ public static class DI
 {
     public static void AddDAL(this IServiceCollection services)
     {
-        services.AddTransient<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }

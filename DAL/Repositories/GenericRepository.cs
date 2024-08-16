@@ -17,6 +17,8 @@ internal class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDispos
     internal MimicContext context;
     internal DbSet<TEntity> dbSet;
 
+    private bool disposed = false;
+
     public GenericRepository(MimicContext context)
     {
         this.context = context;
@@ -38,7 +40,7 @@ internal class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDispos
         }
 
         foreach (var includeProperty in includeProperties
-                     .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                             .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
         {
             query = query.Include(includeProperty);
         }
@@ -82,8 +84,6 @@ internal class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDispos
         dbSet.Attach(entityToUpdate);
         context.Entry(entityToUpdate).State = EntityState.Modified;
     }
-
-    private bool disposed = false;
 
     protected virtual void Dispose(bool disposing)
     {

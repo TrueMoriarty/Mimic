@@ -2,11 +2,11 @@
 
 namespace Services.Items.Dto;
 
-public class CreateItemDto
+public class ItemDto
 {
-    public User Creator { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public int CreatorId { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
     public int? StorageId { get; set; }
     public List<ItemProperty>? ItemProperties { get; set; }
 
@@ -14,7 +14,7 @@ public class CreateItemDto
     {
         var item = new Item
         {
-            CreatorId = Creator.UserId,
+            CreatorId = CreatorId,
             Name = Name,
             Description = Description,
             StorageId = StorageId
