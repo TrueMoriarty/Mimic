@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Models.ItemModels;
 using MimicWebApi.Utils;
 using MimicWebApi.Views;
-using Services;
 using Services.Items;
+using Services.Items.Dto;
 
 namespace MimicWebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class ItemsController(IItemsService itemsService, IUsersService usersService) : ControllerBase
+public class ItemsController(IItemsService itemsService) : ControllerBase
 {
 	[HttpGet]
 	public IActionResult GetPaginatedItems([FromQuery] ItemFilter paginateDataItemDto)
@@ -47,34 +47,52 @@ public class ItemsController(IItemsService itemsService, IUsersService usersServ
 	}
 
 	[HttpPost]
-	public IActionResult CreateItem([FromBody] CreateItemModel itemModel)
+	public IActionResult CreateItem([FromBody] ItemModel itemModel)
 	{
-		var userId = HttpContext.GetUserId()!;
+		int? userId = HttpContext.GetUserId();
 
-		var user = usersService.GetById(userId.Value);
-		if (user == null)
-			return NotFound();
+		if (userId == null)
+			return Unauthorized();
 
-		var itemDto = itemModel.MapToItemDto(user);
+		ItemDto itemDto = itemModel.MapToItemDto(userId.Value);
 
-		var item = itemsService.CreateItem(itemDto);
+		Item item = itemsService.CreateItem(itemDto);
 
 		return Ok(item.ItemId);
 	}
 
-	// TODO: добавить на проверку CreatorId
-	//[HttpPatch]
+	[HttpPut("{itemId}")]
+	public IActionResult EditItem([FromRoute] int itemId, 
+		[FromBody] ItemModel changingItemModel)
+	{
+		int? userId = HttpContext.GetUserId();
+
+		if (itemId == 0)
+			return BadRequest();
+		if (userId == null)
+			return Unauthorized();
+		if (!itemsService.IsCreator(itemId, userId.Value))
+			return Unauthorized();
+
+		ItemDto itemDto = changingItemModel.MapToItemDto(userId.Value);
+		itemsService.EditItem(itemId, itemDto);
+
+		return NoContent();
+	}
 
 	[HttpDelete("{itemId}")]
 	public IActionResult DeleteItem([FromRoute] int itemId)
 	{
-		int? creatorId = HttpContext.GetUserId();
-		if (itemId == 0 || creatorId == null)
-		{
-			return BadRequest();
-		}
+		int? userId = HttpContext.GetUserId();
 
-		Item? item = itemsService.DeleteItem(itemId, creatorId);
+		if (itemId == 0)
+			return BadRequest();
+		if (userId == null)
+			return Unauthorized();
+		if (!itemsService.IsCreator(itemId, userId.Value))
+			return Unauthorized();
+
+		Item? item = itemsService.DeleteItem(itemId, userId.Value);
 		
 		return item is null ? NotFound() : NoContent();
 	}

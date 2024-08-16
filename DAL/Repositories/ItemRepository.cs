@@ -11,7 +11,8 @@ public interface IItemRepository : IGenericRepository<Item>
 {
 	PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
 	Item? GetItemById(int itemId);
-	Item? Delete(int itemId, int? creatorId);
+	Item? Delete(int itemId, int creatorId);
+	bool IsCreator(int itemId, int creatorId);
 }
 
 internal class ItemRepository(MimicContext context) : GenericRepository<Item>(context), IItemRepository
@@ -54,14 +55,10 @@ internal class ItemRepository(MimicContext context) : GenericRepository<Item>(co
 				readOnly: true
 			).FirstOrDefault();
 
-	public Item? Delete(int itemId, int? creatorId)
+	public Item? Delete(int itemId, int creatorId)
 	{
-		var query = context.Items.FirstOrDefault(item => item.ItemId == itemId 
+		var query = context.Items.First(item => item.ItemId == itemId 
 			&& item.CreatorId == creatorId);
-		if (query == null)
-		{
-			return null;
-		}
 
 		context.Items.Remove(query);
 		context.SaveChanges();
@@ -69,4 +66,9 @@ internal class ItemRepository(MimicContext context) : GenericRepository<Item>(co
 		return query;
 	}
 
+	public bool IsCreator(int itemId, int creatorId)
+	{
+		return context.Items.Any(item => item.ItemId == itemId 
+			&& item.CreatorId == creatorId);
+	}
 }
