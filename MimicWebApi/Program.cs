@@ -1,4 +1,5 @@
 using DAL;
+using Microsoft.Extensions.Options;
 using MimicWebApi.VkAuth;
 using MimicWebApi.VkAuth.Models;
 using Serilog;
@@ -25,7 +26,14 @@ public class Program
 
         builder.Services
             .AddAuthentication("auth-cookie")
-            .AddCookie("auth-cookie")
+            .AddCookie("auth-cookie", o =>
+            {
+                o.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return Task.CompletedTask;
+                };
+            })
             .AddVk("vk-oauth", "vk", o =>
             {
                 o.SignInScheme = "auth-cookie";

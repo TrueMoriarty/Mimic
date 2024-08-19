@@ -44,9 +44,8 @@ public class CharactersController(ICharactersService charactersService, IUsersSe
             return BadRequest();
 
         int userId = HttpContext.GetAuthorizedUserId();
-        var user = usersService.GetById(userId)!;
 
-        var characterDto = creatingCharacterModel.MapToCharacterDto(user);
+        var characterDto = creatingCharacterModel.MapToCharacterDto(userId);
 
         var character = charactersService.CreateCharacter(characterDto);
 

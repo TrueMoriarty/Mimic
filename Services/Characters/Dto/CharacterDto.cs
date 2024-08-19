@@ -5,15 +5,15 @@ namespace Services.Characters.Dto;
 
 public class CharacterDto
 {
-    public User Creator { get; set; }
+    public int CreatorId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
 
-    public List<CreateItemDto>? Items { get; set; }
+    public List<ItemDto>? Items { get; set; }
 
     public Character MapToCharacter() => new()
     {
-        CreatorId = Creator.UserId,
+        CreatorId = CreatorId,
         Name = Name,
         Description = Description
     };
