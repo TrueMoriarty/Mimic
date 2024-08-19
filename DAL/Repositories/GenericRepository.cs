@@ -98,14 +98,8 @@ internal class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDispos
         this.disposed = true;
     }
 
-    ~GenericRepository()
-    {
-        Console.WriteLine($"Finalizing object [{nameof(TEntity)}]");
-    }
-
     public void Dispose()
     {
-        Console.WriteLine("DISPOSE REPO");
         Dispose(true);
         GC.SuppressFinalize(this);
     }

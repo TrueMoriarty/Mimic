@@ -15,6 +15,7 @@ import ImageBox from '../Components/ImageBox';
 import { postAsync } from '../axios';
 import { API_CHARACTERS } from '../contants';
 import LoadingButton from '../Components/LoadingButton';
+import ItemAutocomplete from '../Items/ItemAutocomplete';
 
 const initValues = {
     name: '',
@@ -32,6 +33,10 @@ const CharacterFormDailog = ({ open, onClose, disabled }) => {
         setIsLoading(true);
         const { isOk, data } = await postAsync(API_CHARACTERS, values);
         setIsLoading(false);
+    };
+
+    const handleSelectItemSearch = (item) => {
+        console.log('item', item);
     };
 
     return (
@@ -70,6 +75,13 @@ const CharacterFormDailog = ({ open, onClose, disabled }) => {
                                         maxRows={3}
                                     />
                                 </Stack>
+                            </Grid>
+                            <Grid container item xs={12}>
+                                <Grid item xs={4}>
+                                    <ItemAutocomplete
+                                        onSelectItem={handleSelectItemSearch}
+                                    />
+                                </Grid>
                             </Grid>
                         </Grid>
                         <DialogActions>

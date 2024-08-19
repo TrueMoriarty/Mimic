@@ -64,7 +64,6 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 
     public void Dispose()
     {
-        Console.WriteLine("DISPOSE UOW");
         Dispose(true);
         GC.SuppressFinalize(this);
     }

@@ -50,8 +50,9 @@ internal class ItemRepository(MimicContext context) : GenericRepository<Item>(co
 
     public List<Item> GetItemSuggests(int creatorId, string query)
     {
+        query = query.ToLower();
         var items = context.Items
-            .Where(i => i.CreatorId == creatorId && i.Name.Contains(query))
+            .Where(i => i.CreatorId == creatorId && i.Name.ToLower().Contains(query))
             .OrderBy(i=>i.Name);
 
         return items.ToList();

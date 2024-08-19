@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const wrapAction = async (action, ...props) => {
     let response = null;
+
     try {
         axios.defaults.withCredentials = true;
         response = await action(...props);
