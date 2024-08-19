@@ -9,9 +9,10 @@ namespace DAL.Repositories;
 
 public interface IItemRepository : IGenericRepository<Item>
 {
-    public PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
-    public Item? TryDelete(int itemId, int? creatorId);
-
+    PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
+    Item? GetItemById(int itemId);
+    void DeleteItem(Item item);
+    Item? GetLightItemById(int itemId, int creatorId);
     List<Item> GetItemSuggests(int creatorId, string query);
 }
 
@@ -48,28 +49,32 @@ internal class ItemRepository(MimicContext context) : GenericRepository<Item>(co
         return result;
     }
 
+    public Item? GetLightItemById(int itemId, int creatorId) =>
+        Get(
+            item => item.ItemId == itemId && item.CreatorId == creatorId,
+            readOnly: true
+        ).FirstOrDefault();
+
+    public Item? GetItemById(int itemId) =>
+        Get(
+            item => item.ItemId == itemId,
+            includeProperties: "Properties",
+            readOnly: true
+        ).FirstOrDefault();
+
+    public void DeleteItem(Item item)
+    {
+        context.Items.Remove(item);
+        context.SaveChanges();
+    }
+
     public List<Item> GetItemSuggests(int creatorId, string query)
     {
         query = query.ToLower();
         var items = context.Items
             .Where(i => i.CreatorId == creatorId && i.Name.ToLower().Contains(query))
-            .OrderBy(i=>i.Name);
+            .OrderBy(i => i.Name);
 
         return items.ToList();
-    }
-
-    public Item? TryDelete(int itemId, int? creatorId)
-    {
-        var query = context.Items.FirstOrDefault(item => item.ItemId == itemId
-                                                         && item.CreatorId == creatorId);
-        if (query == null)
-        {
-            return null;
-        }
-
-        context.Items.Remove(query);
-        context.SaveChanges();
-
-        return query;
     }
 }

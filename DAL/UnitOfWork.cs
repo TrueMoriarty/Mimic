@@ -59,7 +59,11 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         if (disposed) return;
 
         if (disposing)
+        {
             context.Dispose();
+        }
+
+        disposed = true;
     }
 
     public void Dispose()

@@ -2,7 +2,7 @@
 
 namespace DAL.Repositories.Interfaces;
 
-public interface IUserRepository
+public interface IUserRepository : IDisposable
 {
     User? GetByExternalId(string externalId);
     User? GetById(int id);
