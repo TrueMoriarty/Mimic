@@ -14,3 +14,5 @@ export const getCharacterByIdURL = (id) => BACK_URL + `characters/${id}`;
 //Items
 export const getItemSuggestsURL = (query, creatorId) =>
     BACK_URL + `items/suggests?query=${query}&creatorId=${creatorId}`;
+
+export const getItemByIdURL = (id) => BACK_URL + `items/{id}`;

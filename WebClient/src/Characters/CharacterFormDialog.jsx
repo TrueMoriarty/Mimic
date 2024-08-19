@@ -1,25 +1,63 @@
-import { Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import { Form, Formik, useFormikContext } from 'formik';
+import React, { useEffect, useState } from 'react';
 import TextFieldFormik from '../Components/Formik/TextFieldFormik';
 import {
     Button,
-    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
     Grid,
+    IconButton,
     Stack,
 } from '@mui/material';
 import ImageBox from '../Components/ImageBox';
-import { postAsync } from '../axios';
+import { getAsync, postAsync } from '../axios';
 import { API_CHARACTERS } from '../contants';
 import LoadingButton from '../Components/LoadingButton';
 import ItemAutocomplete from '../Items/ItemAutocomplete';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ItemAccordion from '../Items/ItemAccordion';
 
 const initValues = {
     name: '',
     description: '',
+    items: [],
+};
+
+const CharacterAddedItemForm = ({}) => {
+    const [selectedItem, setSelectedItem] = useState(null);
+    const { values, setFieldValue } = useFormikContext();
+
+    const handleAddItem = async () => {
+        //const { isOk, data } = await getAsync();
+        const newItems = [selectedItem, ...values.items];
+        setFieldValue('items', newItems);
+    };
+
+    return (
+        <Grid container item xs={12}>
+            <Grid item xs={3}>
+                <ItemAutocomplete
+                    onSelectItem={(item) => setSelectedItem(item)}
+                />
+            </Grid>
+            <Grid item xs={1}>
+                {selectedItem && (
+                    <IconButton aria-label='delete'>
+                        <AddCircleOutlineIcon onClick={handleAddItem} />
+                    </IconButton>
+                )}
+            </Grid>
+            {values.items && (
+                <Grid item xs={12} sx={{ mt: 1 }}>
+                    {values.items.map((i) => (
+                        <ItemAccordion item={i} />
+                    ))}
+                </Grid>
+            )}
+        </Grid>
+    );
 };
 
 const CharacterFormDailog = ({ open, onClose, disabled }) => {
@@ -33,10 +71,6 @@ const CharacterFormDailog = ({ open, onClose, disabled }) => {
         setIsLoading(true);
         const { isOk, data } = await postAsync(API_CHARACTERS, values);
         setIsLoading(false);
-    };
-
-    const handleSelectItemSearch = (item) => {
-        console.log('item', item);
     };
 
     return (
@@ -76,13 +110,7 @@ const CharacterFormDailog = ({ open, onClose, disabled }) => {
                                     />
                                 </Stack>
                             </Grid>
-                            <Grid container item xs={12}>
-                                <Grid item xs={4}>
-                                    <ItemAutocomplete
-                                        onSelectItem={handleSelectItemSearch}
-                                    />
-                                </Grid>
-                            </Grid>
+                            <CharacterAddedItemForm />
                         </Grid>
                         <DialogActions>
                             <Button

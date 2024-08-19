@@ -1,5 +1,5 @@
 import { Autocomplete, Stack, TextField, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getAsync } from '../axios';
 import { getItemSuggestsURL } from '../contants';
 import parse from 'autosuggest-highlight/parse';
@@ -21,7 +21,6 @@ const ItemAutocomplete = ({ onSelectItem }) => {
     return (
         <Autocomplete
             freeSolo
-            disableClearable
             value={value}
             size='small'
             onChange={(event, newValue) => {
