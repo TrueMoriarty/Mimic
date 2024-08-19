@@ -5,8 +5,6 @@ public static class HttpContextExtensions
     public static string? GetExternalUserId(this HttpContext context) =>
         context.User.FindFirst("external_user_id")?.Value;
 
-    
     public static int GetAuthorizedUserId(this HttpContext context) =>
-        int.Parse(context.User.FindFirst("user_id")?.Value);
-
+        int.TryParse(context.User.FindFirst("user_id")?.Value, out int id) ? id : 0;
 }

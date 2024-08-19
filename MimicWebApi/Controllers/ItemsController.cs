@@ -16,53 +16,62 @@ namespace MimicWebApi.Controllers;
 [Authorize]
 public class ItemsController(IItemsService itemsService, IUsersService usersService) : ControllerBase
 {
-	[HttpGet]
-	public IActionResult GetPaginatedItems([FromQuery] ItemFilter paginateDataItemDto)
-	{
-		PaginatedContainerDto<List<Item>> itemsList = 
-			itemsService.GetPaginatedItems(paginateDataItemDto);
+    [HttpGet]
+    public IActionResult GetPaginatedItems([FromQuery] ItemFilter paginateDataItemDto)
+    {
+        PaginatedContainerDto<List<Item>> itemsList =
+            itemsService.GetPaginatedItems(paginateDataItemDto);
 
-		var itemsListViewModel = 
-			new PaginatedContainerDto<List<ItemViewModel>>
-			(
-				itemsList.Value.ConvertAll(item => new ItemViewModel(item)),
-				itemsList.TotalCount,
-				itemsList.TotalPages
-			);
+        var itemsListViewModel =
+            new PaginatedContainerDto<List<ItemViewModel>>
+            (
+                itemsList.Value.ConvertAll(item => new ItemViewModel(item)),
+                itemsList.TotalCount,
+                itemsList.TotalPages
+            );
 
-		return Ok(itemsListViewModel);
-	}
+        return Ok(itemsListViewModel);
+    }
 
-	[HttpPost]
-	public IActionResult CreateItem([FromBody] CreateItemModel itemModel)
-	{
-		var userId = HttpContext.GetAuthorizedUserId()!;
+    [HttpPost]
+    public IActionResult CreateItem([FromBody] CreateItemModel itemModel)
+    {
+        var userId = HttpContext.GetAuthorizedUserId()!;
 
-		var user = usersService.GetById(userId);
-		if (user == null)
-			return NotFound();
+        var user = usersService.GetById(userId);
+        if (user == null)
+            return NotFound();
 
-		var itemDto = itemModel.MapToCreatingItemDto(user);
+        var itemDto = itemModel.MapToCreatingItemDto(user);
 
-		var item = itemsService.CreateItem(itemDto);
+        var item = itemsService.CreateItem(itemDto);
 
-		return Ok(item.ItemId);
-	}
+        return Ok(item.ItemId);
+    }
 
-	// TODO: добавить на проверку CreatorId
-	//[HttpPatch]
+    // TODO: добавить на проверку CreatorId
+    //[HttpPatch]
 
-	[HttpDelete("{itemId}")]
-	public IActionResult TryDeleteItem([FromRoute] int itemId)
-	{
-		int? creatorId = HttpContext.GetAuthorizedUserId();
-		if (itemId == 0 || creatorId == null)
-		{
-			return BadRequest();
-		}
+    [HttpDelete("{itemId}")]
+    public IActionResult TryDeleteItem([FromRoute] int itemId)
+    {
+        int? creatorId = HttpContext.GetAuthorizedUserId();
+        if (itemId == 0 || creatorId == null)
+        {
+            return BadRequest();
+        }
 
-		Item? item = itemsService.TryDeleteItem(itemId, creatorId);
-		
-		return item is null ? NotFound() : NoContent();
-	}
+        Item? item = itemsService.TryDeleteItem(itemId, creatorId);
+
+        return item is null ? NotFound() : NoContent();
+    }
+
+    [HttpGet("suggests")]
+    public IActionResult GetItemsSuggestion([FromQuery] string query)
+    {
+        int creatorId = HttpContext.GetAuthorizedUserId();
+
+        var itemSuggests = itemsService.GetItemSuggests(creatorId, query);
+        return Ok(itemSuggests.ConvertAll(s=>new ItemSuggestViewModel(s)));
+    }
 }

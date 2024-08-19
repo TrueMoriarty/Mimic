@@ -54,6 +54,7 @@ const CharacterList = () => {
 
     return (
         <Container maxWidth='lg' sx={{ mt: 1 }}>
+            {/* todo: поправить прыганье  */}
             {isLoading && <LinearProgress color='mimicLoader' />}
             <Grid container spacing={4} alignItems='center'>
                 {characterList?.map((character) => (
