@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Models;
 using MimicWebApi.Utils;
 using MimicWebApi.Views.Characters;
-using Services;
 using Services.Characters;
 
 namespace MimicWebApi.Controllers;
@@ -12,7 +11,7 @@ namespace MimicWebApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class CharactersController(ICharactersService charactersService, IUsersService usersService) : ControllerBase
+public class CharactersController(ICharactersService charactersService) : ControllerBase
 {
     [HttpGet("page")]
     public IActionResult GetCreatorUserCharactersList([FromQuery] CharacterFilter paginatedFilter)
