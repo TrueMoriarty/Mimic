@@ -126,7 +126,7 @@ const CharacterFormDailog = ({ open, onClose, disabled }) => {
                                 Cancel
                             </Button>
                             <LoadingButton
-                                caption={'Subscribe'}
+                                caption={'Add'}
                                 type='submit'
                                 variant='contained'
                                 color='mimicSelected'
