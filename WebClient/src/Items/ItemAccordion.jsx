@@ -15,7 +15,7 @@ import { useState } from 'react';
 
 const ItemAccordion = ({ item }) => {
     const [expanded, setExpanded] = useState(false);
-    const properies = item.properies;
+    const properties = item.properties;
 
     return (
         <Accordion
@@ -38,9 +38,9 @@ const ItemAccordion = ({ item }) => {
                         {item.description}
                     </Typography>
                 )}
-                {properies && (
+                {properties && (
                     <List sx={{ py: 0 }}>
-                        {properies.map((p) => (
+                        {properties.map((p) => (
                             <ListItem disableGutters>
                                 <ListItemIcon sx={{ justifyContent: 'center' }}>
                                     <CircleIcon sx={{ fontSize: 11 }} />

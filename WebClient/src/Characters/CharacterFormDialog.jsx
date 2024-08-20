@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import ImageBox from '../Components/ImageBox';
 import { getAsync, postAsync } from '../axios';
-import { API_CHARACTERS } from '../contants';
+import { API_CHARACTERS, getItemByIdURL } from '../contants';
 import LoadingButton from '../Components/LoadingButton';
 import ItemAutocomplete from '../Items/ItemAutocomplete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -30,9 +30,13 @@ const CharacterAddedItemForm = ({}) => {
     const { values, setFieldValue } = useFormikContext();
 
     const handleAddItem = async () => {
-        //const { isOk, data } = await getAsync();
-        const newItems = [selectedItem, ...values.items];
-        setFieldValue('items', newItems);
+        const { isOk, data } = await getAsync(
+            getItemByIdURL(selectedItem.itemId)
+        );
+        if (isOk) {
+            const newItems = [data, ...values.items];
+            setFieldValue('items', newItems);
+        }
     };
 
     return (
@@ -51,8 +55,8 @@ const CharacterAddedItemForm = ({}) => {
             </Grid>
             {values.items && (
                 <Grid item xs={12} sx={{ mt: 1 }}>
-                    {values.items.map((i) => (
-                        <ItemAccordion item={i} />
+                    {values.items.map((i, index) => (
+                        <ItemAccordion key={index} item={i} />
                     ))}
                 </Grid>
             )}
@@ -68,6 +72,7 @@ const CharacterFormDailog = ({ open, onClose, disabled }) => {
     };
 
     const handleSubmit = async (values) => {
+        console.log(values);
         setIsLoading(true);
         const { isOk, data } = await postAsync(API_CHARACTERS, values);
         setIsLoading(false);

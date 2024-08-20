@@ -96,6 +96,7 @@ public class ItemsController(IItemsService itemsService) : ControllerBase
         return NoContent();
     }
 
+    [HttpGet("suggests")]
     public IActionResult GetItemsSuggestion([FromQuery] string query)
     {
         int creatorId = HttpContext.GetAuthorizedUserId();

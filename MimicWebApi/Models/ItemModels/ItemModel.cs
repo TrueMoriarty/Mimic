@@ -7,7 +7,7 @@ public class ItemModel : BaseModel
     public int CreatorId { get; set; }
     public int? StorageId { get; set; }
 
-    public List<ItemPropertyModel>? ItemProperties { get; set; }
+    public List<ItemPropertyModel>? Properties { get; set; }
 
     public ItemDto MapToItemDto(int creatorId)
     {
@@ -17,7 +17,7 @@ public class ItemModel : BaseModel
             StorageId = StorageId,
             Name = Name,
             Description = Description,
-            ItemProperties = ItemProperties?.ConvertAll(p => p.ToProperty())
+            ItemProperties = Properties?.ConvertAll(p => p.ToProperty())
         };
 
         return itemDto;
