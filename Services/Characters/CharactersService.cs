@@ -30,11 +30,12 @@ public class CharactersService(IUnitOfWork unitOfWork, IStoragesService storages
         var storage = storagesService.CreateStorage($"{character.Name}'s Storage", null);
         character.StorageId = storage.StorageId;
 
-        foreach (var item in characterDto.Items)
-        {
-            item.StorageId = storage.StorageId;
-            itemsService.CreateItem(item);
-        }
+        if (characterDto.Items?.Count > 0)
+            foreach (var item in characterDto.Items)
+            {
+                item.StorageId = storage.StorageId;
+                itemsService.CreateItem(item);
+            }
 
         unitOfWork.CharactersRepository.AddCharacter(character);
         unitOfWork.Save();
