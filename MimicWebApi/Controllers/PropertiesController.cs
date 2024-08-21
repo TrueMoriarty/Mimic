@@ -17,7 +17,7 @@ public class ItemPropertiesController(IItemPropertiesService propertiesService) 
     {
         ItemPropertyDto propertyDto = propertyModel.MapToItemPropertyDto();
 
-        ItemProperty property = 
+        ItemProperty property =
             propertiesService.CreateItemProperty(propertyDto);
 
         return Ok(property);

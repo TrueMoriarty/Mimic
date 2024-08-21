@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { GET_USER_INFO } from '../contants';
+import { API_GET_USER_INFO } from '../contants';
 import { getAsync } from '../axios';
 
 export const UserInfoContext = createContext({});
@@ -9,7 +9,7 @@ export const UserInfoContextProvider = ({ children }) => {
 
     useEffect(() => {
         (async () => {
-            const { isOk, data } = await getAsync(GET_USER_INFO);
+            const { isOk, data } = await getAsync(API_GET_USER_INFO);
             isOk && setUserInfo({ ...data });
         })();
     }, []);

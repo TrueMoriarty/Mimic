@@ -1,15 +1,17 @@
-import axios from "axios";
+import axios from 'axios';
 
 const wrapAction = async (action, ...props) => {
-  let response = null;
-  try {
-    axios.defaults.withCredentials = true;
-    response = await action(...props)
-  } catch (e) {
-    return { isOk: false, data: e }
-  }
+    let response = null;
 
-  return { isOk: true, data: response.data }
-}
+    try {
+        axios.defaults.withCredentials = true;
+        response = await action(...props);
+    } catch (e) {
+        return { isOk: false, data: e };
+    }
 
-export const getAsync = (...props) => wrapAction(axios.get, ...props)
+    return { isOk: true, data: response.data };
+};
+
+export const getAsync = (...props) => wrapAction(axios.get, ...props);
+export const postAsync = (...props) => wrapAction(axios.post, ...props);

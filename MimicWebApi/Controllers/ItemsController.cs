@@ -16,90 +16,92 @@ namespace MimicWebApi.Controllers;
 [Authorize]
 public class ItemsController(IItemsService itemsService) : ControllerBase
 {
-	[HttpGet]
-	public IActionResult GetPaginatedItems([FromQuery] ItemFilter paginateDataItemDto)
-	{
-		PaginatedContainerDto<List<Item>> itemsList =
-			itemsService.GetPaginatedItems(paginateDataItemDto);
+    [HttpGet]
+    public IActionResult GetPaginatedItems([FromQuery] ItemFilter paginateDataItemDto)
+    {
+        PaginatedContainerDto<List<Item>> itemsList =
+            itemsService.GetPaginatedItems(paginateDataItemDto);
 
-		var itemsListViewModel =
-			new PaginatedContainerDto<List<ItemViewModel>>
-			(
-				itemsList.Value.ConvertAll(item => new ItemViewModel(item)),
-				itemsList.TotalCount,
-				itemsList.TotalPages
-			);
+        var itemsListViewModel =
+            new PaginatedContainerDto<List<ItemViewModel>>
+            (
+                itemsList.Value.ConvertAll(item => new ItemViewModel(item)),
+                itemsList.TotalCount,
+                itemsList.TotalPages
+            );
 
-		return Ok(itemsListViewModel);
-	}
+        return Ok(itemsListViewModel);
+    }
 
-	[HttpGet("{itemId}")]
-	public IActionResult GetItemById([FromRoute] int itemId)
-	{
-		Item? item = itemsService.GetItemById(itemId);
+    [HttpGet("{itemId}")]
+    public IActionResult GetItemById([FromRoute] int itemId)
+    {
+        Item? item = itemsService.GetItemById(itemId);
 
-		if (item == null)
-			return NotFound();
+        if (item == null)
+            return NotFound();
 
-		ItemViewModel itemViewModel = new ItemViewModel(item);
+        ItemViewModel itemViewModel = new ItemViewModel(item);
 
-		return Ok(itemViewModel);
-	}
+        return Ok(itemViewModel);
+    }
 
-	[HttpPost]
-	public IActionResult CreateItem([FromBody] ItemModel itemModel)
-	{
-		int? userId = HttpContext.GetUserId();
+    [HttpPost]
+    public IActionResult CreateItem([FromBody] ItemModel itemModel)
+    {
+        int? userId = HttpContext.GetAuthorizedUserId();
 
-		if (userId == null)
-			return Unauthorized();
+        ItemDto itemDto = itemModel.MapToItemDto(userId.Value);
 
-		ItemDto itemDto = itemModel.MapToItemDto(userId.Value);
+        Item item = itemsService.CreateItem(itemDto);
 
-		Item item = itemsService.CreateItem(itemDto);
+        return Ok(item.ItemId);
+    }
 
-		return Ok(item.ItemId);
-	}
+    [HttpPut("{itemId}")]
+    public IActionResult EditItem([FromRoute] int itemId,
+        [FromBody] ItemModel changingItemModel)
+    {
+        if (itemId == 0)
+            return BadRequest();
 
-	[HttpPut("{itemId}")]
-	public IActionResult EditItem([FromRoute] int itemId,
-		[FromBody] ItemModel changingItemModel)
-	{
-		int? userId = HttpContext.GetUserId();
+        int userId = HttpContext.GetAuthorizedUserId();
 
-		if (itemId == 0)
-			return BadRequest();
-		if (userId == null)
-			return Unauthorized();
+        Item? item = itemsService.GetLightItemById(itemId, userId);
 
-		Item? item = itemsService.GetLightItemById(itemId, userId.Value);
+        if (item == null)
+            return NotFound();
 
-		if (item == null)
-			return NotFound();
+        ItemDto itemDto = changingItemModel.MapToItemDto(userId);
+        itemsService.EditItem(itemId, itemDto);
 
-		ItemDto itemDto = changingItemModel.MapToItemDto(userId.Value);
-		itemsService.EditItem(itemId, itemDto);
+        return NoContent();
+    }
 
-		return NoContent();
-	}
+    [HttpDelete("{itemId}")]
+    public IActionResult DeleteItem([FromRoute] int itemId)
+    {
+        int userId = HttpContext.GetAuthorizedUserId();
 
-	[HttpDelete("{itemId}")]
-	public IActionResult DeleteItem([FromRoute] int itemId)
-	{
-		int? userId = HttpContext.GetUserId();
+        if (itemId == 0)
+            return BadRequest();
 
-		if (itemId == 0)
-			return BadRequest();
-		if (userId == null)
-			return Unauthorized();
+        Item? item = itemsService.GetLightItemById(itemId, userId);
 
-		Item? item = itemsService.GetLightItemById(itemId, userId.Value);
+        if (item == null)
+            return NotFound();
 
-		if (item == null)
-			return NotFound();
+        itemsService.DeleteItem(item);
 
-		itemsService.DeleteItem(item);
+        return NoContent();
+    }
 
-		return NoContent();
-	}
+    [HttpGet("suggests")]
+    public IActionResult GetItemsSuggestion([FromQuery] string query)
+    {
+        int creatorId = HttpContext.GetAuthorizedUserId();
+
+        var itemSuggests = itemsService.GetItemSuggests(creatorId, query);
+        return Ok(itemSuggests.ConvertAll(s => new ItemSuggestViewModel(s)));
+    }
 }

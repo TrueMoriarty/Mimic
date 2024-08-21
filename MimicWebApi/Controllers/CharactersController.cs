@@ -1,9 +1,10 @@
 ﻿using DAL.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MimicWebApi.Models;
 using MimicWebApi.Utils;
 using MimicWebApi.Views.Characters;
-using Services;
+using Services.Characters;
 
 namespace MimicWebApi.Controllers;
 
@@ -32,5 +33,21 @@ public class CharactersController(ICharactersService charactersService) : Contro
         var character = charactersService.GetById(characterId);
 
         return character is null ? NotFound() : Ok(new CharacterViewModel(character));
+    }
+
+    [HttpPost]
+    public IActionResult CreateCharacter([FromBody] CharacterModel characterModel)
+    {
+        //валидация
+        if (string.IsNullOrWhiteSpace(characterModel.Name))
+            return BadRequest();
+
+        int userId = HttpContext.GetAuthorizedUserId();
+
+        var characterDto = characterModel.MapToCharacterDto(userId);
+
+        var character = charactersService.CreateCharacter(characterDto);
+
+        return Ok(character.CharacterId);
     }
 }
