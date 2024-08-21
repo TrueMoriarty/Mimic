@@ -1,5 +1,7 @@
+import ItemList from './ItemList';
+
 const Library = () => {
-  return <div>ItemsLibrary</div>;
+    return <ItemList />;
 };
 
 export default Library;

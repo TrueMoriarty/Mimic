@@ -34,8 +34,7 @@ internal class ItemRepository(MimicContext context) : GenericRepository<Item>(co
 			: query;
 
 		var paginatedQueryOrdered = queryOrdered
-			.Skip((paginateDataItemDto.PageIndex - 1)
-				* paginateDataItemDto.PageSize)
+			.Skip(paginateDataItemDto.PageIndex * paginateDataItemDto.PageSize)
 			.Take(paginateDataItemDto.PageSize);
 
 		var result = new PaginatedContainerDto<List<Item>>

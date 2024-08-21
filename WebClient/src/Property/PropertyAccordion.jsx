@@ -13,9 +13,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CircleIcon from '@mui/icons-material/Circle';
 import { useState } from 'react';
 
-const ItemAccordion = ({ item }) => {
+const PropertyAccordion = ({ property }) => {
     const [expanded, setExpanded] = useState(false);
-    const properties = item.properties;
+    const properties = property;
 
     return (
         <Accordion
@@ -24,18 +24,18 @@ const ItemAccordion = ({ item }) => {
         >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography sx={{ width: 'sm', flexShrink: 0, mr: 1 }}>
-                    {item.name}
+                    {property.name}
                 </Typography>
                 {!expanded && (
                     <Typography sx={trunicateTypographyStyle}>
-                        {item.description}
+                        {property.description}
                     </Typography>
                 )}
             </AccordionSummary>
             <AccordionDetails>
                 {expanded && (
                     <Typography sx={{ ...trunicateTypographyStyle, mb: 1 }}>
-                        {item.description}
+                        {property.description}
                     </Typography>
                 )}
                 {properties && (
@@ -57,4 +57,4 @@ const ItemAccordion = ({ item }) => {
     );
 };
 
-export default ItemAccordion;
+export default PropertyAccordion;
