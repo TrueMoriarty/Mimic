@@ -36,15 +36,15 @@ public class CharactersController(ICharactersService charactersService) : Contro
     }
 
     [HttpPost]
-    public IActionResult CreateCharacter([FromBody] CreatingCharacterModel creatingCharacterModel)
+    public IActionResult CreateCharacter([FromBody] CharacterModel characterModel)
     {
         //валидация
-        if (string.IsNullOrWhiteSpace(creatingCharacterModel.Name))
+        if (string.IsNullOrWhiteSpace(characterModel.Name))
             return BadRequest();
 
         int userId = HttpContext.GetAuthorizedUserId();
 
-        var characterDto = creatingCharacterModel.MapToCharacterDto(userId);
+        var characterDto = characterModel.MapToCharacterDto(userId);
 
         var character = charactersService.CreateCharacter(characterDto);
 

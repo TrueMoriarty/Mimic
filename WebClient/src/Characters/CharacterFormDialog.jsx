@@ -72,7 +72,6 @@ const CharacterFormDailog = ({ open, onClose, disabled }) => {
     };
 
     const handleSubmit = async (values) => {
-        console.log(values);
         setIsLoading(true);
         const { isOk, data } = await postAsync(API_CHARACTERS, values);
         setIsLoading(false);

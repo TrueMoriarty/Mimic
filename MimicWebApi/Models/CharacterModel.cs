@@ -3,7 +3,7 @@ using Services.Characters.Dto;
 
 namespace MimicWebApi.Models;
 
-public class CreatingCharacterModel : BaseModel
+public class CharacterModel : BaseModel
 {
     public List<ItemModel>? Items { get; set; }
 
