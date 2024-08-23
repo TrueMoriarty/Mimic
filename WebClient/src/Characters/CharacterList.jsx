@@ -2,9 +2,9 @@ import { Container, Grid, LinearProgress, Pagination } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getAsync } from '../axios';
 import { API_GET_PAGED_CHARACTERS } from '../contants';
-import CharacterDialog from './CharacterDialog';
 import CharacterListItem from './CharacterListItem';
 import useUserInfoContext from '../hooks/useUserInfoContext';
+import CharacterDailog from './CharacterDialog';
 
 const PAGE_SIZE = 6;
 
@@ -82,10 +82,12 @@ const CharacterList = () => {
                     </Grid>
                 )}
             </Grid>
-            <CharacterDialog
+            <CharacterDailog
+                title={'Character'}
                 characterId={selectedCharacterId}
                 open={isOpenDialog}
                 onClose={handleCloseCharacterDialog}
+                readOnly
             />
         </Container>
     );

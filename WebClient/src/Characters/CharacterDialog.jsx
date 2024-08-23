@@ -1,21 +1,56 @@
+import { Formik, useFormikContext } from 'formik';
+import React, { useEffect, useState } from 'react';
 import {
-    CircularProgress,
+    Button,
     Dialog,
+    DialogActions,
     DialogContent,
     DialogTitle,
-    Grid,
-    Typography,
 } from '@mui/material';
-import ImageBox from '../Components/ImageBox';
-import { useEffect, useState } from 'react';
+import { getAsync, postAsync } from '../axios';
+import { API_CHARACTERS, getCharacterByIdURL } from '../contants';
+import LoadingButton from '../Components/LoadingButton';
 import RoomNameTitle from './RoomName';
-import { getCharacterByIdURL } from '../contants';
-import { getAsync } from '../axios';
-import ItemAccordion from '../Items/ItemAccordion';
+import CharacterForm from './CharacterForm';
 
-const CharacterDialog = ({ characterId, open, onClose }) => {
-    const [character, setCharacter] = useState();
-    const [isLoading, setIsLoading] = useState(true);
+const initValues = {
+    name: '',
+    description: '',
+    items: [],
+};
+
+const CharacterDialogBody = ({ readOnly, onClose, isLoading }) => {
+    const { submitForm } = useFormikContext();
+    return (
+        <>
+            <DialogContent>
+                <CharacterForm readOnly={readOnly} />
+            </DialogContent>
+            {!readOnly && (
+                <DialogActions>
+                    <Button
+                        onClick={onClose}
+                        variant='contained'
+                        color='mimicSelected'
+                    >
+                        Cancel
+                    </Button>
+                    <LoadingButton
+                        caption={'Add'}
+                        onClick={submitForm}
+                        variant='contained'
+                        color='mimicSelected'
+                        isLoading={isLoading}
+                    />
+                </DialogActions>
+            )}
+        </>
+    );
+};
+
+const CharacterDailog = ({ title, open, onClose, readOnly, characterId }) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [character, setCharacter] = useState(null);
 
     useEffect(() => {
         if (!characterId || !open) return;
@@ -32,7 +67,12 @@ const CharacterDialog = ({ characterId, open, onClose }) => {
 
     const handleClose = () => {
         onClose?.();
-        setCharacter(null);
+    };
+
+    const handleSubmit = async (values) => {
+        setIsLoading(true);
+        const { isOk, data } = await postAsync(API_CHARACTERS, values);
+        setIsLoading(false);
     };
 
     return (
@@ -42,40 +82,28 @@ const CharacterDialog = ({ characterId, open, onClose }) => {
             open={open}
             onClose={handleClose}
         >
-            {isLoading && (
-                <CircularProgress
-                    color='mimicLoader'
-                    sx={{ mx: 'auto', my: 3 }}
+            <DialogTitle>
+                {title}
+                {readOnly && (
+                    <>
+                        {' '}
+                        <RoomNameTitle roomName={character?.roomName} />
+                    </>
+                )}
+            </DialogTitle>
+            <Formik
+                initialValues={character ?? initValues}
+                onSubmit={handleSubmit}
+                enableReinitialize
+            >
+                <CharacterDialogBody
+                    readOnly={readOnly}
+                    isLoading={isLoading}
+                    onClose={handleClose}
                 />
-            )}
-            {character && (
-                <>
-                    <DialogTitle>
-                        {character.name}{' '}
-                        <RoomNameTitle roomName={character.roomName} />
-                    </DialogTitle>
-                    <DialogContent>
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={4}>
-                                <ImageBox />
-                            </Grid>
-                            <Grid item xs={12} md={8}>
-                                <Typography variant='body2'>
-                                    {character.description}
-                                </Typography>
-                            </Grid>
-                            {character.items && (
-                                <Grid item xs={12}>
-                                    {character.items.map((i) => (
-                                        <ItemAccordion item={i} />
-                                    ))}
-                                </Grid>
-                            )}
-                        </Grid>
-                    </DialogContent>
-                </>
-            )}
+            </Formik>
         </Dialog>
     );
 };
-export default CharacterDialog;
+
+export default CharacterDailog;
