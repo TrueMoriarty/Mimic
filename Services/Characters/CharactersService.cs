@@ -27,9 +27,11 @@ public class CharactersService(IUnitOfWork unitOfWork, IStoragesService storages
 
         character.CreateDate = DateTime.Now;
 
-        Storage characterStorage = new() { Name = $"{character.Name}'s Storage" };
-        characterStorage.Items = characterDto.Items?.ConvertAll(i => i.MapToItem());
-        character.Storage = characterStorage;
+        character.Storage = new()
+        {
+            Name = $"{character.Name}'s Storage",
+            Items = characterDto.Items?.ConvertAll(i => i.MapToItem())
+        };
 
         unitOfWork.CharactersRepository.AddCharacter(character);
         unitOfWork.Save();
