@@ -54,8 +54,10 @@ const CharacterList = () => {
 
     return (
         <Container maxWidth='lg' sx={{ mt: 1 }}>
-            {/* todo: поправить прыганье  */}
-            {isLoading && <LinearProgress color='mimicLoader' />}
+            <LinearProgress
+                color='mimicLoader'
+                sx={{ visibility: isLoading ? 'visible' : 'hidden', mb: 1 }}
+            />
             <Grid container spacing={4} alignItems='center'>
                 {characterList?.map((character) => (
                     <Grid item xs={12} sm={4} key={character.characterId}>
