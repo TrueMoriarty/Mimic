@@ -13,7 +13,7 @@ public interface ICharactersService
     Character CreateCharacter(CharacterDto characterDto);
 }
 
-public class CharactersService(IUnitOfWork unitOfWork, IStoragesService storagesService, IItemsService itemsService) : ICharactersService
+public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
 {
     public PaginatedContainerDto<List<Character>> GetListByCreatorId(CharacterFilter filter) =>
         unitOfWork.CharactersRepository.GetPaginatedListByCreatorId(filter);
