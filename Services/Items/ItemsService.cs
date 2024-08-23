@@ -11,7 +11,6 @@ namespace Services.Items;
 public interface IItemsService
 {
     Item CreateItem(ItemDto itemDto);
-    void CreateBulkItems(List<Item> items);
     PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto);
     Item? GetItemById(int itemId);
     void EditItem(int itemId, ItemDto itemDto);
@@ -20,9 +19,7 @@ public interface IItemsService
     List<Item> GetItemSuggests(int creatorId, string query);
 }
 
-public class ItemsService(
-    IUnitOfWork unitOfWork,
-    IItemPropertiesService propertiesService) : IItemsService
+public class ItemsService(IUnitOfWork unitOfWork) : IItemsService
 {
     public Item CreateItem(ItemDto itemDto)
     {
@@ -32,12 +29,6 @@ public class ItemsService(
         unitOfWork.Save();
 
         return item;
-    }
-
-    public void CreateBulkItems(List<Item> items)
-    {
-        unitOfWork.ItemRepository.InsertRange(items);
-        unitOfWork.Save();
     }
 
     public PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto) =>
