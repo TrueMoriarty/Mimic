@@ -58,7 +58,6 @@ const ItemList = () => {
                         <ItemListProperty
                             key={item.itemId}
                             name={item.name}
-                            propertyName={item.propertyName}
                             description={item.description}
                             onClick={() => handleSelectItem(item.itemId)}
                         />

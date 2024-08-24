@@ -12,8 +12,6 @@ import { getItemById } from '../contants';
 import { getAsync } from '../axios';
 import ImageBox from '../Components/ImageBox';
 import PropertyAccordion from '../Property/PropertyAccordion';
-import PropertyNameTitle from './PropertyNameTitle';
-import ItemAccordion from '../Items/ItemAccordion';
 
 const ItemDialog = ({ itemId, open, onClose }) => {
     const [item, setItem] = useState();
@@ -21,7 +19,6 @@ const ItemDialog = ({ itemId, open, onClose }) => {
 
     useEffect(() => {
         if (!itemId || !open) return;
-
         (async () => {
             setIsLoading(true);
             const { isOk, data } = await getAsync(getItemById(itemId));
@@ -50,10 +47,7 @@ const ItemDialog = ({ itemId, open, onClose }) => {
             )}
             {item && (
                 <>
-                    <DialogTitle>
-                        {item.name}{' '}
-                        <PropertyNameTitle propertyName={item.propertyName} />
-                    </DialogTitle>
+                    <DialogTitle>{item.name}</DialogTitle>
                     <DialogContent>
                         <Grid container spacing={1}>
                             <Grid item xs={12} md={4}>
@@ -64,13 +58,15 @@ const ItemDialog = ({ itemId, open, onClose }) => {
                                     {item.description}
                                 </Typography>
                             </Grid>
-                            {item.properties && (
-                                <Grid property xs={12}>
-                                    {item.properties.map((i) => (
-                                        <ItemAccordion property={i} />
-                                    ))}
-                                </Grid>
-                            )}
+                            <Grid item xs={12}>
+                                {item.properties && (
+                                    <Grid property xs={12}>
+                                        {item.properties.map((i) => (
+                                            <PropertyAccordion property={i} />
+                                        ))}
+                                    </Grid>
+                                )}
+                            </Grid>
                         </Grid>
                     </DialogContent>
                 </>
