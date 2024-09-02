@@ -2,9 +2,9 @@ import { Container, Grid, LinearProgress, Pagination } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getAsync } from '../axios';
 import { API_GET_PAGED_CHARACTERS } from '../contants';
-import CharacterDialog from './CharacterDialog';
 import CharacterListItem from './CharacterListItem';
 import useUserInfoContext from '../hooks/useUserInfoContext';
+import CharacterDailog from './CharacterDialog';
 
 const PAGE_SIZE = 6;
 
@@ -54,8 +54,10 @@ const CharacterList = () => {
 
     return (
         <Container maxWidth='lg' sx={{ mt: 1 }}>
-            {/* todo: поправить прыганье  */}
-            {isLoading && <LinearProgress color='mimicLoader' />}
+            <LinearProgress
+                color='mimicLoader'
+                sx={{ visibility: isLoading ? 'visible' : 'hidden', mb: 1 }}
+            />
             <Grid container spacing={4} alignItems='center'>
                 {characterList?.map((character) => (
                     <Grid item xs={12} sm={4} key={character.characterId}>
@@ -82,10 +84,12 @@ const CharacterList = () => {
                     </Grid>
                 )}
             </Grid>
-            <CharacterDialog
+            <CharacterDailog
+                title={'Character'}
                 characterId={selectedCharacterId}
                 open={isOpenDialog}
                 onClose={handleCloseCharacterDialog}
+                readOnly
             />
         </Container>
     );

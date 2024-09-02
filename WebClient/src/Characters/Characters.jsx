@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import CharacterList from './CharacterList';
-import CharacterFormDailog from './CharacterFormDialog';
+import CharacterDailog from './CharacterDialog';
 import { Button, Container, Stack } from '@mui/material';
 
 const Characters = () => {
@@ -20,7 +20,8 @@ const Characters = () => {
                 </Stack>
             </Container>
             <CharacterList />
-            <CharacterFormDailog
+            <CharacterDailog
+                title={'Create character'}
                 open={isOpenCharaterForm}
                 onClose={() => setOpenCharaterForm(false)}
             />

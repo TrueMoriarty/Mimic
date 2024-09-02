@@ -17,7 +17,8 @@ public class ItemDto
             CreatorId = CreatorId,
             Name = Name,
             Description = Description,
-            StorageId = StorageId
+            StorageId = StorageId,
+            Properties = ItemProperties
         };
 
         return item;

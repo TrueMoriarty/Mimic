@@ -13,7 +13,7 @@ public interface ICharactersService
     Character CreateCharacter(CharacterDto characterDto);
 }
 
-public class CharactersService(IUnitOfWork unitOfWork, IStoragesService storagesService, IItemsService itemsService) : ICharactersService
+public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
 {
     public PaginatedContainerDto<List<Character>> GetListByCreatorId(CharacterFilter filter) =>
         unitOfWork.CharactersRepository.GetPaginatedListByCreatorId(filter);
@@ -27,15 +27,11 @@ public class CharactersService(IUnitOfWork unitOfWork, IStoragesService storages
 
         character.CreateDate = DateTime.Now;
 
-        var storage = storagesService.CreateStorage($"{character.Name}'s Storage", null);
-        character.StorageId = storage.StorageId;
-
-        if (characterDto.Items?.Count > 0)
-            foreach (var item in characterDto.Items)
-            {
-                item.StorageId = storage.StorageId;
-                itemsService.CreateItem(item);
-            }
+        character.Storage = new()
+        {
+            Name = $"{character.Name}'s Storage",
+            Items = characterDto.Items?.ConvertAll(i => i.MapToItem())
+        };
 
         unitOfWork.CharactersRepository.AddCharacter(character);
         unitOfWork.Save();

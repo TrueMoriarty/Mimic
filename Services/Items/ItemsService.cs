@@ -19,9 +19,7 @@ public interface IItemsService
     List<Item> GetItemSuggests(int creatorId, string query);
 }
 
-public class ItemsService(
-    IUnitOfWork unitOfWork,
-    IItemPropertiesService propertiesService) : IItemsService
+public class ItemsService(IUnitOfWork unitOfWork) : IItemsService
 {
     public Item CreateItem(ItemDto itemDto)
     {
@@ -30,16 +28,7 @@ public class ItemsService(
         unitOfWork.ItemRepository.Insert(item);
         unitOfWork.Save();
 
-        if (itemDto.ItemProperties is null) return item;
-        AddProperties(item, itemDto.ItemProperties);
-
         return item;
-    }
-
-    private void AddProperties(Item item, List<ItemProperty> properties)
-    {
-        properties.ForEach(p => p.ItemId = item.ItemId);
-        item.Properties = propertiesService.CreateBulkItemProperties(properties);
     }
 
     public PaginatedContainerDto<List<Item>> GetPaginatedItems(ItemFilter paginateDataItemDto) =>
