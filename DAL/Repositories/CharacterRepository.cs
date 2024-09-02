@@ -29,17 +29,12 @@ internal class CharacterRepository(MimicContext context) : GenericRepository<Cha
         return result;
     }
 
-    public Character GetById(int id) =>
+    public Character GetById(int id, bool readOnly) =>
         Get(
                 character => character.CharacterId == id,
                 includeProperties: "Room,Storage.Items.Properties",
-                readOnly: true
+                readOnly: readOnly
             )
             .FirstOrDefault();
 
-    public Character AddCharacter(Character character)
-    {
-        Insert(character);
-        return character;
-    }
 }

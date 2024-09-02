@@ -50,4 +50,19 @@ public class CharactersController(ICharactersService charactersService) : Contro
 
         return Ok(character.CharacterId);
     }
+
+    [HttpPatch("{characterId}")]
+    public IActionResult UpdateCharacter([FromRoute] int characterId, [FromBody] CharacterModel characterModel)
+    {
+        int userId = HttpContext.GetAuthorizedUserId();
+
+        var original = charactersService.GetById(characterId, true);
+        if (original is null)
+            return NotFound("Character is't found");
+
+        var changes = characterModel.MapToCharacterChangesDto(userId);
+        charactersService.EditCharacter(original, changes);
+
+        return NoContent();
+    }
 }

@@ -15,6 +15,6 @@ public class CharacterDto
     {
         CreatorId = CreatorId,
         Name = Name,
-        Description = Description, 
+        Description = Description,
     };
 }

@@ -14,4 +14,11 @@ public class CharacterModel : BaseModel
         Description = Description,
         Items = Items?.ConvertAll(i => i.MapToItemDto(creatorId))
     };
+
+    public CharacterChangesDto MapToCharacterChangesDto(int creatorId) => new()
+    {
+        Name = Name,
+        Description = Description,
+        Items = Items?.ConvertAll(i => i.MapToItemDto(creatorId))
+    };
 }
