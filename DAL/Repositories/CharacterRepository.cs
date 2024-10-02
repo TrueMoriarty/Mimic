@@ -16,6 +16,7 @@ internal class CharacterRepository(MimicContext context) : GenericRepository<Cha
             .Where(c => filter.CreatorId == null || c.CreatorId == filter.CreatorId);
 
         var paginatedList = query
+            .OrderByDescending(c => c.CreateDate)
             .Skip(filter.PageIndex * filter.PageSize)
             .Take(filter.PageSize);
 
@@ -35,4 +36,10 @@ internal class CharacterRepository(MimicContext context) : GenericRepository<Cha
                 readOnly: true
             )
             .FirstOrDefault();
+
+    public Character AddCharacter(Character character)
+    {
+        Insert(character);
+        return character;
+    }
 }

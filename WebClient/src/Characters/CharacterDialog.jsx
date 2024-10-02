@@ -9,7 +9,7 @@ import {
 import ImageBox from '../Components/ImageBox';
 import { useEffect, useState } from 'react';
 import RoomNameTitle from './RoomName';
-import { getCharacterById } from '../contants';
+import { getCharacterByIdURL } from '../contants';
 import { getAsync } from '../axios';
 import ItemAccordion from '../Items/ItemAccordion';
 
@@ -23,7 +23,7 @@ const CharacterDialog = ({ characterId, open, onClose }) => {
         (async () => {
             setIsLoading(true);
             const { isOk, data } = await getAsync(
-                getCharacterById(characterId)
+                getCharacterByIdURL(characterId)
             );
             isOk && setCharacter(data);
             setIsLoading(false);
