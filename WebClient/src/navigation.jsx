@@ -51,7 +51,7 @@ const Navigation = () => {
                             <Tabs
                                 value={currentTab}
                                 sx={{ mb: 0.5 }}
-                                textColor='inherit'
+                                textColor='mimic'
                                 TabIndicatorProps={{
                                     style: {
                                         background: '#6E8190',
