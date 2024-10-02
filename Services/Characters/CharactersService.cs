@@ -63,15 +63,6 @@ public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
             // TODO: это кал
             
 
-
-
-            // удаляем старые предметы
-            var oldItems = original.Storage.Items;
-            if (oldItems?.Count > 0)
-                unitOfWork.ItemRepository.DeleteRange(oldItems);
-            
-            // добовляем новые предметы
-            newCharacter.Storage.Items = changes.Items.ConvertAll(i => i.MapToItem());
         }
 
         unitOfWork.CharactersRepository.Update(newCharacter);

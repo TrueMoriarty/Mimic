@@ -4,6 +4,7 @@ namespace Services.Items.Dto;
 
 public class ItemDto
 {
+    public int? ItemId { get; set; }
     public int CreatorId { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
@@ -14,6 +15,7 @@ public class ItemDto
     {
         var item = new Item
         {
+            ItemId = ItemId ?? 0,
             CreatorId = CreatorId,
             Name = Name,
             Description = Description,
