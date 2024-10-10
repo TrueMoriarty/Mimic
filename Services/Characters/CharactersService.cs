@@ -58,13 +58,6 @@ public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
         if (changes.Description is not null)
             newCharacter.Description = changes.Description;
 
-        if (changes.Items is not null)
-        {
-            // TODO: это кал
-            
-
-        }
-
         unitOfWork.CharactersRepository.Update(newCharacter);
         unitOfWork.Save();
     }
