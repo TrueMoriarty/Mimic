@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CharacterList from './CharacterList';
 import CharacterDailog from './CharacterDialog';
 import { Button, Container, Stack } from '@mui/material';
+import { DAILOG_MODE } from '../contants';
 
 const Characters = () => {
     const [isOpenCharaterForm, setOpenCharaterForm] = useState(false);
@@ -24,6 +25,7 @@ const Characters = () => {
                 title={'Create character'}
                 open={isOpenCharaterForm}
                 onClose={() => setOpenCharaterForm(false)}
+                dialogMode={DAILOG_MODE.CREATE}
             />
         </>
     );

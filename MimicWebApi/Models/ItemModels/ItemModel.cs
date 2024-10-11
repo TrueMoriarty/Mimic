@@ -5,6 +5,7 @@ namespace MimicWebApi.Models.ItemModels;
 
 public class ItemModel : BaseModel
 {
+    public int? ItemId { get; set; }
     public int CreatorId { get; set; }
     public int? StorageId { get; set; }
 
@@ -28,6 +29,7 @@ public class ItemModel : BaseModel
     {
         var item = new Item
         {
+            ItemId = ItemId ?? 0,
             CreatorId = creatorId,
             StorageId = StorageId,
             Name = Name,

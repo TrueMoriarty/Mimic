@@ -60,6 +60,12 @@ public class CharactersController(ICharactersService charactersService) : Contro
         if (original is null)
             return NotFound();
 
+        Character character = characterModel.MapToCharacter(userId);
+        character.CharacterId = characterId;
+        character.CreateDate = original.CreateDate;
+
+        charactersService.EditCharacter(character);
+
         return NoContent();
     }
 }

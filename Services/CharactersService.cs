@@ -9,7 +9,7 @@ public interface ICharactersService
     PaginatedContainerDto<List<Character>> GetListByCreatorId(CharacterFilter filter);
     Character? GetById(int characterId, bool readOnly = true);
     Character CreateCharacter(Character character);
-    void EditCharacter(Character original);
+    void EditCharacter(Character editedCharacter);
 }
 
 public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
@@ -23,7 +23,12 @@ public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
     public Character CreateCharacter(Character character)
     {
         character.CreateDate = DateTime.Now;
-        character.Storage.Name ??= "Character Storage";
+
+        character.Storage ??= new Storage();
+        character.Storage.Name = "Character Storage";
+
+        foreach (var item in character.Storage.Items)
+            item.ItemId = 0;
 
         unitOfWork.CharactersRepository.Insert(character);
         unitOfWork.Save();
@@ -31,9 +36,9 @@ public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
         return character;
     }
 
-    public void EditCharacter(Character original)
+    public void EditCharacter(Character editedCharacter)
     {
-        unitOfWork.CharactersRepository.Update(original);
+        unitOfWork.CharactersRepository.Update(editedCharacter);
         unitOfWork.Save();
     }
 }

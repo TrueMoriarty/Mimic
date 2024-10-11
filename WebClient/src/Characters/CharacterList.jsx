@@ -1,7 +1,7 @@
 import { Container, Grid, LinearProgress, Pagination } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getAsync } from '../axios';
-import { API_GET_PAGED_CHARACTERS } from '../contants';
+import { API_GET_PAGED_CHARACTERS, DAILOG_MODE } from '../contants';
 import CharacterListItem from './CharacterListItem';
 import useUserInfoContext from '../hooks/useUserInfoContext';
 import CharacterDailog from './CharacterDialog';
@@ -48,6 +48,10 @@ const CharacterList = () => {
     };
 
     const handleCloseCharacterDialog = () => {
+        (async () => {
+            await loadCharacterList();
+        })();
+
         setIsOpenDialog(false);
         setSelectedCharacterId(null);
     };
@@ -89,7 +93,7 @@ const CharacterList = () => {
                 characterId={selectedCharacterId}
                 open={isOpenDialog}
                 onClose={handleCloseCharacterDialog}
-                readOnly
+                dialogMode={DAILOG_MODE.READ}
             />
         </Container>
     );
