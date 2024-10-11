@@ -16,7 +16,7 @@ import CharacterForm from './CharacterForm';
 const initValues = {
     name: '',
     description: '',
-    items: [],
+    storage: null,
 };
 
 const CharacterDialogBody = ({ readOnly, onClose, isLoading }) => {

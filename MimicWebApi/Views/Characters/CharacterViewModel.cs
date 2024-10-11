@@ -1,14 +1,14 @@
 ﻿using DAL.EfClasses;
+using MimicWebApi.Views.Storages;
 
 namespace MimicWebApi.Views.Characters;
 
 public class CharacterViewModel : CharacterBaseViewModel
 {
-    public ItemViewModel[] Items { get; set; }
+    public StorageViewModel Storage { get; set; }
 
     public CharacterViewModel(Character character) : base(character)
     {
-        Items = character.Storage?.Items?
-            .Select(i => new ItemViewModel(i)).ToArray();
+        Storage = new StorageViewModel(character.Storage);
     }
 }

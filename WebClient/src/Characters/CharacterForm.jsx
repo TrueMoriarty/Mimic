@@ -7,10 +7,12 @@ import ItemSearchGroup from '../Items/ItemSearchGroup';
 
 const CharacterForm = ({ readOnly }) => {
     const { values, setFieldValue } = useFormikContext();
+    const items = values.storage?.items;
 
     const handleAddItem = (item) => {
-        const newItems = [item, ...values.items];
-        setFieldValue('items', newItems);
+        const newItems = [item, ...(items ?? [])];
+        const newStorage = { ...values.storage, items: newItems };
+        setFieldValue('storage', newStorage);
     };
 
     return (
@@ -46,9 +48,9 @@ const CharacterForm = ({ readOnly }) => {
                     </Stack>
                 </Grid>
                 {!readOnly && <ItemSearchGroup onAddItem={handleAddItem} />}
-                {values.items && (
+                {items && (
                     <Grid item xs={12} sx={{ mt: 1 }}>
-                        {values.items.map((i, index) => (
+                        {items.map((i, index) => (
                             <ItemAccordion key={index} item={i} />
                         ))}
                     </Grid>
