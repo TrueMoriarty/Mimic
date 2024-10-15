@@ -10,11 +10,10 @@ import {
     Stack,
 } from '@mui/material';
 import { getAsync, postAsync, putAsync } from '../axios';
-import { API_CHARACTERS, DAILOG_MODE, getCharacterByIdURL } from '../contants';
+import { API_CHARACTERS, DAILOG_MODE, getCharacterByIdUrl } from '../contants';
 import LoadingButton from '../Components/LoadingButton';
 import RoomNameTitle from './RoomName';
 import CharacterForm from './CharacterForm';
-import EditIcon from '@mui/icons-material/Edit';
 
 const initValues = {
     name: '',
@@ -26,7 +25,7 @@ const CharacterDialogBody = ({ dialogMode, isLoading }) => {
     const { submitForm } = useFormikContext();
 
     const readOnly = dialogMode === DAILOG_MODE.READ;
-    const buttonTitle = dialogMode === DAILOG_MODE.CREATE ? 'Add' : 'Edit';
+    const buttonTitle = dialogMode === DAILOG_MODE.CREATE ? 'Create' : 'Save';
     return (
         <>
             <DialogContent>
@@ -58,7 +57,7 @@ const CharacterDailog = ({ title, open, onClose, dialogMode, characterId }) => {
         (async () => {
             setIsLoading(true);
             const { isOk, data } = await getAsync(
-                getCharacterByIdURL(characterId)
+                getCharacterByIdUrl(characterId)
             );
             isOk && setCharacter(data);
             setIsLoading(false);
@@ -78,15 +77,11 @@ const CharacterDailog = ({ title, open, onClose, dialogMode, characterId }) => {
         const httpMethod = isCreate ? postAsync : putAsync;
         const url = isCreate
             ? API_CHARACTERS
-            : API_CHARACTERS + `/${values.characterId}`;
+            : getCharacterByIdUrl(values.characterId);
 
         const { isOk, data } = await httpMethod(url, values);
 
         setIsLoading(false);
-    };
-
-    const handleSetEditMode = () => {
-        setMode(DAILOG_MODE.EDIT);
     };
 
     const canShowRoomNameTitle =
@@ -100,32 +95,13 @@ const CharacterDailog = ({ title, open, onClose, dialogMode, characterId }) => {
             onClose={handleClose}
         >
             <DialogTitle>
-                <Stack
-                    direction='row'
-                    spacing={2}
-                    sx={{
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Box>
-                        {title}
-                        {canShowRoomNameTitle && (
-                            <>
-                                {' '}
-                                <RoomNameTitle roomName={character?.roomName} />
-                            </>
-                        )}
-                    </Box>
-                    {mode === DAILOG_MODE.READ && (
-                        <IconButton
-                            aria-label='edit'
-                            onClick={handleSetEditMode}
-                        >
-                            <EditIcon />
-                        </IconButton>
-                    )}
-                </Stack>
+                {title}
+                {canShowRoomNameTitle && (
+                    <>
+                        {' '}
+                        <RoomNameTitle roomName={character?.roomName} />
+                    </>
+                )}
             </DialogTitle>
             <Formik
                 initialValues={character ?? initValues}

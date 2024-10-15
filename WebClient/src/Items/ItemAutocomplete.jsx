@@ -1,7 +1,7 @@
 import { Autocomplete, Stack, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { getAsync } from '../axios';
-import { getItemSuggestsURL } from '../contants';
+import { getItemSuggestsUrl } from '../contants';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 
@@ -13,7 +13,7 @@ const ItemAutocomplete = ({ onSelectItem }) => {
     const handleSearch = async (query) => {
         if (!query || query.length < 3) return;
 
-        const { isOk, data } = await getAsync(getItemSuggestsURL(query, 45));
+        const { isOk, data } = await getAsync(getItemSuggestsUrl(query, 45));
 
         if (isOk) setOptions(data);
     };

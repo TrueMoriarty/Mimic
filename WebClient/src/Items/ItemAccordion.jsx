@@ -2,10 +2,15 @@ import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
+    Box,
+    Button,
+    ButtonGroup,
+    Grid,
     List,
     ListItem,
     ListItemIcon,
     ListItemText,
+    Stack,
     Typography,
 } from '@mui/material';
 import { trunicateTypographyStyle } from '../mimicTheme';
@@ -13,24 +18,60 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CircleIcon from '@mui/icons-material/Circle';
 import { useState } from 'react';
 
-const ItemAccordion = ({ item }) => {
+const ItemAccordion = ({ item, onEdit, onDelete }) => {
     const [expanded, setExpanded] = useState(false);
     const properties = item.properties;
+
+    const handleEditItem = (e) => {
+        e.stopPropagation();
+        onEdit?.(item);
+    };
+
+    const handleDeleteItem = (e) => {
+        e.stopPropagation();
+        onDelete?.(item);
+    };
 
     return (
         <Accordion
             expanded={expanded}
             onChange={() => setExpanded((exp) => !exp)}
         >
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography sx={{ width: 'sm', flexShrink: 0, mr: 1 }}>
-                    {item.name}
-                </Typography>
-                {!expanded && (
-                    <Typography sx={trunicateTypographyStyle}>
-                        {item.description}
-                    </Typography>
-                )}
+            <AccordionSummary sx={{ width: 1 }} expandIcon={<ExpandMoreIcon />}>
+                <Stack
+                    direction='row'
+                    spacing={1}
+                    sx={{
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        width: '100%',
+                        mr: 1,
+                    }}
+                >
+                    <Stack
+                        direction='row'
+                        spacing={1}
+                        sx={{
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Typography>{item.name}</Typography>
+                        {!expanded && (
+                            <Typography
+                                sx={{
+                                    ...trunicateTypographyStyle,
+                                }}
+                            >
+                                {item.description}
+                            </Typography>
+                        )}
+                    </Stack>
+                    <ButtonGroup size='small' color='mimicSelected'>
+                        <Button onClick={handleEditItem}>Edit</Button>
+                        <Button onClick={handleDeleteItem}>Delete</Button>
+                    </ButtonGroup>
+                </Stack>
             </AccordionSummary>
             <AccordionDetails>
                 {expanded && (

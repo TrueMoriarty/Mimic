@@ -23,12 +23,12 @@ public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
     public Character CreateCharacter(Character character)
     {
         character.CreateDate = DateTime.Now;
-
         character.Storage ??= new Storage();
         character.Storage.Name = "Character Storage";
 
-        foreach (var item in character.Storage.Items)
-            item.ItemId = 0;
+        if (character.Storage.Items is not null)
+            foreach (var item in character.Storage.Items)
+                item.ItemId = 0;
 
         unitOfWork.CharactersRepository.Insert(character);
         unitOfWork.Save();

@@ -21,23 +21,23 @@ const CharacterList = () => {
     useEffect(() => {
         if (!userInfo) return;
 
-        (async () => {
-            await loadCharacterList();
-        })();
+        loadCharacterList();
     }, [page, userInfo]);
 
-    const loadCharacterList = async () => {
+    const loadCharacterList = () => {
         setIsLoading(true);
-        const { isOk, data } = await getAsync(
-            API_GET_PAGED_CHARACTERS +
-                `?pageSize=${PAGE_SIZE}&pageIndex=${page - 1}&creatorId=${
-                    userInfo.userId
-                }`
-        );
-        if (isOk) {
-            setCharacterList(data.value);
-            setPageCount(data.totalPages);
-        }
+        (async () => {
+            const { isOk, data } = await getAsync(
+                API_GET_PAGED_CHARACTERS +
+                    `?pageSize=${PAGE_SIZE}&pageIndex=${page - 1}&creatorId=${
+                        userInfo.userId
+                    }`
+            );
+            if (isOk) {
+                setCharacterList(data.value);
+                setPageCount(data.totalPages);
+            }
+        })();
 
         setIsLoading(false);
     };
@@ -48,9 +48,7 @@ const CharacterList = () => {
     };
 
     const handleCloseCharacterDialog = () => {
-        (async () => {
-            await loadCharacterList();
-        })();
+        loadCharacterList();
 
         setIsOpenDialog(false);
         setSelectedCharacterId(null);
@@ -93,7 +91,7 @@ const CharacterList = () => {
                 characterId={selectedCharacterId}
                 open={isOpenDialog}
                 onClose={handleCloseCharacterDialog}
-                dialogMode={DAILOG_MODE.READ}
+                dialogMode={DAILOG_MODE.EDIT}
             />
         </Container>
     );

@@ -4,13 +4,35 @@ import ImageBox from '../Components/ImageBox';
 import TextFieldFormik from '../Components/Formik/TextFieldFormik';
 import ItemAccordion from '../Items/ItemAccordion';
 import ItemSearchGroup from '../Items/ItemSearchGroup';
+import { deleteAsync } from '../axios';
+import { getItemByIdUrl } from '../contants';
 
 const CharacterForm = ({ readOnly }) => {
     const { values, setFieldValue } = useFormikContext();
-    const items = values.storage?.items;
+    const items = values.storage?.items ?? [];
 
     const handleAddItem = (item) => {
-        const newItems = [item, ...(items ?? [])];
+        const newItems = [item, ...items];
+        updateItemInStorage(newItems);
+    };
+
+    const handleDeleteItem = async (item) => {
+        const deletingItemId = item.itemId;
+        const { isOk } = await deleteAsync(getItemByIdUrl(deletingItemId));
+        if (isOk) {
+            const newItems = [...items];
+            const index = items.findIndex((i) => i.itemId === deletingItemId);
+            newItems.splice(index, 1);
+            updateItemInStorage(newItems);
+        }
+    };
+
+    const handleEditItem = (item) => {
+        //todo: добавить изменение предмета
+        console.log('EDIT ITEM ', item);
+    };
+
+    const updateItemInStorage = (newItems) => {
         const newStorage = { ...values.storage, items: newItems };
         setFieldValue('storage', newStorage);
     };
@@ -51,7 +73,12 @@ const CharacterForm = ({ readOnly }) => {
                 {items && (
                     <Grid item xs={12} sx={{ mt: 1 }}>
                         {items.map((i, index) => (
-                            <ItemAccordion key={index} item={i} />
+                            <ItemAccordion
+                                key={index}
+                                item={i}
+                                onDelete={handleDeleteItem}
+                                onEdit={handleEditItem}
+                            />
                         ))}
                     </Grid>
                 )}
