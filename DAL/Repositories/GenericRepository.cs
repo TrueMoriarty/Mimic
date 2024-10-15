@@ -79,13 +79,6 @@ internal class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDispos
         dbSet.Remove(entityToDelete);
     }
 
-    public virtual void DeleteRange(IEnumerable<TEntity> entities)
-    {
-        var detachedEntites = entities.Where(e => context.Entry(e).State == EntityState.Detached);
-        dbSet.AttachRange(detachedEntites);
-        dbSet.RemoveRange(entities);
-    }
-
     public virtual void Update(TEntity entityToUpdate)
     {
         dbSet.Attach(entityToUpdate);

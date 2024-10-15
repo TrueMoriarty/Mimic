@@ -6,8 +6,6 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    IconButton,
-    Stack,
 } from '@mui/material';
 import { getAsync, postAsync, putAsync } from '../axios';
 import { API_CHARACTERS, DAILOG_MODE, getCharacterByIdUrl } from '../contants';
