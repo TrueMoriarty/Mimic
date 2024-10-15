@@ -12,6 +12,7 @@ export const API_GET_PAGED_CHARACTERS = BACK_URL + 'characters/page';
 export const getCharacterByIdUrl = (id) => BACK_URL + `characters/${id}`;
 
 //Items
+export const API_ITEMS = BACK_URL + 'items';
 export const getItemSuggestsUrl = (query, creatorId) =>
     BACK_URL + `items/suggests?query=${query}&creatorId=${creatorId}`;
 

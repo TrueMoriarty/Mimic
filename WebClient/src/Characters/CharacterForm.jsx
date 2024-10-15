@@ -4,16 +4,27 @@ import ImageBox from '../Components/ImageBox';
 import TextFieldFormik from '../Components/Formik/TextFieldFormik';
 import ItemAccordion from '../Items/ItemAccordion';
 import ItemSearchGroup from '../Items/ItemSearchGroup';
-import { deleteAsync } from '../axios';
-import { getItemByIdUrl } from '../contants';
+import { deleteAsync, postAsync } from '../axios';
+import { API_ITEMS, getItemByIdUrl } from '../contants';
 
 const CharacterForm = ({ readOnly }) => {
     const { values, setFieldValue } = useFormikContext();
     const items = values.storage?.items ?? [];
 
-    const handleAddItem = (item) => {
-        const newItems = [item, ...items];
-        updateItemInStorage(newItems);
+    const handleAddItem = async (item) => {
+        if (values.characterId) {
+            const model = { ...item };
+            model.storageId = values.storage.storageId;
+            const { isOk, data } = await postAsync(API_ITEMS, model);
+            if (isOk) {
+                item.itemId = data;
+                const newItems = [item, ...items];
+                updateItemInStorage(newItems);
+            }
+        } else {
+            const newItems = [item, ...items];
+            updateItemInStorage(newItems);
+        }
     };
 
     const handleDeleteItem = async (item) => {

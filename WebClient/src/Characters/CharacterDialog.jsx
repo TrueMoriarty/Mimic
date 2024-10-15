@@ -88,12 +88,7 @@ const CharacterDailog = ({ title, open, onClose, dialogMode, characterId }) => {
         mode === DAILOG_MODE.READ || mode === DAILOG_MODE.EDIT;
 
     return (
-        <Dialog
-            fullWidth={'md'}
-            maxWidth={'md'}
-            open={open}
-            onClose={handleClose}
-        >
+        <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleClose}>
             <DialogTitle>
                 {title}
                 {canShowRoomNameTitle && (

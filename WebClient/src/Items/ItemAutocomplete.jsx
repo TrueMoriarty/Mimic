@@ -68,7 +68,7 @@ const ItemAutocomplete = ({ onSelectItem }) => {
                                     </span>
                                 ))}
                             </Typography>
-                            <Typography variant='caption' sx={{ ml: 1 }}>
+                            <Typography variant='caption'>
                                 {option.description}
                             </Typography>
                         </Stack>
