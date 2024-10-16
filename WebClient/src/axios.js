@@ -15,3 +15,5 @@ const wrapAction = async (action, ...props) => {
 
 export const getAsync = (...props) => wrapAction(axios.get, ...props);
 export const postAsync = (...props) => wrapAction(axios.post, ...props);
+export const putAsync = (...props) => wrapAction(axios.put, ...props);
+export const deleteAsync = (...props) => wrapAction(axios.delete, ...props);

@@ -1,10 +1,11 @@
 ﻿using DAL.Dto;
+using DAL.EfClasses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Models;
 using MimicWebApi.Utils;
 using MimicWebApi.Views.Characters;
-using Services.Characters;
+using Services;
 
 namespace MimicWebApi.Controllers;
 
@@ -44,10 +45,27 @@ public class CharactersController(ICharactersService charactersService) : Contro
 
         int userId = HttpContext.GetAuthorizedUserId();
 
-        var characterDto = characterModel.MapToCharacterDto(userId);
+        Character character = characterModel.MapToCharacter(userId);
+        int characterId = charactersService.CreateCharacter(character).CharacterId;
 
-        var character = charactersService.CreateCharacter(characterDto);
+        return Ok(characterId);
+    }
 
-        return Ok(character.CharacterId);
+    [HttpPut("{characterId}")]
+    public IActionResult UpdateCharacter([FromRoute] int characterId, [FromBody] CharacterModel characterModel)
+    {
+        int userId = HttpContext.GetAuthorizedUserId();
+
+        var original = charactersService.GetById(characterId, true);
+        if (original is null)
+            return NotFound();
+
+        Character character = characterModel.MapToCharacter(userId);
+        character.CharacterId = characterId;
+        character.CreateDate = original.CreateDate;
+
+        charactersService.EditCharacter(character);
+
+        return NoContent();
     }
 }

@@ -17,6 +17,4 @@ public interface IGenericRepository<TEntity> : IDisposable
     void Delete(TEntity entityToDelete);
 
     void Update(TEntity entityToUpdate);
-
-
 }

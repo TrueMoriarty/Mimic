@@ -1,7 +1,7 @@
 import { Container, Grid, LinearProgress, Pagination } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getAsync } from '../axios';
-import { API_GET_PAGED_CHARACTERS } from '../contants';
+import { API_GET_PAGED_CHARACTERS, DAILOG_MODE } from '../contants';
 import CharacterListItem from './CharacterListItem';
 import useUserInfoContext from '../hooks/useUserInfoContext';
 import CharacterDailog from './CharacterDialog';
@@ -21,23 +21,23 @@ const CharacterList = () => {
     useEffect(() => {
         if (!userInfo) return;
 
-        (async () => {
-            await loadCharacterList();
-        })();
+        loadCharacterList();
     }, [page, userInfo]);
 
-    const loadCharacterList = async () => {
+    const loadCharacterList = () => {
         setIsLoading(true);
-        const { isOk, data } = await getAsync(
-            API_GET_PAGED_CHARACTERS +
-                `?pageSize=${PAGE_SIZE}&pageIndex=${page - 1}&creatorId=${
-                    userInfo.userId
-                }`
-        );
-        if (isOk) {
-            setCharacterList(data.value);
-            setPageCount(data.totalPages);
-        }
+        (async () => {
+            const { isOk, data } = await getAsync(
+                API_GET_PAGED_CHARACTERS +
+                    `?pageSize=${PAGE_SIZE}&pageIndex=${page - 1}&creatorId=${
+                        userInfo.userId
+                    }`
+            );
+            if (isOk) {
+                setCharacterList(data.value);
+                setPageCount(data.totalPages);
+            }
+        })();
 
         setIsLoading(false);
     };
@@ -48,6 +48,8 @@ const CharacterList = () => {
     };
 
     const handleCloseCharacterDialog = () => {
+        loadCharacterList();
+
         setIsOpenDialog(false);
         setSelectedCharacterId(null);
     };
@@ -89,7 +91,7 @@ const CharacterList = () => {
                 characterId={selectedCharacterId}
                 open={isOpenDialog}
                 onClose={handleCloseCharacterDialog}
-                readOnly
+                dialogMode={DAILOG_MODE.EDIT}
             />
         </Container>
     );

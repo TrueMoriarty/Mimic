@@ -1,14 +1,14 @@
 import { Formik, useFormikContext } from 'formik';
 import React, { useEffect, useState } from 'react';
 import {
-    Button,
+    Box,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
 } from '@mui/material';
-import { getAsync, postAsync } from '../axios';
-import { API_CHARACTERS, getCharacterByIdURL } from '../contants';
+import { getAsync, postAsync, putAsync } from '../axios';
+import { API_CHARACTERS, DAILOG_MODE, getCharacterByIdUrl } from '../contants';
 import LoadingButton from '../Components/LoadingButton';
 import RoomNameTitle from './RoomName';
 import CharacterForm from './CharacterForm';
@@ -16,11 +16,14 @@ import CharacterForm from './CharacterForm';
 const initValues = {
     name: '',
     description: '',
-    items: [],
+    storage: null,
 };
 
-const CharacterDialogBody = ({ readOnly, onClose, isLoading }) => {
+const CharacterDialogBody = ({ dialogMode, isLoading }) => {
     const { submitForm } = useFormikContext();
+
+    const readOnly = dialogMode === DAILOG_MODE.READ;
+    const buttonTitle = dialogMode === DAILOG_MODE.CREATE ? 'Create' : 'Save';
     return (
         <>
             <DialogContent>
@@ -28,15 +31,8 @@ const CharacterDialogBody = ({ readOnly, onClose, isLoading }) => {
             </DialogContent>
             {!readOnly && (
                 <DialogActions>
-                    <Button
-                        onClick={onClose}
-                        variant='contained'
-                        color='mimicSelected'
-                    >
-                        Cancel
-                    </Button>
                     <LoadingButton
-                        caption={'Add'}
+                        caption={buttonTitle}
                         onClick={submitForm}
                         variant='contained'
                         color='mimicSelected'
@@ -48,9 +44,10 @@ const CharacterDialogBody = ({ readOnly, onClose, isLoading }) => {
     );
 };
 
-const CharacterDailog = ({ title, open, onClose, readOnly, characterId }) => {
+const CharacterDailog = ({ title, open, onClose, dialogMode, characterId }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [character, setCharacter] = useState(null);
+    const [mode, setMode] = useState(dialogMode);
 
     useEffect(() => {
         if (!characterId || !open) return;
@@ -58,7 +55,7 @@ const CharacterDailog = ({ title, open, onClose, readOnly, characterId }) => {
         (async () => {
             setIsLoading(true);
             const { isOk, data } = await getAsync(
-                getCharacterByIdURL(characterId)
+                getCharacterByIdUrl(characterId)
             );
             isOk && setCharacter(data);
             setIsLoading(false);
@@ -66,25 +63,33 @@ const CharacterDailog = ({ title, open, onClose, readOnly, characterId }) => {
     }, [open]);
 
     const handleClose = () => {
+        setCharacter(null);
+        setMode(dialogMode);
         onClose?.();
     };
 
     const handleSubmit = async (values) => {
         setIsLoading(true);
-        const { isOk, data } = await postAsync(API_CHARACTERS, values);
+
+        const isCreate = mode === DAILOG_MODE.CREATE;
+        const httpMethod = isCreate ? postAsync : putAsync;
+        const url = isCreate
+            ? API_CHARACTERS
+            : getCharacterByIdUrl(values.characterId);
+
+        const { isOk, data } = await httpMethod(url, values);
+
         setIsLoading(false);
     };
 
+    const canShowRoomNameTitle =
+        mode === DAILOG_MODE.READ || mode === DAILOG_MODE.EDIT;
+
     return (
-        <Dialog
-            fullWidth={'md'}
-            maxWidth={'md'}
-            open={open}
-            onClose={handleClose}
-        >
+        <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleClose}>
             <DialogTitle>
                 {title}
-                {readOnly && (
+                {canShowRoomNameTitle && (
                     <>
                         {' '}
                         <RoomNameTitle roomName={character?.roomName} />
@@ -97,7 +102,7 @@ const CharacterDailog = ({ title, open, onClose, readOnly, characterId }) => {
                 enableReinitialize
             >
                 <CharacterDialogBody
-                    readOnly={readOnly}
+                    dialogMode={mode}
                     isLoading={isLoading}
                     onClose={handleClose}
                 />

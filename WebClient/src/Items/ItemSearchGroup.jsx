@@ -3,14 +3,14 @@ import ItemAutocomplete from './ItemAutocomplete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
 import { getAsync } from '../axios';
-import { getItemByIdURL } from '../contants';
+import { getItemByIdUrl } from '../contants';
 
 const ItemSearchGroup = ({ onAddItem }) => {
     const [selectedItem, setSelectedItem] = useState(null);
 
     const handleAddItem = async () => {
         const { isOk, data } = await getAsync(
-            getItemByIdURL(selectedItem.itemId)
+            getItemByIdUrl(selectedItem.itemId)
         );
         isOk && onAddItem?.(data);
     };

@@ -3,9 +3,9 @@ using DAL.EfClasses;
 
 namespace DAL.Repositories.Interfaces;
 
-public interface ICharacterRepository : IDisposable
+public interface ICharacterRepository : IGenericRepository<Character>
 {
     PaginatedContainerDto<List<Character>> GetPaginatedListByCreatorId(CharacterFilter filter);
-    Character GetById(int id);
-    Character AddCharacter(Character character);
+    Character GetById(int id, bool readOnly = true);
+
 }

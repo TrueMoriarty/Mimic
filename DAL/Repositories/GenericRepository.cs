@@ -40,7 +40,7 @@ internal class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDispos
         }
 
         foreach (var includeProperty in includeProperties
-                             .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                     .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
         {
             query = query.Include(includeProperty);
         }

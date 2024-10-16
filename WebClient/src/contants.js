@@ -9,10 +9,18 @@ export const API_GET_USER_INFO = BACK_URL + 'users/info';
 //Characters
 export const API_CHARACTERS = BACK_URL + 'characters';
 export const API_GET_PAGED_CHARACTERS = BACK_URL + 'characters/page';
-export const getCharacterByIdURL = (id) => BACK_URL + `characters/${id}`;
+export const getCharacterByIdUrl = (id) => BACK_URL + `characters/${id}`;
 
 //Items
-export const getItemSuggestsURL = (query, creatorId) =>
+export const API_ITEMS = BACK_URL + 'items';
+export const getItemSuggestsUrl = (query, creatorId) =>
     BACK_URL + `items/suggests?query=${query}&creatorId=${creatorId}`;
 
-export const getItemByIdURL = (id) => BACK_URL + `items/${id}`;
+export const getItemByIdUrl = (id) => BACK_URL + `items/${id}`;
+
+// ENUMS
+export const DAILOG_MODE = {
+    READ: 1,
+    EDIT: 2,
+    CREATE: 3,
+};
