@@ -1,7 +1,6 @@
 import { Formik, useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-    Box,
     Dialog,
     DialogActions,
     DialogContent,
@@ -12,6 +11,7 @@ import { API_CHARACTERS, DAILOG_MODE, getCharacterByIdUrl } from '../contants';
 import LoadingButton from '../Components/LoadingButton';
 import RoomNameTitle from './RoomName';
 import CharacterForm from './CharacterForm';
+import useNotification from '../hooks/useNotification';
 
 const initValues = {
     name: '',
@@ -44,10 +44,19 @@ const CharacterDialogBody = ({ dialogMode, isLoading }) => {
     );
 };
 
-const CharacterDailog = ({ title, open, onClose, dialogMode, characterId }) => {
+const CharacterDailog = ({ open, onClose, dialogMode, characterId }) => {
+    const [title, setTitle] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [character, setCharacter] = useState(null);
     const [mode, setMode] = useState(dialogMode);
+    const { pushSuccessNotify, pushErrorNotify, clearAllNotification } =
+        useNotification();
+
+    const isCreate = mode === DAILOG_MODE.CREATE;
+
+    useEffect(() => {
+        setTitle(isCreate ? 'Create Character' : 'Character');
+    }, [mode]);
 
     useEffect(() => {
         if (!characterId || !open) return;
@@ -58,6 +67,7 @@ const CharacterDailog = ({ title, open, onClose, dialogMode, characterId }) => {
                 getCharacterByIdUrl(characterId)
             );
             isOk && setCharacter(data);
+
             setIsLoading(false);
         })();
     }, [open]);
@@ -65,19 +75,36 @@ const CharacterDailog = ({ title, open, onClose, dialogMode, characterId }) => {
     const handleClose = () => {
         setCharacter(null);
         setMode(dialogMode);
+        clearAllNotification();
         onClose?.();
+    };
+
+    const createCharacter = async (character) => {
+        const { isOk, data } = await postAsync(API_CHARACTERS, character);
+        if (isOk) {
+            pushSuccessNotify('Персонаж успешно создан');
+            setMode(DAILOG_MODE.EDIT);
+            setCharacter(data);
+        } else {
+            pushErrorNotify('Не удалось создать персонажа');
+        }
+    };
+
+    const changeCharacter = async (character) => {
+        const { isOk, data } = await putAsync(
+            getCharacterByIdUrl(character.characterId),
+            character
+        );
+
+        if (isOk) pushSuccessNotify('Персонаж успешно изменен');
+        else pushErrorNotify('Не удалось изменить персонажа');
     };
 
     const handleSubmit = async (values) => {
         setIsLoading(true);
 
-        const isCreate = mode === DAILOG_MODE.CREATE;
-        const httpMethod = isCreate ? postAsync : putAsync;
-        const url = isCreate
-            ? API_CHARACTERS
-            : getCharacterByIdUrl(values.characterId);
-
-        const { isOk, data } = await httpMethod(url, values);
+        if (isCreate) await createCharacter(values);
+        else await changeCharacter(values);
 
         setIsLoading(false);
     };

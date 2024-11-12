@@ -6,12 +6,15 @@ import { ThemeProvider } from '@mui/material';
 import { mimicTheme } from './mimicTheme.js';
 import './index.css';
 import { UserInfoContextProvider } from './contexts/UserInfoContext.jsx';
+import NotificationContextProvider from './contexts/NotificationContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <ThemeProvider theme={mimicTheme}>
         <BrowserRouter>
             <UserInfoContextProvider>
-                <App />
+                <NotificationContextProvider>
+                    <App />
+                </NotificationContextProvider>
             </UserInfoContextProvider>
         </BrowserRouter>
     </ThemeProvider>

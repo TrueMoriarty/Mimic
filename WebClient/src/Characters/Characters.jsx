@@ -22,7 +22,6 @@ const Characters = () => {
             </Container>
             <CharacterList />
             <CharacterDailog
-                title={'Create character'}
                 open={isOpenCharaterForm}
                 onClose={() => setOpenCharaterForm(false)}
                 dialogMode={DAILOG_MODE.CREATE}
