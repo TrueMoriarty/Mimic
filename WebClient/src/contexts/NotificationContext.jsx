@@ -1,6 +1,6 @@
 import { Alert, IconButton, Stack, Zoom } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 
 export const NotificationContext = createContext({});
 
