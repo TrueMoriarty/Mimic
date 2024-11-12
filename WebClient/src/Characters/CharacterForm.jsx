@@ -6,10 +6,13 @@ import ItemAccordion from '../Items/ItemAccordion';
 import ItemSearchGroup from '../Items/ItemSearchGroup';
 import { deleteAsync, postAsync } from '../axios';
 import { API_ITEMS, getItemByIdUrl } from '../contants';
+import useNotification from '../hooks/useNotification';
 
 const CharacterForm = ({ readOnly }) => {
     const { values, setFieldValue } = useFormikContext();
     const items = values.storage?.items ?? [];
+
+    const { pushSuccessNotify, pushWarningNotify } = useNotification();
 
     const handleAddItem = async (item) => {
         if (values.characterId) {
@@ -20,6 +23,7 @@ const CharacterForm = ({ readOnly }) => {
                 item.itemId = data;
                 const newItems = [item, ...items];
                 updateItemInStorage(newItems);
+                pushSuccessNotify('Предмет успешно добавлен');
             }
         } else {
             const newItems = [item, ...items];
@@ -35,12 +39,12 @@ const CharacterForm = ({ readOnly }) => {
             const index = items.findIndex((i) => i.itemId === deletingItemId);
             newItems.splice(index, 1);
             updateItemInStorage(newItems);
+            pushSuccessNotify('Предмет успешно удален');
         }
     };
 
     const handleEditItem = (item) => {
-        //todo: добавить изменение предмета
-        console.log('EDIT ITEM ', item);
+        pushWarningNotify('Упс....Изменения предметов еще нет((');
     };
 
     const updateItemInStorage = (newItems) => {

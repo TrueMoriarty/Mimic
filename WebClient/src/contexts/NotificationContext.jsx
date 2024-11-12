@@ -25,6 +25,9 @@ function NotificationContextProvider({ children }) {
 
     const pushErrorNotify = (message) => pushNotify(message, NotifyType.Error);
 
+    const pushWarningNotify = (message) =>
+        pushNotify(message, NotifyType.Warning);
+
     const removeNotify = (index) => {
         const deletedNotifies = [...notifies];
         deletedNotifies.splice(index, 1);
@@ -42,6 +45,7 @@ function NotificationContextProvider({ children }) {
                 pushNotify: pushNotify,
                 pushSuccessNotify: pushSuccessNotify,
                 pushErrorNotify: pushErrorNotify,
+                pushWarningNotify: pushWarningNotify,
                 clearAllNotification: clearAllNotification,
             }}
         >
@@ -61,7 +65,6 @@ function NotificationContextProvider({ children }) {
                         <Zoom in={open}>
                             <Alert
                                 severity={notify.type}
-                                icon={false}
                                 action={
                                     <IconButton
                                         aria-label='close'
