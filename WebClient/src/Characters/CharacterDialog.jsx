@@ -49,7 +49,7 @@ const CharacterDailog = ({ open, onClose, dialogMode, characterId }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [character, setCharacter] = useState(null);
     const [mode, setMode] = useState(dialogMode);
-    const { pushSuccessNotify, pushErrorNotify, clearAllNotification } =
+    const { notifySuccess, notifyError, clearAllNotification } =
         useNotification();
 
     const isCreate = mode === DAILOG_MODE.CREATE;
@@ -82,11 +82,11 @@ const CharacterDailog = ({ open, onClose, dialogMode, characterId }) => {
     const createCharacter = async (character) => {
         const { isOk, data } = await postAsync(API_CHARACTERS, character);
         if (isOk) {
-            pushSuccessNotify('Персонаж успешно создан');
+            notifySuccess('Персонаж успешно создан');
             setMode(DAILOG_MODE.EDIT);
             setCharacter(data);
         } else {
-            pushErrorNotify('Не удалось создать персонажа');
+            notifyError('Не удалось создать персонажа');
         }
     };
 
@@ -96,8 +96,8 @@ const CharacterDailog = ({ open, onClose, dialogMode, characterId }) => {
             character
         );
 
-        if (isOk) pushSuccessNotify('Персонаж успешно изменен');
-        else pushErrorNotify('Не удалось изменить персонажа');
+        if (isOk) notifySuccess('Персонаж успешно изменен');
+        else notifyError('Не удалось изменить персонажа');
     };
 
     const handleSubmit = async (values) => {

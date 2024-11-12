@@ -15,20 +15,18 @@ function NotificationContextProvider({ children }) {
     const [open, setOpen] = useState(false);
     const [notifies, setNotifies] = useState([]);
 
-    const pushNotify = (message, type) => {
+    const notify = (message, type) => {
         setOpen(true);
         setNotifies([...notifies, { message, type }]);
     };
 
-    const pushSuccessNotify = (message) =>
-        pushNotify(message, NotifyType.Success);
+    const notifySuccess = (message) => notify(message, NotifyType.Success);
 
-    const pushErrorNotify = (message) => pushNotify(message, NotifyType.Error);
+    const notifyError = (message) => notify(message, NotifyType.Error);
 
-    const pushWarningNotify = (message) =>
-        pushNotify(message, NotifyType.Warning);
+    const notifyWarning = (message) => notify(message, NotifyType.Warning);
 
-    const removeNotify = (index) => {
+    const removeNotification = (index) => {
         const deletedNotifies = [...notifies];
         deletedNotifies.splice(index, 1);
         setNotifies(deletedNotifies);
@@ -42,10 +40,10 @@ function NotificationContextProvider({ children }) {
     return (
         <NotificationContext.Provider
             value={{
-                pushNotify: pushNotify,
-                pushSuccessNotify: pushSuccessNotify,
-                pushErrorNotify: pushErrorNotify,
-                pushWarningNotify: pushWarningNotify,
+                notify: notify,
+                notifySuccess: notifySuccess,
+                notifyError: notifyError,
+                notifyWarning: notifyWarning,
                 clearAllNotification: clearAllNotification,
             }}
         >
@@ -71,7 +69,7 @@ function NotificationContextProvider({ children }) {
                                         color='inherit'
                                         size='small'
                                         onClick={() => {
-                                            removeNotify(index);
+                                            removeNotification(index);
                                         }}
                                     >
                                         <CloseIcon fontSize='inherit' />

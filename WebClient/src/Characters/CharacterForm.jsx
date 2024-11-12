@@ -12,7 +12,7 @@ const CharacterForm = ({ readOnly }) => {
     const { values, setFieldValue } = useFormikContext();
     const items = values.storage?.items ?? [];
 
-    const { pushSuccessNotify, pushWarningNotify } = useNotification();
+    const { notifySuccess, notifyWarning, notifyError } = useNotification();
 
     const handleAddItem = async (item) => {
         if (values.characterId) {
@@ -23,8 +23,8 @@ const CharacterForm = ({ readOnly }) => {
                 item.itemId = data;
                 const newItems = [item, ...items];
                 updateItemInStorage(newItems);
-                pushSuccessNotify('Предмет успешно добавлен');
-            }
+                notifySuccess('Предмет успешно добавлен');
+            } else notifyError('Не удалось добавить предмет');
         } else {
             const newItems = [item, ...items];
             updateItemInStorage(newItems);
@@ -39,12 +39,14 @@ const CharacterForm = ({ readOnly }) => {
             const index = items.findIndex((i) => i.itemId === deletingItemId);
             newItems.splice(index, 1);
             updateItemInStorage(newItems);
-            pushSuccessNotify('Предмет успешно удален');
+            notifySuccess('Предмет успешно удален');
+        } else {
+            notifyError('Не удалось удалить предмет');
         }
     };
 
     const handleEditItem = (item) => {
-        pushWarningNotify('Упс....Изменения предметов еще нет((');
+        notifyWarning('Упс....Изменения предметов еще нет((');
     };
 
     const updateItemInStorage = (newItems) => {
