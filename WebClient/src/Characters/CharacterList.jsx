@@ -87,7 +87,6 @@ const CharacterList = () => {
                 )}
             </Grid>
             <CharacterDailog
-                title={'Character'}
                 characterId={selectedCharacterId}
                 open={isOpenDialog}
                 onClose={handleCloseCharacterDialog}

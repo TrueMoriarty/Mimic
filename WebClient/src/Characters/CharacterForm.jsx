@@ -6,10 +6,13 @@ import ItemAccordion from '../Items/ItemAccordion';
 import ItemSearchGroup from '../Items/ItemSearchGroup';
 import { deleteAsync, postAsync } from '../axios';
 import { API_ITEMS, getItemByIdUrl } from '../contants';
+import useNotification from '../hooks/useNotification';
 
 const CharacterForm = ({ readOnly }) => {
     const { values, setFieldValue } = useFormikContext();
     const items = values.storage?.items ?? [];
+
+    const { notifySuccess, notifyWarning, notifyError } = useNotification();
 
     const handleAddItem = async (item) => {
         if (values.characterId) {
@@ -20,7 +23,8 @@ const CharacterForm = ({ readOnly }) => {
                 item.itemId = data;
                 const newItems = [item, ...items];
                 updateItemInStorage(newItems);
-            }
+                notifySuccess('Предмет успешно добавлен');
+            } else notifyError('Не удалось добавить предмет');
         } else {
             const newItems = [item, ...items];
             updateItemInStorage(newItems);
@@ -35,12 +39,14 @@ const CharacterForm = ({ readOnly }) => {
             const index = items.findIndex((i) => i.itemId === deletingItemId);
             newItems.splice(index, 1);
             updateItemInStorage(newItems);
+            notifySuccess('Предмет успешно удален');
+        } else {
+            notifyError('Не удалось удалить предмет');
         }
     };
 
     const handleEditItem = (item) => {
-        //todo: добавить изменение предмета
-        console.log('EDIT ITEM ', item);
+        notifyWarning('Упс....Изменения предметов еще нет((');
     };
 
     const updateItemInStorage = (newItems) => {

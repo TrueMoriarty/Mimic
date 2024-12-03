@@ -46,9 +46,9 @@ public class CharactersController(ICharactersService charactersService) : Contro
         int userId = HttpContext.GetAuthorizedUserId();
 
         Character character = characterModel.MapToCharacter(userId);
-        int characterId = charactersService.CreateCharacter(character).CharacterId;
+        charactersService.CreateCharacter(character);
 
-        return Ok(characterId);
+        return Ok(new CharacterViewModel(character));
     }
 
     [HttpPut("{characterId}")]
