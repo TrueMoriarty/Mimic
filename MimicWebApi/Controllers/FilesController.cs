@@ -1,28 +1,48 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Amazon.S3.Model;
+using DAL.EfClasses;
+using Microsoft.AspNetCore.Mvc;
 using Services;
 
 namespace MimicWebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class FilesController(IFileService fileService) : ControllerBase
+public class FilesController(IAttachedFileService attachedFileService) : ControllerBase
 {
-    [HttpPost("{bucket}")]
-    public async Task<IActionResult> UploadFile([FromForm] IFormFile formFile, [FromRoute] string bucket)
+    [HttpPost]
+    public async Task<IActionResult> UploadFile([FromForm] IFormFile formFile, 
+        [FromForm] int ownerId, 
+        [FromForm] AttachedFileOwnerType fileOwnerType)
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
         formFile.CopyTo(stream);
         stream.Position = 0;
 
-        await fileService.PutFileAsync(stream, formFile.FileName, formFile.ContentType, bucket);
-        return Ok();
+        AttachedFile attachedFile = new()
+        {
+            OwnerId = ownerId,
+            OwnerType = fileOwnerType,
+            Stream = stream,
+            Name = formFile.FileName,
+            Type = formFile.ContentType switch
+            {
+                "image/jpeg" => FileType.ImageJpeg,
+                "image/png" => FileType.ImagePng,
+                _ => throw new ArgumentOutOfRangeException()
+            }
+        };
+
+        attachedFileService.PutFile(attachedFile);
+        return Ok(attachedFile.Url);
     }
 
-    [HttpGet("{namefile}")]
-    public async Task<IActionResult> GetFile([FromRoute] string namefile)
+    [HttpGet("{ownerId}")]
+    public IActionResult GetFile([FromRoute] int ownerId)
     {
-        var res = await fileService.GetFileAsync(namefile);
+        var res = attachedFileService.GetFile(1,
+            AttachedFileOwnerType.User,
+            true);
 
-        return File(res, $"image/jpeg", $"{namefile}");
+        return File(res.Stream, $"image/jpeg", $"{res.Name}");
     }
 }
