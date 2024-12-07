@@ -17,22 +17,18 @@ public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
     public PaginatedContainerDto<List<Character>> GetListByCreatorId(CharacterFilter filter)
     {
         var characters = unitOfWork.CharactersRepository.GetPaginatedListByCreatorId(filter);
-
-        var characterIds = characters.Value.Select(u => u.CharacterId).ToArray();
-        var attachedCovers = unitOfWork.AttachedFileRepository.GetFilesByOwner(characterIds, AttachedFileOwnerType.Character)
-            .ToDictionary(x => x.OwnerId, x => x);
-
-        foreach (var character in characters.Value)
-        {
-            if (attachedCovers.ContainsKey(character.CharacterId))
-                character.Cover = attachedCovers[character.CharacterId];
-        }
+        FillCharacterCovers(characters.Value);
 
         return characters;
     }
 
-    public Character? GetById(int characterId, bool readOnly) =>
-        unitOfWork.CharactersRepository.GetById(characterId, readOnly);
+    public Character? GetById(int characterId, bool readOnly)
+    {
+        Character character = unitOfWork.CharactersRepository.GetById(characterId, readOnly);
+        character.Cover = unitOfWork.AttachedFileRepository.GetFirstFileByOwner(character.CharacterId, AttachedFileOwnerType.Character);
+
+        return character;
+    }
 
     public void CreateCharacter(Character character)
     {
@@ -52,5 +48,16 @@ public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
     {
         unitOfWork.CharactersRepository.Update(editedCharacter);
         unitOfWork.Save();
+    }
+
+    private void FillCharacterCovers(List<Character> characters)
+    {
+        var characterIds = characters.Select(u => u.CharacterId).ToArray();
+        var attachedCovers = unitOfWork.AttachedFileRepository.GetFilesByOwner(characterIds, AttachedFileOwnerType.Character)
+            .ToDictionary(x => x.OwnerId, x => x);
+
+        var charactersWithCovers = characters.Where(character => attachedCovers.ContainsKey(character.CharacterId));
+        foreach (Character character in charactersWithCovers)
+            character.Cover = attachedCovers[character.CharacterId];
     }
 }

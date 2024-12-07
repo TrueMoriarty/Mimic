@@ -58,7 +58,7 @@ const CharacterForm = ({ readOnly }) => {
         <Form>
             <Grid container spacing={1}>
                 <Grid item xs={12} md={4}>
-                    <ImageBox />
+                    <ImageBox url={values.coverUrl} />
                 </Grid>
                 <Grid item xs={12} md={8}>
                     <Stack direction='column' spacing={1}>

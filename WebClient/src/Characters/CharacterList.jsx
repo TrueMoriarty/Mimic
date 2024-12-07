@@ -68,6 +68,7 @@ const CharacterList = () => {
                             name={character.name}
                             roomName={character.roomName}
                             description={character.description}
+                            coverUrl={character.coverUrl}
                             onClick={() =>
                                 handleSelectCharacter(character.characterId)
                             }

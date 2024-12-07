@@ -3,7 +3,13 @@ import ImageBox from '../Components/ImageBox';
 import RoomNameTitle from './RoomName';
 import { trunicateTypographyStyle } from '../mimicTheme';
 
-const CharacterListItem = ({ name, roomName, description, onClick }) => {
+const CharacterListItem = ({
+    name,
+    roomName,
+    description,
+    coverUrl,
+    onClick,
+}) => {
     return (
         <Card
             onClick={onClick}
@@ -15,10 +21,10 @@ const CharacterListItem = ({ name, roomName, description, onClick }) => {
         >
             <CardContent>
                 <Grid container spacing={1}>
-                    <Grid item xs={12} md={6}>
-                        <ImageBox />
+                    <Grid item md={12} lg={6}>
+                        <ImageBox url={coverUrl} />
                     </Grid>
-                    <Grid item xs={'auto'}>
+                    <Grid item md={12} lg={6}>
                         <Grid container spacing={1} direction='column'>
                             <Grid item xs={1}>
                                 <RoomNameTitle roomName={roomName} />

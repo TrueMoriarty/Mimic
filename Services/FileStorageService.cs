@@ -1,9 +1,8 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using DAL.EfClasses;
 using Microsoft.Extensions.Configuration;
 using System.Net;
-using DAL.EfClasses;
-using Services.Exceptions;
 
 namespace Services;
 
