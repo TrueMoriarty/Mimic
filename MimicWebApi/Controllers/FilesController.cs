@@ -1,7 +1,7 @@
-﻿using Amazon.S3.Model;
-using DAL.EfClasses;
+﻿using DAL.EfClasses;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Services.Exceptions;
 
 namespace MimicWebApi.Controllers;
 
@@ -10,8 +10,8 @@ namespace MimicWebApi.Controllers;
 public class FilesController(IAttachedFileService attachedFileService) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> UploadFile([FromForm] IFormFile formFile, 
-        [FromForm] int ownerId, 
+    public async Task<IActionResult> UploadFile([FromForm] IFormFile formFile,
+        [FromForm] int ownerId,
         [FromForm] AttachedFileOwnerType fileOwnerType)
     {
         MemoryStream stream = new();

@@ -12,5 +12,10 @@ internal class AttachedAttachedFileRepository(MimicContext context) : GenericRep
             && f.OwnerType == attachedFileOwnerAttachedType
         );
 
+    public List<AttachedFile> GetFilesByOwner(int[] ownerIds, AttachedFileOwnerType attachedFileOwnerAttachedType) =>
+        context.AttachedFiles.Where(f =>
+            f.OwnerType == attachedFileOwnerAttachedType && ownerIds.Contains(f.OwnerId)
+        ).ToList();
+
     public void InsertFile(AttachedFile attachedFile) => Insert(attachedFile);
 }

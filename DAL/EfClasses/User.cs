@@ -1,4 +1,6 @@
-﻿namespace DAL.EfClasses;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DAL.EfClasses;
 
 public class User
 {
@@ -7,6 +9,9 @@ public class User
     public string? Login { get; set; }
     public string? Password { get; set; }
     public string? Name { get; set; }
+
+    [NotMapped]
+    public AttachedFile? Icon { get; set; }
 
     // --------------------------------------
     // Relationships

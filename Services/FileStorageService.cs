@@ -3,6 +3,7 @@ using Amazon.S3.Model;
 using Microsoft.Extensions.Configuration;
 using System.Net;
 using DAL.EfClasses;
+using Services.Exceptions;
 
 namespace Services;
 
@@ -47,7 +48,6 @@ internal class S3FileStorageService : IFileStorageService
             InputStream = stream
         };
 
-        //Todo: добавить обработку ошибок
         var res = await _amazonS3.PutObjectAsync(putObjectRequest);
 
         string url = res.HttpStatusCode == HttpStatusCode.OK ? $"{_s3Url}{currentBucket}/{key}" : string.Empty;
@@ -56,12 +56,12 @@ internal class S3FileStorageService : IFileStorageService
 
     public async Task<Stream> GetFileStreamAsync(string fileName, string bucket = null)
     {
-        //Todo: добавить обработку ошибок
         string bucketName = GetBucketOrDefault(bucket);
-        using var res = await _amazonS3.GetObjectAsync(bucketName, fileName);
-
         MemoryStream ms = new();
+
+        using var res = await _amazonS3.GetObjectAsync(bucketName, fileName);
         await res.ResponseStream.CopyToAsync(ms);
+
         ms.Position = 0;
         return ms;
     }

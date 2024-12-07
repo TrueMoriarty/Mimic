@@ -38,7 +38,7 @@ internal class AttachedFileService : IAttachedFileService
         AttachedFile attachedFile = _uow.AttachedFileRepository.GetFirstFileByOwner(ownerId, attachedFileOwnerAttachedType);
 
         if (attachedFile is not null && withStream)
-            attachedFile.Stream = _fileStorageService.GetFileStreamAsync(attachedFile.Key).Result;
+            attachedFile.Stream = _fileStorageService.GetFileStreamAsync(attachedFile.Key, "123").Result;
 
         return attachedFile;
     }
