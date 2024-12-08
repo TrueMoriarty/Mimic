@@ -35,7 +35,7 @@ internal class S3FileStorageService : IFileStorageService
             _ => "application/octet-stream"
         };
 
-        string key = $"{fileName}_{Guid.NewGuid()}";
+        string key = $"{Guid.NewGuid()}_{fileName}";
 
         string currentBucket = GetBucketOrDefault(bucket);
 

@@ -1,25 +1,54 @@
-import { Box } from '@mui/material';
+import { Box, Dialog } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
+import { useState } from 'react';
 
-const ImageBox = ({ url }) => {
-    if (url)
-        return (
+const FullSizeImageBoxDialog = ({ open, url, onClose }) => {
+    return (
+        <Dialog fullWidth maxWidth={'lg'} open={open} onClose={onClose}>
             <Box
                 component={'img'}
                 src={url}
-                height={150}
-                width={150}
                 sx={{
                     borderRadius: 1,
-                    bgcolor: 'mimic.main',
+                    backgroundImage: `url(${url})`,
+                    objectFit: 'cover',
                 }}
             />
+        </Dialog>
+    );
+};
+
+const ImageBox = ({ url, width, height, isShowFull }) => {
+    const [isShowFullImage, setShowFullImage] = useState(false);
+    if (url)
+        return (
+            <>
+                <Box
+                    component={'img'}
+                    src={url}
+                    sx={{
+                        borderRadius: 1,
+                        width: width,
+                        height: height,
+                        backgroundImage: `url(${url})`,
+                        objectFit: 'cover',
+                    }}
+                    onClick={() => isShowFull && setShowFullImage(true)}
+                />
+                {isShowFull && (
+                    <FullSizeImageBoxDialog
+                        url={url}
+                        open={isShowFullImage}
+                        onClose={() => setShowFullImage(false)}
+                    />
+                )}
+            </>
         );
 
     return (
         <Box
-            height={150}
-            width={150}
+            height={width}
+            width={height}
             display='flex'
             alignItems={'center'}
             justifyContent={'center'}

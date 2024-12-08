@@ -22,7 +22,7 @@ const CharacterListItem = ({
             <CardContent>
                 <Grid container spacing={1}>
                     <Grid item md={12} lg={6}>
-                        <ImageBox url={coverUrl} />
+                        <ImageBox url={coverUrl} width={150} height={150} />
                     </Grid>
                     <Grid item md={12} lg={6}>
                         <Grid container spacing={1} direction='column'>
