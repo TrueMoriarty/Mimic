@@ -25,6 +25,7 @@ public enum FileType
 {
     ImageJpeg,
     ImagePng,
+    ImageGif,
 }
 
 public enum AttachedFileOwnerType

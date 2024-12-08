@@ -1,5 +1,6 @@
 ﻿using DAL.EfClasses;
 using Microsoft.AspNetCore.Mvc;
+using MimicWebApi.Utils;
 using Services;
 
 namespace MimicWebApi.Controllers;
@@ -9,27 +10,11 @@ namespace MimicWebApi.Controllers;
 public class FilesController(IAttachedFileService attachedFileService) : ControllerBase
 {
     [HttpPost]
-    public  IActionResult UploadFile([FromForm] IFormFile formFile,
+    public IActionResult UploadFile([FromForm] IFormFile formFile,
         [FromForm] int ownerId,
         [FromForm] AttachedFileOwnerType fileOwnerType)
     {
-        MemoryStream stream = new();
-        formFile.CopyTo(stream);
-        stream.Position = 0;
-
-        AttachedFile attachedFile = new()
-        {
-            OwnerId = ownerId,
-            OwnerType = fileOwnerType,
-            Stream = stream,
-            Name = formFile.FileName,
-            Type = formFile.ContentType switch
-            {
-                "image/jpeg" => FileType.ImageJpeg,
-                "image/png" => FileType.ImagePng,
-                _ => throw new ArgumentOutOfRangeException()
-            }
-        };
+        AttachedFile attachedFile = formFile.CreateAttachedFile(ownerId, fileOwnerType);
 
         attachedFileService.PutFile(attachedFile);
         return Ok(attachedFile.Url);

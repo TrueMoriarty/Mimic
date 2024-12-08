@@ -12,7 +12,7 @@ public interface ICharactersService
     void EditCharacter(Character editedCharacter);
 }
 
-public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
+public class CharactersService(IUnitOfWork unitOfWork, IAttachedFileService attachedFileService) : ICharactersService
 {
     public PaginatedContainerDto<List<Character>> GetListByCreatorId(CharacterFilter filter)
     {
@@ -42,10 +42,23 @@ public class CharactersService(IUnitOfWork unitOfWork) : ICharactersService
 
         unitOfWork.CharactersRepository.Insert(character);
         unitOfWork.Save();
+
+        // create Attached file
+        character.Cover.OwnerId = character.CharacterId;
+        character.Cover.OwnerType = AttachedFileOwnerType.Character;
+        attachedFileService.PutFile(character.Cover);
     }
 
     public void EditCharacter(Character editedCharacter)
     {
+        if (editedCharacter.Cover is not null)
+        {
+            if (!string.IsNullOrWhiteSpace(editedCharacter.Cover.Key))
+                attachedFileService.EditFile(editedCharacter.Cover);
+            else
+                attachedFileService.PutFile(editedCharacter.Cover);
+        }
+
         unitOfWork.CharactersRepository.Update(editedCharacter);
         unitOfWork.Save();
     }

@@ -1,11 +1,15 @@
-﻿using DAL.Dto;
+﻿using Amazon.S3.Model;
+using DAL.Dto;
 using DAL.EfClasses;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Models;
 using MimicWebApi.Utils;
 using MimicWebApi.Views.Characters;
 using Services;
+using System.IO;
+using System.Text.Json;
 
 namespace MimicWebApi.Controllers;
 
@@ -37,24 +41,36 @@ public class CharactersController(ICharactersService charactersService) : Contro
     }
 
     [HttpPost]
-    public IActionResult CreateCharacter([FromBody] CharacterModel characterModel)
+    public IActionResult CreateCharacter([FromForm] string characterModelJson, [FromForm] IFormFile? cover)
     {
+        CharacterModel? characterModel = JsonSerializer.Deserialize<CharacterModel>(characterModelJson,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
         //валидация
-        if (string.IsNullOrWhiteSpace(characterModel.Name))
+        if (characterModel is null || string.IsNullOrWhiteSpace(characterModel.Name))
             return BadRequest();
 
         int userId = HttpContext.GetAuthorizedUserId();
-
         Character character = characterModel.MapToCharacter(userId);
+        character.Cover = cover?.CreateAttachedFile();
+
         charactersService.CreateCharacter(character);
 
         return Ok(new CharacterViewModel(character));
     }
 
     [HttpPut("{characterId}")]
-    public IActionResult UpdateCharacter([FromRoute] int characterId, [FromBody] CharacterModel characterModel)
+    public IActionResult UpdateCharacter([FromRoute] int characterId, [FromForm] string characterModelJson, [FromForm] IFormFile? cover)
     {
         int userId = HttpContext.GetAuthorizedUserId();
+        CharacterModel? characterModel = JsonSerializer.Deserialize<CharacterModel>(characterModelJson,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
 
         var original = charactersService.GetById(characterId, true);
         if (original is null)
@@ -63,6 +79,18 @@ public class CharactersController(ICharactersService charactersService) : Contro
         Character character = characterModel.MapToCharacter(userId);
         character.CharacterId = characterId;
         character.CreateDate = original.CreateDate;
+
+        if (cover is not null)
+        {
+            if (original.Cover is not null)
+            {
+                character.Cover = original.Cover;
+                character.Cover.Stream = new MemoryStream();
+                cover.CopyTo(character.Cover.Stream);
+            }
+            else
+                character.Cover = cover.CreateAttachedFile(characterId, AttachedFileOwnerType.Character);
+        }
 
         charactersService.EditCharacter(character);
 

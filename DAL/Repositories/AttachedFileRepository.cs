@@ -12,6 +12,8 @@ internal class AttachedAttachedFileRepository(MimicContext context) : GenericRep
             && f.OwnerType == attachedFileOwnerAttachedType
         );
 
+    public void UpdateFile(AttachedFile attachedFile) => Update(attachedFile);
+
     public List<AttachedFile> GetFilesByOwner(int[] ownerIds, AttachedFileOwnerType attachedFileOwnerAttachedType) =>
         context.AttachedFiles.Where(f =>
             f.OwnerType == attachedFileOwnerAttachedType && ownerIds.Contains(f.OwnerId)

@@ -8,8 +8,9 @@ namespace Services;
 
 public interface IFileStorageService
 {
-    Task<(string url, string key)> PutFileAsync(Stream stream, string fileName, FileType fileType, string bucket = null);
+    Task<string> PutFileAsync(Stream stream, string key, FileType fileType, string bucket = null);
     Task<Stream> GetFileStreamAsync(string fileName, string bucket = null);
+    Task DeleteFileAsync(string key, string bucket = null);
 }
 
 internal class S3FileStorageService : IFileStorageService
@@ -26,16 +27,15 @@ internal class S3FileStorageService : IFileStorageService
         _s3Url = configuration.GetSection("S3:Url").Value!;
     }
 
-    public async Task<(string url, string key)> PutFileAsync(Stream stream, string fileName, FileType fileType, string bucket = null)
+    public async Task<string> PutFileAsync(Stream stream, string key, FileType fileType, string bucket = null)
     {
         string contentType = fileType switch
         {
             FileType.ImageJpeg => "image/jpeg",
             FileType.ImagePng => "image/png",
+            FileType.ImageGif => "image/gif",
             _ => "application/octet-stream"
         };
-
-        string key = $"{Guid.NewGuid()}_{fileName}";
 
         string currentBucket = GetBucketOrDefault(bucket);
 
@@ -50,7 +50,13 @@ internal class S3FileStorageService : IFileStorageService
         var res = await _amazonS3.PutObjectAsync(putObjectRequest);
 
         string url = res.HttpStatusCode == HttpStatusCode.OK ? $"{_s3Url}{currentBucket}/{key}" : string.Empty;
-        return await Task.FromResult((url, key));
+        return await Task.FromResult(url);
+    }
+
+    public async Task DeleteFileAsync(string key, string bucket = null)
+    {
+        string bucketName = GetBucketOrDefault(bucket);
+        await _amazonS3.DeleteObjectAsync(bucketName, key);
     }
 
     public async Task<Stream> GetFileStreamAsync(string fileName, string bucket = null)

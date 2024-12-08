@@ -7,6 +7,8 @@ import ItemSearchGroup from '../Items/ItemSearchGroup';
 import { deleteAsync, postAsync } from '../axios';
 import { API_ITEMS, getItemByIdUrl } from '../contants';
 import useNotification from '../hooks/useNotification';
+import { useEffect } from 'react';
+import UploadingButton from '../Components/UploadingButton';
 
 const CharacterForm = ({ readOnly }) => {
     const { values, setFieldValue } = useFormikContext();
@@ -54,6 +56,11 @@ const CharacterForm = ({ readOnly }) => {
         setFieldValue('storage', newStorage);
     };
 
+    const handleUploadeImage = (img) => {
+        setFieldValue('cover', img);
+        setFieldValue('coverUrl', URL.createObjectURL(img));
+    };
+
     return (
         <Form>
             <Grid container spacing={1}>
@@ -63,6 +70,19 @@ const CharacterForm = ({ readOnly }) => {
                         width={250}
                         height={250}
                         isShowFull
+                    />
+                    <UploadingButton
+                        onUpload={handleUploadeImage}
+                        allowedContentTypes={[
+                            'image/png',
+                            'image/jpeg',
+                            'image/gif',
+                        ]}
+                        onErrorContentType={() =>
+                            notifyError(
+                                'Не возможно загрузить файл с данным разрешением!'
+                            )
+                        }
                     />
                 </Grid>
                 <Grid item xs={12} md={8}>

@@ -6,8 +6,8 @@ namespace Services;
 public interface IAttachedFileService
 {
     void PutFile(AttachedFile attachedFile);
-
     AttachedFile GetFile(int ownerId, AttachedFileOwnerType attachedFileOwnerAttachedType, bool withStream = false);
+    void EditFile(AttachedFile attachedFile);
 }
 
 internal class AttachedFileService : IAttachedFileService
@@ -23,13 +23,27 @@ internal class AttachedFileService : IAttachedFileService
 
     public void PutFile(AttachedFile attachedFile)
     {
-        var (url, key) = _fileStorageService.PutFileAsync(attachedFile.Stream, attachedFile.Name, attachedFile.Type).Result;
-
+        string key = $"{Guid.NewGuid()}";
+        string url = _fileStorageService.PutFileAsync(attachedFile.Stream, key, attachedFile.Type).Result;
         if (string.IsNullOrWhiteSpace(url)) return;
 
         attachedFile.Url = url;
         attachedFile.Key = key;
         _uow.AttachedFileRepository.InsertFile(attachedFile);
+        _uow.Save();
+    }
+
+    public void EditFile(AttachedFile attachedFile)
+    {
+        _fileStorageService.DeleteFileAsync(attachedFile.Key).Wait();
+
+        string key = $"{Guid.NewGuid()}";
+        string url = _fileStorageService.PutFileAsync(attachedFile.Stream, key, attachedFile.Type).Result;
+        if (string.IsNullOrWhiteSpace(url)) return;
+
+        attachedFile.Url = url;
+        attachedFile.Key = key;
+        _uow.AttachedFileRepository.UpdateFile(attachedFile);
         _uow.Save();
     }
 
