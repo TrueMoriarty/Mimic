@@ -91,7 +91,7 @@ const Navigation = () => {
                     {userInfo ? (
                         <Grid container spacing={1}>
                             <Grid item>
-                                <Avatar alt='user' />
+                                <Avatar alt='user' src={userInfo?.iconUrl} />
                             </Grid>
                             <Grid item sx={{ my: 'auto' }}>
                                 <Typography variant='h6'>

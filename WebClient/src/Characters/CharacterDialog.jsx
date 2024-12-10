@@ -80,7 +80,8 @@ const CharacterDailog = ({ open, onClose, dialogMode, characterId }) => {
     };
 
     const createCharacter = async (character) => {
-        const { isOk, data } = await postAsync(API_CHARACTERS, character);
+        const characterForm = buildCharacterForm(character);
+        const { isOk, data } = await postAsync(API_CHARACTERS, characterForm);
         if (isOk) {
             notifySuccess('Персонаж успешно создан');
             setMode(DAILOG_MODE.EDIT);
@@ -91,9 +92,10 @@ const CharacterDailog = ({ open, onClose, dialogMode, characterId }) => {
     };
 
     const changeCharacter = async (character) => {
+        const characterForm = buildCharacterForm(character);
         const { isOk, data } = await putAsync(
             getCharacterByIdUrl(character.characterId),
-            character
+            characterForm
         );
 
         if (isOk) notifySuccess('Персонаж успешно изменен');
@@ -107,6 +109,13 @@ const CharacterDailog = ({ open, onClose, dialogMode, characterId }) => {
         else await changeCharacter(values);
 
         setIsLoading(false);
+    };
+
+    const buildCharacterForm = (character) => {
+        const characterForm = new FormData();
+        characterForm.append('characterModelJson', JSON.stringify(character));
+        characterForm.append('cover', character.cover);
+        return characterForm;
     };
 
     const canShowRoomNameTitle =

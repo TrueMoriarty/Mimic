@@ -12,6 +12,7 @@ public class MimicContext : DbContext
     public DbSet<Room> Rooms { get; set; }
     public DbSet<Storage> Storages { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<AttachedFile> AttachedFiles { get; set; }
 
     public MimicContext()
     {
@@ -84,6 +85,8 @@ public class MimicContext : DbContext
         modelBuilder.Entity<Storage>().Property(t => t.StorageId).UseIdentityAlwaysColumn();
 
         modelBuilder.Entity<RoomStorageRelation>().Property(t => t.RoomStorageRelationId).UseIdentityAlwaysColumn();
+
+        modelBuilder.Entity<AttachedFile>().Property(t => t.AttachedFileId).UseIdentityAlwaysColumn();
 
         base.OnModelCreating(modelBuilder);
     }

@@ -33,5 +33,5 @@ export const trunicateTypographyStyle = {
     display: '-webkit-box',
     overflow: 'hidden',
     WebkitBoxOrient: 'vertical',
-    WebkitLineClamp: 1,
+    WebkitLineClamp: 3,
 };

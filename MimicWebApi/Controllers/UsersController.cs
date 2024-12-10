@@ -1,5 +1,4 @@
-﻿using DAL.EfClasses;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Utils;
 using MimicWebApi.Views;

@@ -13,5 +13,7 @@ public static class DI
         services.AddTransient<IStoragesService, StoragesService>();
         services.AddTransient<IItemPropertiesService, ItemPropertiesService>();
         services.AddTransient<ICharactersService, CharactersService>();
+        services.AddTransient<IFileStorageService, S3FileStorageService>();
+        services.AddTransient<IAttachedFileService, AttachedFileService>();
     }
 }

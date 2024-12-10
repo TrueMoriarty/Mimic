@@ -20,5 +20,11 @@ public class UsersService(IUnitOfWork unitOfWork) : IUsersService
     }
 
     public User? GetByExternalId(string externalId) => unitOfWork.UserRepository.GetByExternalId(externalId);
-    public User GetById(int id) => unitOfWork.UserRepository.GetById(id);
+
+    public User GetById(int id)
+    {
+        User user = unitOfWork.UserRepository.GetById(id);
+        user.Icon = unitOfWork.AttachedFileRepository.GetFirstFileByOwner(user.UserId, AttachedFileOwnerType.User);
+        return user;
+    }
 }

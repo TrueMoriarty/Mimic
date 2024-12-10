@@ -1,4 +1,6 @@
-﻿namespace DAL.EfClasses;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DAL.EfClasses;
 
 public class Character
 {
@@ -19,4 +21,7 @@ public class Character
 
     public int? StorageId { get; set; }
     public Storage? Storage { get; set; }
+
+    [NotMapped]
+    public AttachedFile? Cover { get; set; }
 }
