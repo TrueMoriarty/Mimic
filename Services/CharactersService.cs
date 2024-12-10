@@ -7,7 +7,7 @@ namespace Services;
 public interface ICharactersService
 {
     PaginatedContainerDto<List<Character>> GetListByCreatorId(CharacterFilter filter);
-    Character? GetById(int characterId, bool readOnly = true);
+    Character? GetById(int characterId, bool readOnly = true, bool includeAttachedFiles = false);
     void CreateCharacter(Character character);
     void EditCharacter(Character editedCharacter);
 }
@@ -22,10 +22,12 @@ public class CharactersService(IUnitOfWork unitOfWork, IAttachedFileService atta
         return characters;
     }
 
-    public Character? GetById(int characterId, bool readOnly)
+    public Character? GetById(int characterId, bool readOnly, bool includeAttachedFiles = false)
     {
-        Character character = unitOfWork.CharactersRepository.GetById(characterId, readOnly);
-        character.Cover = unitOfWork.AttachedFileRepository.GetFirstFileByOwner(character.CharacterId, AttachedFileOwnerType.Character);
+        Character? character = unitOfWork.CharactersRepository.GetById(characterId, readOnly);
+
+        if (character is not null && includeAttachedFiles)
+            character.Cover = unitOfWork.AttachedFileRepository.GetFirstFileByOwner(character.CharacterId, AttachedFileOwnerType.Character);
 
         return character;
     }
@@ -48,7 +50,6 @@ public class CharactersService(IUnitOfWork unitOfWork, IAttachedFileService atta
         character.Cover.OwnerId = character.CharacterId;
         character.Cover.OwnerType = AttachedFileOwnerType.Character;
         attachedFileService.PutFile(character.Cover);
-
     }
 
     public void EditCharacter(Character editedCharacter)

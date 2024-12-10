@@ -32,7 +32,7 @@ public class CharactersController(ICharactersService charactersService) : Contro
     [HttpGet("{characterId}")]
     public IActionResult GetCharacter([FromRoute] int characterId)
     {
-        var character = charactersService.GetById(characterId);
+        var character = charactersService.GetById(characterId, includeAttachedFiles: true);
 
         return character is null ? NotFound() : Ok(new CharacterViewModel(character));
     }
@@ -69,7 +69,7 @@ public class CharactersController(ICharactersService charactersService) : Contro
                 PropertyNameCaseInsensitive = true
             });
 
-        var original = charactersService.GetById(characterId, true);
+        var original = charactersService.GetById(characterId, includeAttachedFiles: true);
         if (original is null)
             return NotFound();
 
