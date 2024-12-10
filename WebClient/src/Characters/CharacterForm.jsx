@@ -69,7 +69,7 @@ const CharacterForm = ({ readOnly }) => {
                         url={values.coverUrl}
                         width={250}
                         height={250}
-                        isShowFull
+                        hasFullResolutionShowing
                     />
                     <UploadingButton
                         onUpload={handleUploadeImage}

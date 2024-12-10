@@ -18,7 +18,7 @@ const FullSizeImageBoxDialog = ({ open, url, onClose }) => {
     );
 };
 
-const ImageBox = ({ url, width, height, isShowFull }) => {
+const ImageBox = ({ url, width, height, hasFullResolutionShowing }) => {
     const [isShowFullImage, setShowFullImage] = useState(false);
     if (url)
         return (
@@ -33,9 +33,11 @@ const ImageBox = ({ url, width, height, isShowFull }) => {
                         backgroundImage: `url(${url})`,
                         objectFit: 'cover',
                     }}
-                    onClick={() => isShowFull && setShowFullImage(true)}
+                    onClick={() =>
+                        hasFullResolutionShowing && setShowFullImage(true)
+                    }
                 />
-                {isShowFull && (
+                {hasFullResolutionShowing && (
                     <FullSizeImageBoxDialog
                         url={url}
                         open={isShowFullImage}
