@@ -44,9 +44,11 @@ public class CharactersService(IUnitOfWork unitOfWork, IAttachedFileService atta
         unitOfWork.Save();
 
         // create Attached file
+        if (character.Cover is null) return;
         character.Cover.OwnerId = character.CharacterId;
         character.Cover.OwnerType = AttachedFileOwnerType.Character;
         attachedFileService.PutFile(character.Cover);
+
     }
 
     public void EditCharacter(Character editedCharacter)
