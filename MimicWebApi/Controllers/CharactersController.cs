@@ -1,14 +1,11 @@
-﻿using Amazon.S3.Model;
-using DAL.Dto;
+﻿using DAL.Dto;
 using DAL.EfClasses;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Models;
 using MimicWebApi.Utils;
 using MimicWebApi.Views.Characters;
 using Services;
-using System.IO;
 using System.Text.Json;
 
 namespace MimicWebApi.Controllers;
