@@ -1,11 +1,10 @@
-﻿using Amazon.S3.Model;
-using DAL.EfClasses;
+﻿using DAL.EfClasses;
 
 namespace MimicWebApi.Utils;
 
 public static class AttachedFileExtensions
 {
-    public static AttachedFile CreateAttachedFile(this IFormFile formFile)
+    public static AttachedFile MapToAttachedFile(this IFormFile formFile)
     {
         MemoryStream stream = new();
         formFile.CopyTo(stream);
@@ -27,9 +26,9 @@ public static class AttachedFileExtensions
         return attachedFile;
     }
 
-    public static AttachedFile CreateAttachedFile(this IFormFile formFile, int ownerId, AttachedFileOwnerType fileOwnerType)
+    public static AttachedFile MapToAttachedFile(this IFormFile formFile, int ownerId, AttachedFileOwnerType fileOwnerType)
     {
-        AttachedFile attachedFile = formFile.CreateAttachedFile();
+        AttachedFile attachedFile = formFile.MapToAttachedFile();
         attachedFile.OwnerId = ownerId;
         attachedFile.OwnerType = fileOwnerType;
 

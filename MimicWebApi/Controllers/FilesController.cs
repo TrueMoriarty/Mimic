@@ -14,7 +14,7 @@ public class FilesController(IAttachedFileService attachedFileService) : Control
         [FromForm] int ownerId,
         [FromForm] AttachedFileOwnerType fileOwnerType)
     {
-        AttachedFile attachedFile = formFile.CreateAttachedFile(ownerId, fileOwnerType);
+        AttachedFile attachedFile = formFile.MapToAttachedFile(ownerId, fileOwnerType);
 
         attachedFileService.PutFile(attachedFile);
         return Ok(attachedFile.Url);

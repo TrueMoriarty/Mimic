@@ -52,7 +52,7 @@ public class CharactersController(ICharactersService charactersService) : Contro
 
         int userId = HttpContext.GetAuthorizedUserId();
         Character character = characterModel.MapToCharacter(userId);
-        character.Cover = cover?.CreateAttachedFile();
+        character.Cover = cover?.MapToAttachedFile();
 
         charactersService.CreateCharacter(character);
 
@@ -86,7 +86,7 @@ public class CharactersController(ICharactersService charactersService) : Contro
                 cover.CopyTo(character.Cover.Stream);
             }
             else
-                character.Cover = cover.CreateAttachedFile(characterId, AttachedFileOwnerType.Character);
+                character.Cover = cover.MapToAttachedFile(characterId, AttachedFileOwnerType.Character);
         }
 
         charactersService.EditCharacter(character);
