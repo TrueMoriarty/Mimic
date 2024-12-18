@@ -1,7 +1,8 @@
+using Amazon.Runtime;
+using Amazon.S3;
 using DAL;
-using Microsoft.Extensions.Options;
+using MimicWebApi.ConfigModels;
 using MimicWebApi.VkAuth;
-using MimicWebApi.VkAuth.Models;
 using Serilog;
 using Services;
 
@@ -17,13 +18,28 @@ public class Program
 
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddSerilog();
-        builder.Services.AddDAL();
-        builder.Services.AddServices();
-
+        var s3Config = builder.Configuration.GetSection("S3").Get<S3Config>()!;
         var vkConfig = builder.Configuration.GetSection("VkConfig").Get<VkConfig>()!;
         string clientLocation = builder.Configuration.GetValue<string>("ClientUrl")!;
+        
+        builder.Services.AddSerilog();
+        builder.Services.AddSingleton<IAmazonS3>(_ =>
+        {
+            BasicAWSCredentials awsCreds = new(s3Config.AccessKey, s3Config.SecretKey);
 
+            AmazonS3Config S3Config = new()
+            {
+                ServiceURL = s3Config.Url,
+                UseHttp = true,
+                ForcePathStyle = true,
+                AuthenticationRegion = s3Config.Region,
+            };
+
+            return new AmazonS3Client(awsCreds, S3Config);
+        });
+
+        builder.Services.AddDAL();
+        builder.Services.AddServices();
         builder.Services
             .AddAuthentication("auth-cookie")
             .AddCookie("auth-cookie", o =>

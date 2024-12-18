@@ -8,6 +8,7 @@ public class CharacterBaseViewModel
     public string Name { get; set; }
     public string Description { get; set; }
     public string RoomName { get; set; }
+    public string? CoverUrl { get; set; }
 
     public CharacterBaseViewModel(Character character)
     {
@@ -15,5 +16,6 @@ public class CharacterBaseViewModel
         Name = character.Name!;
         Description = character.Description!;
         RoomName = character.Room?.Name!;
+        CoverUrl = character.Cover?.Url;
     }
 }

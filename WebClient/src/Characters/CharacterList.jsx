@@ -6,7 +6,7 @@ import CharacterListItem from './CharacterListItem';
 import useUserInfoContext from '../hooks/useUserInfoContext';
 import CharacterDailog from './CharacterDialog';
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 9;
 
 const CharacterList = () => {
     const [characterList, setCharacterList] = useState(null);
@@ -68,6 +68,7 @@ const CharacterList = () => {
                             name={character.name}
                             roomName={character.roomName}
                             description={character.description}
+                            coverUrl={character.coverUrl}
                             onClick={() =>
                                 handleSelectCharacter(character.characterId)
                             }

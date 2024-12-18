@@ -1,4 +1,4 @@
-﻿namespace MimicWebApi.VkAuth.Models;
+﻿namespace MimicWebApi.ConfigModels;
 
 public class VkConfig
 {
