@@ -70,8 +70,7 @@ public class MimicContext : DbContext
         modelBuilder.Entity<Character>()
             .HasOne(t => t.Storage)
             .WithOne()
-            .HasForeignKey<Character>(t => t.StorageId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey<Character>(t => t.StorageId);
 
         modelBuilder.Entity<Item>().Property(t => t.ItemId).UseIdentityAlwaysColumn();
 

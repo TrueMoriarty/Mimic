@@ -8,6 +8,7 @@ public interface IAttachedFileService
     void PutFile(AttachedFile attachedFile);
     AttachedFile GetFile(int ownerId, AttachedFileOwnerType attachedFileOwnerAttachedType, bool withStream = false);
     void EditFile(AttachedFile attachedFile);
+    void DeleteFile(AttachedFile attachedFile);
 }
 
 internal class AttachedFileService : IAttachedFileService
@@ -55,5 +56,13 @@ internal class AttachedFileService : IAttachedFileService
             attachedFile.Stream = _fileStorageService.GetFileStreamAsync(attachedFile.Key, "123").Result;
 
         return attachedFile;
+    }
+
+    public void DeleteFile(AttachedFile attachedFile)
+    {
+        _fileStorageService.DeleteFileAsync(attachedFile.Key).Wait();
+
+        _uow.AttachedFileRepository.Delete(attachedFile);
+        _uow.Save();
     }
 }

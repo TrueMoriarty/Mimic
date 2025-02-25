@@ -69,6 +69,12 @@ public class CharactersService(IUnitOfWork unitOfWork, IAttachedFileService atta
 
     public void DeleteCharacter(Character character)
     {
+        if (character.Storage is not null)
+            unitOfWork.StorageRepository.Delete(character.Storage);
+
+        if (character.Cover is not null)
+            attachedFileService.DeleteFile(character.Cover);
+
         unitOfWork.CharactersRepository.Delete(character);
         unitOfWork.Save();
     }

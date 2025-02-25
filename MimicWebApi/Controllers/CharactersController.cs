@@ -97,7 +97,7 @@ public class CharactersController(ICharactersService charactersService) : Contro
     [HttpDelete("{characterId}")]
     public IActionResult DeleteCharacter([FromRoute] int characterId)
     {
-        Character? character = charactersService.GetById(characterId);
+        Character? character = charactersService.GetById(characterId, readOnly: false, includeAttachedFiles: true);
         if (character is null)
             return NotFound("Character not found");
 
