@@ -1,12 +1,13 @@
 import { Formik, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import {
+    Button,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
 } from '@mui/material';
-import { getAsync, postAsync, putAsync } from '../axios';
+import { deleteAsync, getAsync, postAsync, putAsync } from '../axios';
 import { API_CHARACTERS, DAILOG_MODE, getCharacterByIdUrl } from '../contants';
 import LoadingButton from '../Components/LoadingButton';
 import RoomNameTitle from './RoomName';
@@ -19,7 +20,7 @@ const initValues = {
     storage: null,
 };
 
-const CharacterDialogBody = ({ dialogMode, isLoading }) => {
+const CharacterDialogBody = ({ dialogMode, isLoading, onDelete }) => {
     const { submitForm } = useFormikContext();
 
     const readOnly = dialogMode === DAILOG_MODE.READ;
@@ -31,6 +32,15 @@ const CharacterDialogBody = ({ dialogMode, isLoading }) => {
             </DialogContent>
             {!readOnly && (
                 <DialogActions>
+                    {dialogMode === DAILOG_MODE.EDIT && (
+                        <Button
+                            onClick={onDelete}
+                            variant='contained'
+                            color='mimicSelected'
+                        >
+                            Delete
+                        </Button>
+                    )}
                     <LoadingButton
                         caption={buttonTitle}
                         onClick={submitForm}
@@ -111,6 +121,17 @@ const CharacterDailog = ({ open, onClose, dialogMode, characterId }) => {
         setIsLoading(false);
     };
 
+    const handleDelete = async () => {
+        const { isOk } = await deleteAsync(
+            getCharacterByIdUrl(character.characterId)
+        );
+
+        if (isOk) {
+            handleClose();
+            notifySuccess('Персонаж успешно удален');
+        }
+    };
+
     const buildCharacterForm = (character) => {
         const characterForm = new FormData();
         characterForm.append('characterModelJson', JSON.stringify(character));
@@ -141,6 +162,7 @@ const CharacterDailog = ({ open, onClose, dialogMode, characterId }) => {
                     dialogMode={mode}
                     isLoading={isLoading}
                     onClose={handleClose}
+                    onDelete={handleDelete}
                 />
             </Formik>
         </Dialog>

@@ -2,7 +2,7 @@
 
 using EfClasses;
 
-public interface IAttachedFileRepository
+public interface IAttachedFileRepository : IGenericRepository<AttachedFile>
 {
     AttachedFile GetFirstFileByOwner(int ownerId, AttachedFileOwnerType attachedFileOwnerAttachedType);
     void InsertFile(AttachedFile attachedFile);

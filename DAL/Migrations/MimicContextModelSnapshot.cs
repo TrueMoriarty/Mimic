@@ -55,7 +55,7 @@ namespace MimicWebApi.Migrations
 
                     b.HasKey("AttachedFileId");
 
-                    b.ToTable("AttachedFiles");
+                    b.ToTable("AttachedFiles", (string)null);
                 });
 
             modelBuilder.Entity("DAL.EfClasses.Character", b =>
@@ -96,7 +96,7 @@ namespace MimicWebApi.Migrations
                     b.HasIndex("StorageId")
                         .IsUnique();
 
-                    b.ToTable("Characters");
+                    b.ToTable("Characters", (string)null);
                 });
 
             modelBuilder.Entity("DAL.EfClasses.Item", b =>
@@ -125,7 +125,7 @@ namespace MimicWebApi.Migrations
 
                     b.HasIndex("StorageId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("DAL.EfClasses.ItemProperty", b =>
@@ -149,7 +149,7 @@ namespace MimicWebApi.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("ItemProperties");
+                    b.ToTable("ItemProperties", (string)null);
                 });
 
             modelBuilder.Entity("DAL.EfClasses.Room", b =>
@@ -170,7 +170,7 @@ namespace MimicWebApi.Migrations
 
                     b.HasIndex("MasterId");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("DAL.EfClasses.RoomStorageRelation", b =>
@@ -193,7 +193,7 @@ namespace MimicWebApi.Migrations
 
                     b.HasIndex("StorageId");
 
-                    b.ToTable("RoomStorageRelation");
+                    b.ToTable("RoomStorageRelation", (string)null);
                 });
 
             modelBuilder.Entity("DAL.EfClasses.Storage", b =>
@@ -212,7 +212,7 @@ namespace MimicWebApi.Migrations
 
                     b.HasKey("StorageId");
 
-                    b.ToTable("Storages");
+                    b.ToTable("Storages", (string)null);
                 });
 
             modelBuilder.Entity("DAL.EfClasses.User", b =>
@@ -237,7 +237,7 @@ namespace MimicWebApi.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("DAL.EfClasses.Character", b =>
