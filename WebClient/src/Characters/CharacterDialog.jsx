@@ -32,13 +32,15 @@ const CharacterDialogBody = ({ dialogMode, isLoading, onDelete }) => {
             </DialogContent>
             {!readOnly && (
                 <DialogActions>
-                    <Button
-                        onClick={onDelete}
-                        variant='contained'
-                        color='mimicSelected'
-                    >
-                        Delete
-                    </Button>
+                    {dialogMode === DAILOG_MODE.EDIT && (
+                        <Button
+                            onClick={onDelete}
+                            variant='contained'
+                            color='mimicSelected'
+                        >
+                            Delete
+                        </Button>
+                    )}
                     <LoadingButton
                         caption={buttonTitle}
                         onClick={submitForm}
