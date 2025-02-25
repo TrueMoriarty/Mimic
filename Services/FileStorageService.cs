@@ -19,6 +19,7 @@ internal class S3FileStorageService : IFileStorageService
 
     private readonly string _defaultBucket;
     private readonly string _s3Url;
+    
 
     public S3FileStorageService(IAmazonS3 amazonS3, IConfiguration configuration)
     {

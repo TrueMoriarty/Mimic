@@ -10,6 +10,7 @@ public interface ICharactersService
     Character? GetById(int characterId, bool readOnly = true, bool includeAttachedFiles = false);
     void CreateCharacter(Character character);
     void EditCharacter(Character editedCharacter);
+    void DeleteCharacter(Character character);
 }
 
 public class CharactersService(IUnitOfWork unitOfWork, IAttachedFileService attachedFileService) : ICharactersService
@@ -66,13 +67,21 @@ public class CharactersService(IUnitOfWork unitOfWork, IAttachedFileService atta
         unitOfWork.Save();
     }
 
+    public void DeleteCharacter(Character character)
+    {
+        unitOfWork.CharactersRepository.Delete(character);
+        unitOfWork.Save();
+    }
+
     private void FillCharacterCovers(List<Character> characters)
     {
         var characterIds = characters.Select(u => u.CharacterId).ToArray();
-        var attachedCovers = unitOfWork.AttachedFileRepository.GetFilesByOwner(characterIds, AttachedFileOwnerType.Character)
+        var attachedCovers = unitOfWork.AttachedFileRepository
+            .GetFilesByOwner(characterIds, AttachedFileOwnerType.Character)
             .ToDictionary(x => x.OwnerId, x => x);
 
-        var charactersWithCovers = characters.Where(character => attachedCovers.ContainsKey(character.CharacterId));
+        var charactersWithCovers = characters
+            .Where(character => attachedCovers.ContainsKey(character.CharacterId));
         foreach (Character character in charactersWithCovers)
             character.Cover = attachedCovers[character.CharacterId];
     }

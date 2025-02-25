@@ -53,9 +53,9 @@ function NotificationContextProvider({ children }) {
                     spacing={1}
                     sx={{
                         zIndex: 'tooltip',
-                        position: 'sticky',
-                        bottom: 20,
-                        left: '75%',
+                        position: 'absolute',
+                        bottom: '5%',
+                        left: '70%',
                         width: '25%',
                     }}
                 >

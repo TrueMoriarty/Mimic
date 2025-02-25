@@ -24,7 +24,8 @@ public class UsersService(IUnitOfWork unitOfWork) : IUsersService
     public User GetById(int id)
     {
         User user = unitOfWork.UserRepository.GetById(id);
-        user.Icon = unitOfWork.AttachedFileRepository.GetFirstFileByOwner(user.UserId, AttachedFileOwnerType.User);
+        if (user is not null)
+            user.Icon = unitOfWork.AttachedFileRepository.GetFirstFileByOwner(user.UserId, AttachedFileOwnerType.User);
         return user;
     }
 }
