@@ -14,6 +14,8 @@ public interface IUnitOfWork
     public ICharacterRepository CharactersRepository { get; }
     public IAttachedFileRepository AttachedFileRepository { get; }
 
+    public IGenericRepository<Room> RoomRepository { get; }
+
     public void Save();
 }
 
@@ -21,7 +23,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 {
     // Создаются переменные класса для контекста бд и каждого репозитория.
     // Для переменной context создается новый контекст.
-    private MimicContext context = new ();
+    private MimicContext context = new();
 
     UserRepository? userRepository;
     ItemRepository? itemRepository;
@@ -29,6 +31,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     GenericRepository<ItemProperty>? propertyRepository;
     ICharacterRepository? characterRepository;
     AttachedAttachedFileRepository? fileRepository;
+    GenericRepository<Room>? roomRepository;
 
     private bool disposed = false;
 
@@ -52,6 +55,9 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 
     public IAttachedFileRepository AttachedFileRepository =>
         fileRepository ??= new AttachedAttachedFileRepository(context);
+
+    public IGenericRepository<Room> RoomRepository =>
+        roomRepository ??= new GenericRepository<Room>(context);
 
     public void Save()
     {

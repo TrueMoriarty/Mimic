@@ -1,6 +1,6 @@
 ﻿using DAL.EfClasses;
 
-namespace MimicWebApi.Views.Characters;
+namespace MimicWebApi.ViewModels.Characters;
 
 public class CharacterBaseViewModel
 {
