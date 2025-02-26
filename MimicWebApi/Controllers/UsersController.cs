@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Utils;
-using MimicWebApi.Views;
+using MimicWebApi.ViewModels;
 using Services;
 
 namespace MimicWebApi.Controllers;

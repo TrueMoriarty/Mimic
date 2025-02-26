@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Models;
 using MimicWebApi.Utils;
-using MimicWebApi.Views.Characters;
+using MimicWebApi.ViewModels.Characters;
 using Services;
 using System.Text.Json;
 

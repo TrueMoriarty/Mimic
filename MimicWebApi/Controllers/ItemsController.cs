@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Models.ItemModels;
 using MimicWebApi.Utils;
-using MimicWebApi.Views;
+using MimicWebApi.ViewModels;
 using Services.Items;
 using Services.Items.Dto;
 

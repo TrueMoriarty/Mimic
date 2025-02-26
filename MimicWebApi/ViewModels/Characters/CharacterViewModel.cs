@@ -1,7 +1,7 @@
 ﻿using DAL.EfClasses;
-using MimicWebApi.Views.Storages;
+using MimicWebApi.ViewModels.Storages;
 
-namespace MimicWebApi.Views.Characters;
+namespace MimicWebApi.ViewModels.Characters;
 
 public class CharacterViewModel : CharacterBaseViewModel
 {

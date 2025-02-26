@@ -1,6 +1,6 @@
 ﻿using DAL.EfClasses;
 
-namespace MimicWebApi.Views;
+namespace MimicWebApi.ViewModels;
 
 public class ItemPropertyViewModel
 {

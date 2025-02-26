@@ -1,6 +1,6 @@
 ﻿using DAL.EfClasses;
 
-namespace MimicWebApi.Views.Storages;
+namespace MimicWebApi.ViewModels.Storages;
 
 public class StorageViewModel
 {
