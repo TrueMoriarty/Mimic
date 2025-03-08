@@ -34,6 +34,13 @@ public class AuthController(IUsersService usersService) : ControllerBase
         return SignInUser(unbordedUser);
     }
 
+    [Authorize]
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        return SignOut("auth-cookie");
+    }
+
     private SignInResult SignInUser(User user, AuthenticationProperties? properties = null)
     {
         var claims = new List<Claim>()

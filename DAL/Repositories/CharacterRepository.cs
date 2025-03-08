@@ -37,4 +37,13 @@ internal class CharacterRepository(MimicContext context) : GenericRepository<Cha
             )
             .FirstOrDefault();
 
+   public  List<Character> GetSuggestedCharacters(string query, int creatorId)
+    {
+        string lowerQuery = query.ToLower();
+        var characters = context.Characters
+          .AsNoTracking()
+          .Where(c => c.CreatorId == creatorId && c.Name.ToLower().StartsWith(lowerQuery));
+        return characters.ToList();
+    }
+
 }

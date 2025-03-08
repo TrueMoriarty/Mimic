@@ -7,16 +7,15 @@ namespace DAL;
 
 public interface IUnitOfWork
 {
-    public IUserRepository UserRepository { get; }
-    public IItemRepository ItemRepository { get; }
-    public IGenericRepository<Storage> StorageRepository { get; }
-    public IGenericRepository<ItemProperty> PropertiesRepository { get; }
-    public ICharacterRepository CharactersRepository { get; }
-    public IAttachedFileRepository AttachedFileRepository { get; }
+    IUserRepository UserRepository { get; }
+    IItemRepository ItemRepository { get; }
+    IGenericRepository<Storage> StorageRepository { get; }
+    IGenericRepository<ItemProperty> PropertiesRepository { get; }
+    ICharacterRepository CharactersRepository { get; }
+    IAttachedFileRepository AttachedFileRepository { get; }
+    IRoomRepository RoomRepository { get; }
 
-    public IGenericRepository<Room> RoomRepository { get; }
-
-    public void Save();
+    void Save();
 }
 
 public class UnitOfWork : IUnitOfWork, IDisposable
@@ -31,7 +30,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     GenericRepository<ItemProperty>? propertyRepository;
     ICharacterRepository? characterRepository;
     AttachedAttachedFileRepository? fileRepository;
-    GenericRepository<Room>? roomRepository;
+    RoomRepository? roomRepository;
 
     private bool disposed = false;
 
@@ -56,8 +55,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IAttachedFileRepository AttachedFileRepository =>
         fileRepository ??= new AttachedAttachedFileRepository(context);
 
-    public IGenericRepository<Room> RoomRepository =>
-        roomRepository ??= new GenericRepository<Room>(context);
+    public IRoomRepository RoomRepository =>
+        roomRepository ??= new RoomRepository(context);
 
     public void Save()
     {

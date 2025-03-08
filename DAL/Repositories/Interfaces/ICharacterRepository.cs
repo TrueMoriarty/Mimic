@@ -7,5 +7,6 @@ public interface ICharacterRepository : IGenericRepository<Character>
 {
     PaginatedContainerDto<List<Character>> GetPaginatedListByCreatorId(CharacterFilter filter);
     Character? GetById(int id, bool readOnly = true);
+    List<Character> GetSuggestedCharacters(string query, int creatorId);
 
 }

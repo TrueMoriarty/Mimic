@@ -1,4 +1,5 @@
 ﻿using DAL;
+using DAL.Dto;
 using DAL.EfClasses;
 using System.Net.Http;
 
@@ -8,6 +9,8 @@ public interface IRoomService
 {
     Room CreateRoom(int masterId, string name);
     Room[] GetRoomsByMasterId(int masterId);
+
+    PaginatedContainerDto<List<Room>> GetPaginatedRooms(RoomsFilter filter);
     Room? GetRoomById(int Id);
     void JoinRoom(Room room, Character character);
 }
@@ -32,6 +35,9 @@ internal class RoomService(IUnitOfWork uow) : IRoomService
     {
         return uow.RoomRepository.Get(room => room.MasterId == masterId, includeProperties: "Characters,Master").ToArray();
     }
+
+    public PaginatedContainerDto<List<Room>> GetPaginatedRooms(RoomsFilter filter)
+        => uow.RoomRepository.GetPaginatedRooms(filter);
 
     public Room? GetRoomById(int Id)
     {

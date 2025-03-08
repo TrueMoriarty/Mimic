@@ -5,6 +5,7 @@ namespace MimicWebApi.ViewModels;
 
 public class RoomViewModel
 {
+    public int RoomId { get; set; }
     public string Name { get; set; }
     public UserInfoViewModel MasterInfo { get; set; }
 
@@ -12,8 +13,10 @@ public class RoomViewModel
 
     public RoomViewModel(Room room)
     {
+        RoomId = room.RoomId;
         Name = room.Name;
-        MasterInfo = new UserInfoViewModel(room.Master);
+        if (room.Master is not null)
+            MasterInfo = new UserInfoViewModel(room.Master);
         Characters = room.Characters?.Select(c => new CharacterBaseViewModel(c)).ToArray();
     }
 }

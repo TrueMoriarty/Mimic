@@ -1,5 +1,5 @@
 //todo: исправить это. Не нужно хранить url сервера на клиенте
-const BACK_URL = 'https://localhost/api/';
+export const BACK_URL = 'https://localhost/api/';
 
 //API
 
@@ -18,6 +18,9 @@ export const getItemSuggestsUrl = (query, creatorId) =>
 
 export const getItemByIdUrl = (id) => BACK_URL + `items/${id}`;
 
+//Rooms
+export const API_ROOM = BACK_URL + 'rooms';
+export const API_GET_PAGED_ROOMS = BACK_URL + 'rooms/page';
 // ENUMS
 export const DAILOG_MODE = {
     READ: 1,
