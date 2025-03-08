@@ -1,4 +1,5 @@
-﻿using DAL.EfClasses;
+﻿using DAL.Dto;
+using DAL.EfClasses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimicWebApi.Utils;
@@ -19,19 +20,30 @@ public class RoomsController(IRoomService roomService, ICharactersService charac
         return Ok(room.RoomId);
     }
 
-    [HttpGet]
-    public IActionResult GetRoom([FromQuery] int masterId)
+    [HttpGet("page")]
+    public IActionResult GetPaginatedRooms([FromQuery] RoomsFilter filter)
     {
-        RoomViewModel[] rooms = roomService.GetRoomsByMasterId(masterId)
-            .Select(r=> new RoomViewModel(r)).ToArray();
-        return Ok(rooms);
+        filter.UserId = HttpContext.GetAuthorizedUserId();
+
+        var rooms = roomService.GetPaginatedRooms(filter);
+
+        var roomsViewModal = new PaginatedContainerDto<List<RoomViewModel>>(
+            rooms.Value.ConvertAll(c => new RoomViewModel(c)),
+            rooms.TotalCount,
+            rooms.TotalPages
+        );
+
+        return Ok(roomsViewModal);
     }
 
     [HttpPost("{roomId}/join")]
     public IActionResult JoinRoom([FromRoute] int roomId, [FromForm] int characterId)
     {
         Room? room = roomService.GetRoomById(roomId);
+        if (room is null) return NotFound("Room not found");
+
         Character? character = charactersService.GetById(characterId);
+        if (character is null) return NotFound("Character not found");
 
         roomService.JoinRoom(room, character);
         return Ok();

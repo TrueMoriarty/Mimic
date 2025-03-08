@@ -29,6 +29,18 @@ public class CharactersController(ICharactersService charactersService) : Contro
         return Ok(characterListViewModal);
     }
 
+    [HttpGet("suggests")]
+    public IActionResult GetCreatorUserCharactersList([FromQuery] string query)
+    {
+        var characters = charactersService.GetSuggestedCharacters(query, HttpContext.GetAuthorizedUserId());
+
+        var charactersViewModel = characters.Select(c =>
+            new CharacterBaseViewModel(c)
+        ).ToArray();
+
+        return Ok(charactersViewModel);
+    }
+
     [HttpGet("{characterId}")]
     public IActionResult GetCharacter([FromRoute] int characterId)
     {

@@ -10,16 +10,24 @@ import {
 import { Link } from 'react-router-dom';
 import useRouteMatch from './hooks/useRouteMatch';
 import useUserInfoContext from './hooks/useUserInfoContext';
+import { postAsync } from './axios';
+import { BACK_URL } from './contants';
 
 const Navigation = () => {
     const userInfo = useUserInfoContext();
     const routeMatch = useRouteMatch([
+        '/',
         '/rooms',
         '/library',
         '/workshop',
         '/characters',
     ]);
     const currentTab = routeMatch?.pattern?.path;
+
+    const handleLogout = async () => {
+        await postAsync(BACK_URL + 'auth/logout');
+        window.location.assign('/');
+    };
 
     return (
         <AppBar position='static' color='mimic'>
@@ -97,6 +105,15 @@ const Navigation = () => {
                                 <Typography variant='h6'>
                                     {userInfo?.userName}
                                 </Typography>
+                            </Grid>
+                            <Grid item sx={{ my: 'auto' }}>
+                                <Button
+                                    color='inherit'
+                                    variant='contained'
+                                    onClick={handleLogout}
+                                >
+                                    <Typography variant='h6'>Logout</Typography>
+                                </Button>
                             </Grid>
                         </Grid>
                     ) : (

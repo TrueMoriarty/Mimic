@@ -7,6 +7,7 @@ namespace Services;
 public interface ICharactersService
 {
     PaginatedContainerDto<List<Character>> GetListByCreatorId(CharacterFilter filter);
+    List<Character> GetSuggestedCharacters(string query, int creatorId);
     Character? GetById(int characterId, bool readOnly = true, bool includeAttachedFiles = false);
     void CreateCharacter(Character character);
     void EditCharacter(Character editedCharacter);
@@ -31,6 +32,10 @@ public class CharactersService(IUnitOfWork unitOfWork, IAttachedFileService atta
             character.Cover = unitOfWork.AttachedFileRepository.GetFirstFileByOwner(character.CharacterId, AttachedFileOwnerType.Character);
 
         return character;
+    }
+    public List<Character> GetSuggestedCharacters(string query, int creatorId)
+    {
+        return unitOfWork.CharactersRepository.GetSuggestedCharacters(query, creatorId);
     }
 
     public void CreateCharacter(Character character)
